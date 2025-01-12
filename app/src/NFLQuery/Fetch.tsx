@@ -3,7 +3,7 @@ import { GameType, TeamStatistic } from "./Data";
 
 // https://gist.github.com/nntrn/ee26cb2a0716de0947a0a4e9a157bc1c
 
-const startYear = 2004;
+const startYear = 2024;
 const endYear = 2024;
 var fetching = false;
 
@@ -124,6 +124,7 @@ function getGames(year: number): Promise<GameType[]> {
                 .then((resp) => resp.json())
                 .then(
                   (obj: {
+                    header: { week: number; competitions: [{ date: string }] };
                     drives: {
                       previous: {
                         team: { abbreviation: string };
@@ -173,7 +174,10 @@ function getGames(year: number): Promise<GameType[]> {
                     }));
                     const game = {
                       gameId,
-                      timestamp: 0,
+                      timestamp: new Date(
+                        obj.header.competitions[0].date
+                      ).getTime(),
+                      week: obj.header.week,
                       teams: obj.boxscore.teams.map((t, index) => ({
                         name: t.team.name,
                         statistics: Object.fromEntries(
