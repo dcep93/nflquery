@@ -1,7 +1,7 @@
 import debug2024 from "./2024.json";
 
 export default function Data(years: number[]): Promise<DataType[]> {
-  return Promise.resolve([debug2024 as DataType]);
+  return Promise.resolve([debug2024 as unknown as DataType]);
 }
 
 export type DataType = {
@@ -11,6 +11,7 @@ export type DataType = {
 
 export type GameType = {
   gameId: number;
+  week: number; // -1 for postseason
   timestamp: number;
   teams: {
     name: string;

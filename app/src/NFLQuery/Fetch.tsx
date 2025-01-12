@@ -23,7 +23,7 @@ function releaseTicket() {
   if (p) p();
 }
 
-function clog<T>(t: T): T {
+export function clog<T>(t: T): T {
   console.log(t);
   return t;
 }
@@ -124,7 +124,11 @@ function getGames(year: number): Promise<GameType[]> {
                 .then((resp) => resp.json())
                 .then(
                   (obj: {
-                    header: { week: number; competitions: [{ date: string }] };
+                    header: {
+                      week: number;
+                      season: { type: number };
+                      competitions: [{ date: string }];
+                    };
                     drives: {
                       previous: {
                         team: { abbreviation: string };
@@ -177,7 +181,7 @@ function getGames(year: number): Promise<GameType[]> {
                       timestamp: new Date(
                         obj.header.competitions[0].date
                       ).getTime(),
-                      week: obj.header.week,
+                      week: obj.header.season.type === 3 ? -1 : obj.header.week,
                       teams: obj.boxscore.teams.map((t, index) => ({
                         name: t.team.name,
                         statistics: Object.fromEntries(
