@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { GameType, TeamStatistic } from "./Data";
 
 // https://gist.github.com/nntrn/ee26cb2a0716de0947a0a4e9a157bc1c
 
@@ -67,6 +68,7 @@ export default function Fetch() {
   }
   return <pre>{JSON.stringify(state)}</pre>;
 }
+
 function getGames(year: number): Promise<GameType[]> {
   return Promise.resolve()
     .then(() =>
@@ -198,67 +200,3 @@ function getGames(year: number): Promise<GameType[]> {
     )
     .then((ps) => Promise.all(ps));
 }
-
-export type Data = {
-  year: string;
-  games: GameType[];
-};
-
-export type GameType = {
-  gameId: number;
-  timestamp: number;
-  teams: {
-    name: string;
-    statistics: { [key in TeamStatistic]: string };
-    boxScore: BoxScoreType[];
-  }[];
-  playByPlay: DriveType[];
-};
-
-export enum TeamStatistic {
-  firstDowns,
-  firstDownsPassing,
-  firstDownsRushing,
-  firstDownsPenalty,
-  thirdDownEff,
-  fourthDownEff,
-  totalOffensivePlays,
-  totalYards,
-  yardsPerPlay,
-  totalDrives,
-  netPassingYards,
-  completionAttempts,
-  yardsPerPass,
-  interceptions,
-  sacksYardsLost,
-  rushingYards,
-  rushingAttempts,
-  yardsPerRushAttempt,
-  redZoneAttempts,
-  totalPenaltiesYards,
-  turnovers,
-  fumblesLost,
-  defensiveTouchdowns,
-  possessionTime,
-}
-
-export type DriveType = {
-  team: string;
-  description: string;
-  result: string;
-  plays: PlayType[];
-};
-
-export type PlayType = {
-  down: string;
-  text: string;
-  clock: string;
-  distance: number;
-  startYardsToEndzone: number;
-};
-
-export type BoxScoreType = {
-  category: string;
-  labels: string[];
-  players: { name: string; stats: string[] }[];
-};
