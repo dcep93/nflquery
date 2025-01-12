@@ -3,8 +3,8 @@ import { useState } from "react";
 // https://gist.github.com/nntrn/ee26cb2a0716de0947a0a4e9a157bc1c
 
 // 14,15,16 bad
-const startYear = 2024;
-const endYear = 2024;
+const startYear = 2004;
+const endYear = 2004;
 var fetching = false;
 
 var tickets = 64;
@@ -58,12 +58,24 @@ export default function Fetch() {
             )
             .then(() =>
               fetch(
-                `https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=1000&dates=${year}`
+                `https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=1000&dates=${year}0801-${
+                  year + 1
+                }0401`
               )
             )
             .then((resp) => resp.json())
-            .then((resp: { events: { id: string }[] }) =>
-              resp.events.map((e) => parseInt(e.id))
+            .then(
+              (resp: {
+                events: {
+                  id: string;
+                  season: { slug: string };
+                  status: { type: { state: string } };
+                }[];
+              }) =>
+                resp.events
+                  .filter((e) => e.season.slug !== "preseason")
+                  .filter((e) => e.status.type.state === "post")
+                  .map((e) => parseInt(e.id))
             )
             .then((gameIds) =>
               gameIds
