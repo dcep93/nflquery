@@ -2,12 +2,11 @@ import { useState } from "react";
 
 // https://gist.github.com/nntrn/ee26cb2a0716de0947a0a4e9a157bc1c
 
-// 14,15,16 bad
 const startYear = 2004;
-const endYear = 2004;
+const endYear = 2024;
 var fetching = false;
 
-var tickets = 64;
+var tickets = 48;
 const queue: (() => void)[] = [];
 function getTicket(): Promise<void> {
   if (tickets > 0) {
@@ -68,11 +67,13 @@ export default function Fetch() {
               (resp: {
                 events: {
                   id: string;
+                  name: string;
                   season: { slug: string };
                   status: { type: { state: string } };
                 }[];
               }) =>
                 resp.events
+                  .filter((e) => !e.name.toUpperCase().includes("NFC"))
                   .filter((e) => e.season.slug !== "preseason")
                   .filter((e) => e.status.type.state === "post")
                   .map((e) => parseInt(e.id))
@@ -83,9 +84,17 @@ export default function Fetch() {
                   (gameId) =>
                     ![
                       0,
+                      // chiefs broncos 2004
+                      241106007,
                       // giants saints 2005
                       250919018,
-                      // cancelled bills bengals
+                      // jets bills 2014
+                      400554331,
+                      // redskins eagles 2014
+                      400554366,
+                      // bucs dolphins 2017
+                      400951581,
+                      // bills bengals 2022
                       401437947,
                     ].includes(gameId)
                 )
