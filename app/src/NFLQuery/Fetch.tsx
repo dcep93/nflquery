@@ -150,6 +150,9 @@ export default function Fetch() {
                               ...state,
                               endedTickets: ++state.endedTickets,
                             });
+                            if (!obj.drives) {
+                              console.log({ year, gameId, obj });
+                            }
                             const playByPlay = obj.drives.previous.map(
                               (drive) => ({
                                 team: drive.team?.abbreviation || "",
