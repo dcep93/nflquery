@@ -1,15 +1,12 @@
 import { useState } from "react";
 
+// https://gist.github.com/nntrn/ee26cb2a0716de0947a0a4e9a157bc1c
+
 // 14,15,16 bad
-const startYear = 2016;
-const endYear = 2016;
+const startYear = 2024;
+const endYear = 2024;
 var fetching = false;
 
-declare global {
-  interface Window {
-    chrome: any;
-  }
-}
 var tickets = 64;
 const queue: (() => void)[] = [];
 function getTicket(): Promise<void> {
@@ -61,35 +58,12 @@ export default function Fetch() {
             )
             .then(() =>
               fetch(
-                // TODO better way to get all gameIds
-                `https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/${year}?view=proTeamSchedules_wl`
+                `https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=1000&dates=${year}`
               )
             )
             .then((resp) => resp.json())
-            .then(
-              (resp: {
-                settings: {
-                  proTeams: {
-                    id: number;
-                    name: string;
-                    byeWeek: number;
-                    proGamesByScoringPeriod: {
-                      [scoringPeriodId: string]: {
-                        id: number;
-                      }[];
-                    };
-                  }[];
-                };
-              }) =>
-                Array.from(
-                  new Set(
-                    resp.settings.proTeams.flatMap((p) =>
-                      Object.values(p.proGamesByScoringPeriod).map(
-                        (a) => a[0].id
-                      )
-                    )
-                  )
-                )
+            .then((resp: { events: { id: string }[] }) =>
+              resp.events.map((e) => parseInt(e.id))
             )
             .then((gameIds) =>
               gameIds
