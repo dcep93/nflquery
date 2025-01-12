@@ -4,7 +4,7 @@ set -euo pipefail
 
 SA_KEY="$1"
 
-# # disable billing
+# # disable billing, enable api https://console.cloud.google.com/apis/library/firebase.googleapis.com
 # set -e
 # nvm install 16.4.0
 # firebase projects:addfirebase $GOOGLE_CLOUD_PROJECT
@@ -17,13 +17,12 @@ SA_KEY="$1"
 cd app
 
 export GOOGLE_APPLICATION_CREDENTIALS="gac.json"
-echo "$SA_KEY" > "$GOOGLE_APPLICATION_CREDENTIALS"
+echo "$SA_KEY" >"$GOOGLE_APPLICATION_CREDENTIALS"
 npm install -g firebase-tools
 gcloud auth activate-service-account --key-file="$GOOGLE_APPLICATION_CREDENTIALS"
 project_id="$(cat $GOOGLE_APPLICATION_CREDENTIALS | jq -r .project_id)"
 
-
-cat <<EOF > firebase.json
+cat <<EOF >firebase.json
 {
     "hosting": {
         "public": "build",
@@ -36,7 +35,7 @@ cat <<EOF > firebase.json
 }
 EOF
 
-cat <<EOF > .firebaserc
+cat <<EOF >.firebaserc
 {
     "projects": {
         "default": "$project_id"
