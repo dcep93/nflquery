@@ -1,7 +1,8 @@
 import { useState } from "react";
 
-const startYear = 2004;
-const endYear = 2024;
+// 14,15,16 bad
+const startYear = 2016;
+const endYear = 2016;
 var fetching = false;
 
 declare global {
@@ -9,7 +10,7 @@ declare global {
     chrome: any;
   }
 }
-var tickets = 32;
+var tickets = 64;
 const queue: (() => void)[] = [];
 function getTicket(): Promise<void> {
   if (tickets > 0) {
@@ -49,10 +50,14 @@ export default function Fetch() {
         )
       )
       .then((years) =>
-        years.map((year) =>
+        years.map((year, yearIndex) =>
           Promise.resolve()
             .then(() =>
               update({ ...state, startedYears: ++state.startedYears })
+            )
+            .then(
+              () =>
+                new Promise((resolve) => setTimeout(resolve, 1000 * yearIndex))
             )
             .then(() =>
               fetch(
@@ -71,7 +76,6 @@ export default function Fetch() {
                     proGamesByScoringPeriod: {
                       [scoringPeriodId: string]: {
                         id: number;
-                        statsOfficial: boolean;
                       }[];
                     };
                   }[];
@@ -79,14 +83,11 @@ export default function Fetch() {
               }) =>
                 Array.from(
                   new Set(
-                    resp.settings.proTeams
-                      .flatMap((p) =>
-                        Object.values(p.proGamesByScoringPeriod).map(
-                          (a) => a[0]
-                        )
+                    resp.settings.proTeams.flatMap((p) =>
+                      Object.values(p.proGamesByScoringPeriod).map(
+                        (a) => a[0].id
                       )
-                      .filter((o) => o.statsOfficial)
-                      .map((o) => o.id)
+                    )
                   )
                 )
             )
@@ -95,6 +96,9 @@ export default function Fetch() {
                 .filter(
                   (gameId) =>
                     ![
+                      0,
+                      // giants saints 2005
+                      250919018,
                       // cancelled bills bengals
                       401437947,
                     ].includes(gameId)
