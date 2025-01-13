@@ -132,7 +132,7 @@ function getGames(year: number): Promise<GameType[]> {
                         }[];
                       }[];
                       teams: {
-                        team: { name: string };
+                        team: { abbreviation: string };
                         statistics: {
                           name: string;
                           displayValue: string;
@@ -163,7 +163,7 @@ function getGames(year: number): Promise<GameType[]> {
                       ).getTime(),
                       week: obj.header.season.type === 3 ? -1 : obj.header.week,
                       teams: obj.boxscore.teams.map((t, index) => ({
-                        name: t.team.name,
+                        name: t.team.abbreviation,
                         statistics: Object.fromEntries(
                           t.statistics.map((s) => [s.name, s.displayValue])
                         ) as { [key in TeamStatistic]: string },
