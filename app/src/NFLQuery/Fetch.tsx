@@ -5,28 +5,8 @@ import { GameType, TeamStatistic } from "./Data";
 
 const startYear = 2024;
 const endYear = 2024;
-var fetching = false;
 
-var tickets = 48;
-const queue: (() => void)[] = [];
-function getTicket(): Promise<void> {
-  if (tickets > 0) {
-    tickets -= 1;
-    return Promise.resolve();
-  }
-  return new Promise((resolve) => queue.push(resolve));
-}
-
-function releaseTicket() {
-  tickets += 1;
-  const p = queue.shift();
-  if (p) p();
-}
-
-export function clog<T>(t: T): T {
-  console.log(t);
-  return t;
-}
+var initialized = false;
 
 export default function Fetch() {
   const [state, update] = useState({
@@ -37,8 +17,8 @@ export default function Fetch() {
     // startedTickets: 0,
     // endedTickets: 0,
   });
-  if (!fetching) {
-    fetching = true;
+  if (!initialized) {
+    initialized = true;
     Promise.resolve()
       .then(() => update({ ...state, startedJobs: ++state.startedJobs }))
       .then(() =>
@@ -207,4 +187,25 @@ function getGames(year: number): Promise<GameType[]> {
         )
     )
     .then((ps) => Promise.all(ps));
+}
+
+var tickets = 48;
+const queue: (() => void)[] = [];
+function getTicket(): Promise<void> {
+  if (tickets > 0) {
+    tickets -= 1;
+    return Promise.resolve();
+  }
+  return new Promise((resolve) => queue.push(resolve));
+}
+
+function releaseTicket() {
+  tickets += 1;
+  const p = queue.shift();
+  if (p) p();
+}
+
+export function clog<T>(t: T): T {
+  console.log(t);
+  return t;
 }
