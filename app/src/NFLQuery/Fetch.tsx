@@ -3,7 +3,7 @@ import { GameType, TeamStatistic } from "./Data";
 
 // https://gist.github.com/nntrn/ee26cb2a0716de0947a0a4e9a157bc1c
 
-const startYear = 2024;
+const startYear = 2004;
 const endYear = 2024;
 
 var initialized = false;
@@ -200,7 +200,7 @@ function getGames(year: number): Promise<GameType[]> {
     .then((ps) => Promise.all(ps));
 }
 
-var tickets = 48;
+var tickets = 64;
 const queue: (() => void)[] = [];
 function getTicket(): Promise<void> {
   if (tickets > 0) {
@@ -211,9 +211,12 @@ function getTicket(): Promise<void> {
 }
 
 function releaseTicket<T>(t: T) {
-  tickets += 1;
   const p = queue.shift();
-  if (p) p();
+  if (p) {
+    p();
+  } else {
+    tickets += 1;
+  }
   return t;
 }
 
