@@ -21,17 +21,12 @@ export default function Data(years: number[]): Promise<DataType[]> {
                     )
                     .then((resp) =>
                       !resp.ok
-                        ? resp
-                        : Promise.resolve()
-                            .then(() => cache.put(year, resp.clone()))
-                            .then(() => resp)
-                    )
-                    .then((resp) =>
-                      !resp.ok
                         ? (() => {
                             throw new Error(resp.status.toString());
                           })()
-                        : resp.json()
+                        : Promise.resolve()
+                            .then(() => cache.put(year, resp.clone()))
+                            .then(() => resp.json())
                     )
                     .catch((err) =>
                       (() => {
