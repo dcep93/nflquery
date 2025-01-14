@@ -102,6 +102,7 @@ function getGames(year: number): Promise<GameType[]> {
                 `https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/summary?region=us&lang=en&contentorigin=espn&event=${gameId}`
               )
                 .then((resp) => resp.json())
+                .then(releaseTicket)
                 .then(
                   (obj: {
                     header: {
@@ -117,6 +118,8 @@ function getGames(year: number): Promise<GameType[]> {
                         plays: {
                           shortDownDistanceText: string;
                           yardsToEndzone: number;
+                          awayScore: number;
+                          homeScore: number;
                         }[];
                       }[];
                     };
@@ -140,23 +143,10 @@ function getGames(year: number): Promise<GameType[]> {
                       }[];
                     };
                   }) => {
-                    releaseTicket();
                     if (!obj.drives) {
                       console.log({ year, gameId, obj });
                     }
-                    const playByPlay = obj.drives.previous.map((drive) => ({
-                      team: drive.team?.abbreviation || "",
-                      result: drive.displayResult,
-                      plays: drive.plays.map((p: any) => ({
-                        down: p.start.shortDownDistanceText,
-                        text: p.text,
-                        clock: `Q${p.period.number} ${p.clock.displayValue}`,
-                        distance: p.statYardage,
-                        startYardsToEndzone: p.start.yardsToEndzone,
-                      })),
-                      description: drive.description,
-                    }));
-                    const game = {
+                    return {
                       gameId,
                       timestamp: new Date(
                         obj.header.competitions[0].date
@@ -178,9 +168,25 @@ function getGames(year: number): Promise<GameType[]> {
                           })
                         ),
                       })),
-                      playByPlay,
+                      playByPlay: obj.drives.previous.map((drive) => ({
+                        team: drive.team?.abbreviation || "",
+                        result: drive.displayResult,
+                        plays: drive.plays.map((p: any) => ({
+                          down: p.start.shortDownDistanceText,
+                          text: p.text,
+                          clock: `Q${p.period.number} ${p.clock.displayValue}`,
+                          distance: p.statYardage,
+                          startYardsToEndzone: p.start.yardsToEndzone,
+                        })),
+                        description: drive.description,
+                        score: (
+                          ["homeScore", "awayScore"] as [
+                            "homeScore",
+                            "awayScore"
+                          ]
+                        ).map((k) => drive.plays[drive.plays.length - 1][k]),
+                      })),
                     };
-                    return game;
                   }
                 )
             )
@@ -199,13 +205,14 @@ function getTicket(): Promise<void> {
   return new Promise((resolve) => queue.push(resolve));
 }
 
-function releaseTicket() {
+function releaseTicket<T>(t: T) {
   tickets += 1;
   const p = queue.shift();
   if (p) p();
+  return t;
 }
 
-export function clog<T>(t: T): T {
-  console.log(t);
+export function clog<T>(t: T, f: (tt: T) => any = (tt) => tt): T {
+  console.log(f(t));
   return t;
 }
