@@ -1,4 +1,4 @@
-import { DataType, GameType } from "../Data";
+import { DataType } from "../Data";
 import { GraphType } from "../Query";
 
 export default function Comeback(datas: DataType[]): GraphType {
@@ -7,43 +7,64 @@ export default function Comeback(datas: DataType[]): GraphType {
       d.games
         .map((g) => ({
           g,
-          homeAdvantage: g.playByPlay[g.playByPlay.length - 1].homeAdvantage,
+          endHomeAdvantage: g.playByPlay[g.playByPlay.length - 1].homeAdvantage,
         }))
-        .flatMap(({ g, homeAdvantage }) =>
-          g.playByPlay.map((pbp) => ({
-            pbp,
+        .flatMap(({ g, endHomeAdvantage }) =>
+          g.playByPlay.map((pbp, i) => ({
             d,
             g,
-            rMinutes: 0, // todo
-            comeback: (homeAdvantage === 0
+            pbp,
+            endHomeAdvantage,
+            x: pbp.plays[pbp.plays.length - 1].clock,
+            y: (i === 0
               ? null
-              : pbp.homeAdvantage * (homeAdvantage > 0 ? 1 : -1))!,
+              : endHomeAdvantage === 0
+              ? null
+              : g.playByPlay[i - 1].homeAdvantage *
+                (endHomeAdvantage > 0 ? -1 : 1))!,
           }))
         )
     )
-    .filter((o) => o.comeback > 0)
-    .sort((a, b) => b.comeback - a.comeback)
+    .filter((o) => o.y > 0)
+    .map((o) => ({
+      ...o,
+      match:
+        o.pbp.plays[o.pbp.plays.length - 1].clock.match(/Q(\d) (\d+):(\d+)/)!,
+    }))
+    .map((o) => ({
+      ...o,
+      rMinutes:
+        15 * (4 - parseInt(o.match[1])) +
+        parseInt(o.match[2]) +
+        parseInt(o.match[3]) / 60,
+    }))
+    .sort((a, b) =>
+      a.rMinutes === b.rMinutes ? b.y - a.y : a.rMinutes - b.rMinutes
+    )
     .reduce(
       (prev, curr) =>
-        prev.record > curr.comeback
+        prev.record >= curr.y
           ? prev
-          : { record: curr.comeback, rval: prev.rval.concat(curr) },
+          : {
+              record: curr.y,
+              rval: prev.rval.concat({
+                x: curr.x,
+                y: curr.y,
+                label: `${
+                  curr.endHomeAdvantage > 0
+                    ? curr.g.teams
+                        .slice()
+                        .reverse()
+                        .map((t) => t.name)
+                        .join(" vs ")
+                    : curr.g.teams.map((t) => t.name).join(" @ ")
+                } ${curr.d.year}w${curr.g.week}:${curr.g.gameId}`,
+              }),
+            },
       {
         record: -1,
-        rval: [] as {
-          comeback: number;
-          rMinutes: number;
-          d: DataType;
-          g: GameType;
-        }[],
+        rval: [] as GraphType,
       }
     )
-    .rval.map((o) => ({
-      x: o.comeback,
-      y: o.rMinutes,
-      label: `${o.g.teams.map((t) => t.name).join(" @ ")} ${o.d.year}w${
-        o.g.week
-      }`,
-    }))
-    .sort((a, b) => b.y - a.y);
+    .rval.sort((a, b) => b.y - a.y);
 }

@@ -181,9 +181,9 @@ function getGames(year: number): Promise<GameType[]> {
                           })),
                           description: drive.description,
                           score: (
-                            ["homeScore", "awayScore"] as [
-                              "homeScore",
-                              "awayScore"
+                            ["awayScore", "homeScore"] as [
+                              "awayScore",
+                              "homeScore"
                             ]
                           ).map((k) => drive.plays[drive.plays.length - 1][k]),
                         }))
@@ -217,7 +217,12 @@ function releaseTicket<T>(t: T) {
   return t;
 }
 
-export function clog<T>(t: T, f: (tt: T) => any = (tt) => tt): T {
+export function fClog<T>(t: T, f: (tt: T) => any): T {
   console.log(f(t));
+  return t;
+}
+
+export function clog<T>(t: T): T {
+  console.log(t);
   return t;
 }
