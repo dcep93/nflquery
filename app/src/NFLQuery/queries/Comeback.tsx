@@ -1,33 +1,49 @@
-import { DataType } from "../Data";
-import { GraphType, groupByF } from "../Query";
+import { DataType, GameType } from "../Data";
+import { GraphType } from "../Query";
 
 export default function Comeback(datas: DataType[]): GraphType {
-  return Object.entries(
-    groupByF(
-      datas.flatMap((d) =>
-        d.games.flatMap((g) =>
-          g.playByPlay.flatMap((pbp) =>
-            pbp.plays
-              .filter((p) => p.down?.startsWith("4th"))
-              .filter(
-                (p) => !p.text?.toLowerCase().includes("two-minute warning")
-              )
-              .filter((p) => !p.text?.toLowerCase().includes("timeout"))
-              .filter((p) => !p.text?.toLowerCase().includes("penalty"))
-              .map((p) => ({ d, g, pbp, p }))
-          )
+  return datas
+    .flatMap((d) =>
+      d.games
+        .map((g) => ({
+          g,
+          homeAdvantage: g.playByPlay[g.playByPlay.length - 1].homeAdvantage,
+        }))
+        .flatMap(({ g, homeAdvantage }) =>
+          g.playByPlay.map((pbp) => ({
+            pbp,
+            d,
+            g,
+            rMinutes: 0, // todo
+            comeback: (homeAdvantage === 0
+              ? null
+              : pbp.homeAdvantage * (homeAdvantage > 0 ? 1 : -1))!,
+          }))
         )
-      ),
-      (t) => t.pbp.team
     )
-  )
-    .map(([team, objs]) => ({ team, objs }))
-    .map((o) => ({
-      x: o.objs.length,
-      y: o.objs
-        .filter(({ p }) => !p.text?.toLowerCase().includes("punt"))
-        .filter(({ p }) => !p.text?.includes("field goal")).length,
-      label: o.team,
+    .filter((o) => o.comeback > 0)
+    .sort((a, b) => b.comeback - a.comeback)
+    .reduce(
+      (prev, curr) =>
+        prev.record > curr.comeback
+          ? prev
+          : { record: curr.comeback, rval: prev.rval.concat(curr) },
+      {
+        record: -1,
+        rval: [] as {
+          comeback: number;
+          rMinutes: number;
+          d: DataType;
+          g: GameType;
+        }[],
+      }
+    )
+    .rval.map((o) => ({
+      x: o.comeback,
+      y: o.rMinutes,
+      label: `${o.g.teams.map((t) => t.name).join(" @ ")} ${o.d.year}w${
+        o.g.week
+      }`,
     }))
     .sort((a, b) => b.y - a.y);
 }

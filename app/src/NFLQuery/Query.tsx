@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Data, { DataType } from "./Data";
-import Penalty from "./queries/Penalty";
+import Comeback from "./queries/Comeback";
 
 var initialized = false;
 
@@ -13,7 +13,7 @@ export default function Query() {
   if (datas === null) return null;
   return (
     <pre style={{ whiteSpace: "pre-wrap" }}>
-      {JSON.stringify(Penalty(datas), null, 2)}
+      {JSON.stringify(Comeback(datas), null, 2)}
     </pre>
   );
 }

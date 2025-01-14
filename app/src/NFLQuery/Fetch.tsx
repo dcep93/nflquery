@@ -168,24 +168,29 @@ function getGames(year: number): Promise<GameType[]> {
                           })
                         ),
                       })),
-                      playByPlay: obj.drives.previous.map((drive) => ({
-                        team: drive.team?.abbreviation || "",
-                        result: drive.displayResult,
-                        plays: drive.plays.map((p: any) => ({
-                          down: p.start.shortDownDistanceText,
-                          text: p.text,
-                          clock: `Q${p.period.number} ${p.clock.displayValue}`,
-                          distance: p.statYardage,
-                          startYardsToEndzone: p.start.yardsToEndzone,
+                      playByPlay: obj.drives.previous
+                        .map((drive) => ({
+                          team: drive.team?.abbreviation || "",
+                          result: drive.displayResult,
+                          plays: drive.plays.map((p: any) => ({
+                            down: p.start.shortDownDistanceText,
+                            text: p.text,
+                            clock: `Q${p.period.number} ${p.clock.displayValue}`,
+                            distance: p.statYardage,
+                            startYardsToEndzone: p.start.yardsToEndzone,
+                          })),
+                          description: drive.description,
+                          score: (
+                            ["homeScore", "awayScore"] as [
+                              "homeScore",
+                              "awayScore"
+                            ]
+                          ).map((k) => drive.plays[drive.plays.length - 1][k]),
+                        }))
+                        .map(({ score, ...pbp }) => ({
+                          ...pbp,
+                          homeAdvantage: score[1] - score[0],
                         })),
-                        description: drive.description,
-                        score: (
-                          ["homeScore", "awayScore"] as [
-                            "homeScore",
-                            "awayScore"
-                          ]
-                        ).map((k) => drive.plays[drive.plays.length - 1][k]),
-                      })),
                     };
                   }
                 )

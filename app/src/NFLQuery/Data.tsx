@@ -53,7 +53,7 @@ export type DriveType = {
   description: string;
   result: string;
   plays: PlayType[];
-  score: number[];
+  homeAdvantage: number;
 };
 
 export type PlayType = {
