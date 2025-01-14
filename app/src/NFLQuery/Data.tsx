@@ -1,7 +1,19 @@
-import debug2024 from "./2024.json";
-
 export default function Data(years: number[]): Promise<DataType[]> {
-  return Promise.resolve([debug2024 as unknown as DataType]);
+  return Promise.resolve()
+    .then(() =>
+      years.map((year) =>
+        fetch(
+          `https://dcep93.github.io/nflquery/app/src/NFLQuery/data/${year}`
+        ).then((resp) =>
+          !resp.ok
+            ? (() => {
+                throw new Error(resp.status.toString());
+              })()
+            : resp.json()
+        )
+      )
+    )
+    .then((ps) => Promise.all(ps));
 }
 
 export type DataType = {

@@ -8,7 +8,7 @@ export default function Query() {
   const [datas, updateDatas] = useState<DataType[] | null>(null);
   if (!initialized) {
     initialized = true;
-    Data([]).then(updateDatas);
+    Data([2024]).then(updateDatas);
   }
   if (datas === null) return null;
   return (
