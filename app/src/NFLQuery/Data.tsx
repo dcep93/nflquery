@@ -20,9 +20,11 @@ export default function Data(years: number[]): Promise<DataType[]> {
                       )
                     )
                     .then((resp) =>
-                      Promise.resolve()
-                        .then(() => cache.put(year, resp.clone()))
-                        .then(() => resp)
+                      !resp.ok
+                        ? resp
+                        : Promise.resolve()
+                            .then(() => cache.put(year, resp.clone()))
+                            .then(() => resp)
                     )
                     .then((resp) =>
                       !resp.ok
