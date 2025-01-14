@@ -5,6 +5,9 @@ import { GameType, TeamStatistic } from "./Data";
 
 const startYear = 2004;
 const endYear = 2024;
+export const allYears = Array.from(new Array(endYear - startYear + 1)).map(
+  (_, i) => startYear + i
+);
 
 var initialized = false;
 
@@ -21,13 +24,8 @@ export default function Fetch() {
     initialized = true;
     Promise.resolve()
       .then(() => update({ ...state, startedJobs: ++state.startedJobs }))
-      .then(() =>
-        Array.from(new Array(endYear - startYear + 1)).map(
-          (_, i) => startYear + i
-        )
-      )
       .then((years) =>
-        years.map((year, yearIndex) =>
+        allYears.map((year, yearIndex) =>
           Promise.resolve()
             .then(
               () =>

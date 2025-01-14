@@ -3,14 +3,20 @@ export default function Data(years: number[]): Promise<DataType[]> {
     .then(() =>
       years.map((year) =>
         fetch(
-          `https://dcep93.github.io/nflquery/app/src/NFLQuery/data/${year}`
-        ).then((resp) =>
-          !resp.ok
-            ? (() => {
-                throw new Error(resp.status.toString());
-              })()
-            : resp.json()
+          `https://dcep93.github.io/nflquery/app/src/NFLQuery/data/${year}.json`
         )
+          .then((resp) =>
+            !resp.ok
+              ? (() => {
+                  throw new Error(resp.status.toString());
+                })()
+              : resp.json()
+          )
+          .catch((err) =>
+            (() => {
+              throw new Error(`${year}: ${err}`);
+            })()
+          )
       )
     )
     .then((ps) => Promise.all(ps));

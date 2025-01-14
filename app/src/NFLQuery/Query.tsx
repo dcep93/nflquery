@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Data, { DataType } from "./Data";
+import { allYears } from "./Fetch";
 import Comeback from "./queries/Comeback";
 
 var initialized = false;
@@ -8,7 +9,7 @@ export default function Query() {
   const [datas, updateDatas] = useState<DataType[] | null>(null);
   if (!initialized) {
     initialized = true;
-    Data([2024]).then(updateDatas);
+    Data(allYears).then(updateDatas);
   }
   if (datas === null) return null;
   return (
