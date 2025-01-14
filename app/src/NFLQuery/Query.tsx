@@ -13,9 +13,11 @@ export default function Query() {
   }
   if (datas === null) return null;
   return (
-    <pre style={{ whiteSpace: "pre-wrap" }}>
-      {JSON.stringify(Comeback(datas), null, 2)}
-    </pre>
+    <div>
+      <pre style={{ whiteSpace: "pre-wrap" }}>
+        {JSON.stringify(Comeback(datas), null, 2)}
+      </pre>
+    </div>
   );
 }
 
