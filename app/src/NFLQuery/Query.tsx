@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Data, { DataType } from "./Data";
 import { allYears } from "./Fetch";
-import Comeback from "./queries/Comeback";
+import MinPossessionTime from "./queries/MinPossessionTime";
 
 var initialized = false;
 
@@ -15,7 +15,7 @@ export default function Query() {
   return (
     <div>
       <pre style={{ whiteSpace: "pre-wrap" }}>
-        {JSON.stringify(Comeback(datas), null, 2)}
+        {JSON.stringify(MinPossessionTime(datas), null, 2)}
       </pre>
     </div>
   );

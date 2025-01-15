@@ -57,38 +57,38 @@ export type GameType = {
   playByPlay: DriveType[];
 };
 
-export enum TeamStatistic {
-  firstDowns,
-  firstDownsPassing,
-  firstDownsRushing,
-  firstDownsPenalty,
-  thirdDownEff,
-  fourthDownEff,
-  totalOffensivePlays,
-  totalYards,
-  yardsPerPlay,
-  totalDrives,
-  netPassingYards,
-  completionAttempts,
-  yardsPerPass,
-  interceptions,
-  sacksYardsLost,
-  rushingYards,
-  rushingAttempts,
-  yardsPerRushAttempt,
-  redZoneAttempts,
-  totalPenaltiesYards,
-  turnovers,
-  fumblesLost,
-  defensiveTouchdowns,
-  possessionTime,
-}
+export type TeamStatistic =
+  | "firstDowns"
+  | "firstDownsPassing"
+  | "firstDownsRushing"
+  | "firstDownsPenalty"
+  | "thirdDownEff"
+  | "fourthDownEff"
+  | "totalOffensivePlays"
+  | "totalYards"
+  | "yardsPerPlay"
+  | "totalDrives"
+  | "netPassingYards"
+  | "completionAttempts"
+  | "yardsPerPass"
+  | "interceptions"
+  | "sacksYardsLost"
+  | "rushingYards"
+  | "rushingAttempts"
+  | "yardsPerRushAttempt"
+  | "redZoneAttempts"
+  | "totalPenaltiesYards"
+  | "turnovers"
+  | "fumblesLost"
+  | "defensiveTouchdowns"
+  | "possessionTime";
 
 export type DriveType = {
   team: string;
   description: string;
   result: string;
   plays: PlayType[];
+  homeScore: number;
   homeAdvantage: number;
 };
 

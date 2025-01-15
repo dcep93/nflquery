@@ -24,7 +24,7 @@ export default function Fetch() {
     initialized = true;
     Promise.resolve()
       .then(() => update({ ...state, startedJobs: ++state.startedJobs }))
-      .then((years) =>
+      .then(() =>
         allYears.map((year, yearIndex) =>
           Promise.resolve()
             .then(
@@ -181,16 +181,13 @@ function getGames(year: number): Promise<GameType[]> {
                             startYardsToEndzone: p.start.yardsToEndzone,
                           })),
                           description: drive.description,
-                          score: (
-                            ["awayScore", "homeScore"] as [
-                              "awayScore",
-                              "homeScore"
-                            ]
-                          ).map((k) => drive.plays[drive.plays.length - 1][k]),
+                          lastPlay: drive.plays[drive.plays.length - 1],
                         }))
-                        .map(({ score, ...pbp }) => ({
+                        .map(({ lastPlay, ...pbp }) => ({
                           ...pbp,
-                          homeAdvantage: score[1] - score[0],
+                          homeScore: lastPlay.homeScore,
+                          homeAdvantage:
+                            lastPlay.homeScore - lastPlay.awayScore,
                         })),
                     };
                   }
