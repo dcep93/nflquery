@@ -8,7 +8,6 @@ const endYear = 2024;
 export const allYears = Array.from(new Array(endYear - startYear + 1)).map(
   (_, i) => startYear + i
 );
-export const dataVersion = "v2";
 
 var initialized = false;
 
@@ -37,7 +36,6 @@ export default function Fetch() {
             )
             .then(() => getGames(year))
             .then((games: GameType[]) => ({
-              dataVersion,
               year,
               games,
             }))
