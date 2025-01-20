@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Data, { DataType } from "./Data";
 import { allYears } from "./Fetch";
 import _4th_down from "./queries/_4th_down";
@@ -32,7 +32,14 @@ export default function Query() {
     window.location.hash.slice(1) || Object.keys(allQueries)[0]
   );
   window.location.hash = query;
-  if (datas === null) return <div>NFLQuery</div>;
+  const [output, updateOutput] = useState("NFLQuery");
+  useEffect(() => {
+    datas &&
+      Promise.resolve()
+        .then(() => allQueries[query as keyof typeof allQueries](datas))
+        .then((o) => JSON.stringify(o, null, 2))
+        .then(updateOutput);
+  }, [datas]);
   return (
     <div>
       <div>
@@ -45,13 +52,7 @@ export default function Query() {
           ))}
         </select>
       </div>
-      <pre style={{ whiteSpace: "pre-wrap" }}>
-        {JSON.stringify(
-          allQueries[query as keyof typeof allQueries](datas),
-          null,
-          2
-        )}
-      </pre>
+      <pre style={{ whiteSpace: "pre-wrap" }}>{output}</pre>
     </div>
   );
 }
