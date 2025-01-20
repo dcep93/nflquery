@@ -32,7 +32,7 @@ export default function Query() {
     window.location.hash.slice(1) || Object.keys(allQueries)[0]
   );
   window.location.hash = query;
-  if (datas === null) return null;
+  if (datas === null) return <div>NFLQuery</div>;
   return (
     <div>
       <div>

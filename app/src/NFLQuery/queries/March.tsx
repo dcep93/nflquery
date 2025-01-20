@@ -10,42 +10,43 @@ export default function March(datas: DataType[]): GraphType {
   return datas
     .flatMap((d) =>
       d.games
-        .map((g) => ({ g, endHomeAdvantage: getHomeAdvantage(g.scores) }))
-        .flatMap(({ g, endHomeAdvantage }) =>
-          g.drives.map((dr, i) => ({
-            d,
-            g,
-            dr,
-            endHomeAdvantage,
-            x: dr.plays[dr.plays.length - 1].clock,
-            y: (i === 0
-              ? null
-              : endHomeAdvantage === 0
-              ? null
-              : getHomeAdvantage(g.drives[i - 1].scores) *
-                (endHomeAdvantage > 0 ? -1 : 1))!,
-          }))
-        )
+        .map((g) => ({
+          g,
+          endHomeAdvantage: getHomeAdvantage(g.scores),
+        }))
+        .map(({ g, endHomeAdvantage }) => ({
+          d,
+          g,
+          endHomeAdvantage,
+          finalScoringDrive: g.drives
+            .slice()
+            .reverse()
+            .map((dr) => ({ dr, drHomeAdvantage: getHomeAdvantage(dr.scores) }))
+            .find(
+              ({ drHomeAdvantage }) => endHomeAdvantage !== drHomeAdvantage
+            )!,
+        }))
     )
-    .filter((o) => o.y > 0)
+    .filter((o) => o.endHomeAdvantage * o.finalScoringDrive.drHomeAdvantage < 1)
     .map((o) => ({
       ...o,
-      elapsedSeconds: clockToSeconds(o.dr.plays[o.dr.plays.length - 1].clock),
+      yards: o.finalScoringDrive.dr.plays[0].startYardsToEndzone,
+      elapsedSeconds: clockToSeconds(o.finalScoringDrive.dr.plays[0].clock),
     }))
     .sort((a, b) =>
       a.elapsedSeconds === b.elapsedSeconds
-        ? b.y - a.y
+        ? b.yards - a.yards
         : b.elapsedSeconds - a.elapsedSeconds
     )
     .reduce(
       (prev, curr) =>
-        prev.record >= curr.y
+        prev.record >= curr.yards
           ? prev
           : {
-              record: curr.y,
+              record: curr.yards,
               rval: prev.rval.concat({
-                x: curr.x,
-                y: curr.y,
+                x: curr.elapsedSeconds,
+                y: curr.yards,
                 label: `${
                   curr.endHomeAdvantage > 0
                     ? curr.g.teams
