@@ -1,7 +1,7 @@
 import { DataType } from "../Data";
-import { GraphType, groupByF } from "../Query";
+import { GraphType, groupByF, isPlay } from "../Query";
 
-export default function _4th_down(datas: DataType[]): GraphType {
+export default function Team4thDown(datas: DataType[]): GraphType {
   return Object.entries(
     groupByF(
       datas.flatMap((d) =>
@@ -9,11 +9,7 @@ export default function _4th_down(datas: DataType[]): GraphType {
           g.drives.flatMap((dr) =>
             dr.plays
               .filter((p) => p.down?.startsWith("4th"))
-              .filter(
-                (p) => !p.text?.toLowerCase().includes("two-minute warning")
-              )
-              .filter((p) => !p.text?.toLowerCase().includes("timeout"))
-              .filter((p) => !p.text?.toLowerCase().includes("penalty"))
+              .filter((p) => isPlay(p))
               .map((p) => ({ d, g, dr, p }))
           )
         )

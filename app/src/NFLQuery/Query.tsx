@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react";
-import Data, { DataType } from "./Data";
+import Data, { DataType, PlayType } from "./Data";
 import { allYears } from "./Fetch";
-import _4th_down from "./queries/_4th_down";
 import Comeback from "./queries/Comeback";
 import LongestDrive from "./queries/LongestDrive";
 import March from "./queries/March";
 import MinPossessionTime from "./queries/MinPossessionTime";
 import Penalty from "./queries/Penalty";
+import Team4thDown from "./queries/Team4thDown";
 import TeamHighScore from "./queries/TeamHighScore";
 import TotalHighScore from "./queries/TotalHighScore";
+import Year4thDown from "./queries/Year4thDown";
 
 var initialized = false;
 const allQueries = {
   March,
-  _4th_down,
+  Team4thDown,
   Comeback,
   MinPossessionTime,
+  Year4thDown,
   Penalty,
   TeamHighScore,
   TotalHighScore,
@@ -92,4 +94,16 @@ export function secondsToClock(seconds: number): string {
   return `${Math.floor(seconds / 60)}:${"0"
     .concat((seconds % 60).toString())
     .slice(-2)}`;
+}
+
+export function isPlay(p: PlayType): boolean {
+  return (
+    p.text !== undefined &&
+    !p.text.toLowerCase().startsWith("start of") &&
+    !p.text.toLowerCase().startsWith("end of") &&
+    !p.text.toLowerCase().includes("two-minute warning") &&
+    !p.text.toLowerCase().includes("2 minute warning") &&
+    !p.text.toLowerCase().includes("timeout") &&
+    !p.text.toLowerCase().includes("penalty")
+  );
 }
