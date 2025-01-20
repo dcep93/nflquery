@@ -82,6 +82,14 @@ export function clockToSeconds(clock: string): number {
   );
 }
 
+export const totalGameSeconds = clockToSeconds("Q0 00:00");
+
 export function getHomeAdvantage(scores: [number, number]): number {
   return scores[1] - scores[0];
+}
+
+export function secondsToClock(seconds: number): string {
+  return `${Math.floor(seconds / 60)}:${"0"
+    .concat((seconds % 60).toString())
+    .slice(-2)}`;
 }

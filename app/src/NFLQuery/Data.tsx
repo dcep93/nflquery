@@ -10,7 +10,7 @@ export default function Data(years: number[]): Promise<DataType[]> {
         }))
         .map(({ year, url }) =>
           Promise.resolve()
-            .then(() => cache.delete(year))
+            // .then(() => cache.delete(year))
             .then(() => cache.match(year))
             .then((cachedResponse) =>
               cachedResponse?.url === url

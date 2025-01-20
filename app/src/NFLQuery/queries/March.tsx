@@ -1,5 +1,11 @@
 import { DataType } from "../Data";
-import { clockToSeconds, getHomeAdvantage, GraphType } from "../Query";
+import {
+  clockToSeconds,
+  getHomeAdvantage,
+  GraphType,
+  secondsToClock,
+  totalGameSeconds,
+} from "../Query";
 
 // for all scores that end the game that dont pad a victory
 // what was time on the clock, how many timeouts, how many yards
@@ -12,23 +18,21 @@ export default function March(datas: DataType[]): GraphType {
       d.games
         .map((g) => ({
           g,
+          endScore: g.scores.reduce((a, b) => a + b, 0),
           endHomeAdvantage: getHomeAdvantage(g.scores),
         }))
-        .map(({ g, endHomeAdvantage }) => ({
+        .map(({ g, endScore, endHomeAdvantage }) => ({
           d,
           g,
           endHomeAdvantage,
           finalScoringDrive: g.drives
             .slice()
-            .reverse()
-            .map((dr) => ({ dr, drHomeAdvantage: getHomeAdvantage(dr.scores) }))
-            .find(
-              ({ drHomeAdvantage }) => endHomeAdvantage !== drHomeAdvantage
-            )!,
+            .map((dr) => ({
+              dr,
+              drScore: dr.scores.reduce((a, b) => a + b, 0),
+            }))
+            .find(({ drScore }) => drScore === endScore)!,
         }))
-    )
-    .filter(
-      (o) => o.endHomeAdvantage * o.finalScoringDrive?.drHomeAdvantage < 1
     )
     .map((o) => ({
       ...o,
@@ -47,7 +51,7 @@ export default function March(datas: DataType[]): GraphType {
           : {
               record: curr.yards,
               rval: prev.rval.concat({
-                x: curr.elapsedSeconds,
+                x: secondsToClock(totalGameSeconds - curr.elapsedSeconds),
                 y: curr.yards,
                 label: `${
                   curr.endHomeAdvantage > 0
