@@ -27,7 +27,9 @@ export default function March(datas: DataType[]): GraphType {
             )!,
         }))
     )
-    .filter((o) => o.endHomeAdvantage * o.finalScoringDrive.drHomeAdvantage < 1)
+    .filter(
+      (o) => o.endHomeAdvantage * o.finalScoringDrive?.drHomeAdvantage < 1
+    )
     .map((o) => ({
       ...o,
       yards: o.finalScoringDrive.dr.plays[0].startYardsToEndzone,
