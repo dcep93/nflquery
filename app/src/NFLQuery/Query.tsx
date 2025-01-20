@@ -39,7 +39,7 @@ export default function Query() {
         .then(() => allQueries[query as keyof typeof allQueries](datas))
         .then((o) => JSON.stringify(o, null, 2))
         .then(updateOutput);
-  }, [datas]);
+  }, [query, datas]);
   return (
     <div>
       <div>
