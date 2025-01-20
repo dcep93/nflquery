@@ -212,9 +212,6 @@ function getGames(year: number): Promise<GameType[]> {
                             number,
                             number
                           ],
-                          homeScore: lastPlay.homeScore,
-                          homeAdvantage:
-                            lastPlay.homeScore - lastPlay.awayScore,
                         })),
                     };
                   }

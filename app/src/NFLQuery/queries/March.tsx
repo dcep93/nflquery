@@ -7,11 +7,6 @@ import {
   totalGameSeconds,
 } from "../Query";
 
-// for all scores that end the game that dont pad a victory
-// what was time on the clock, how many timeouts, how many yards
-// how many times did something at least this rare happen
-// sort by rarity, timestamp
-
 export default function March(datas: DataType[]): GraphType {
   return datas
     .flatMap((d) =>
@@ -24,15 +19,23 @@ export default function March(datas: DataType[]): GraphType {
         .map(({ g, endScore, endHomeAdvantage }) => ({
           d,
           g,
+          endScore,
           endHomeAdvantage,
           finalScoringDrive: g.drives
-            .slice()
-            .map((dr) => ({
+            .map((dr, dri) => ({
               dr,
+              dri,
               drScore: dr.scores.reduce((a, b) => a + b, 0),
             }))
             .find(({ drScore }) => drScore === endScore)!,
         }))
+    )
+    .filter(
+      (o) =>
+        o.finalScoringDrive.dri > 0 &&
+        o.endHomeAdvantage *
+          getHomeAdvantage(o.g.drives[o.finalScoringDrive.dri - 1].scores) <
+          0
     )
     .map((o) => ({
       ...o,
@@ -42,7 +45,7 @@ export default function March(datas: DataType[]): GraphType {
     .sort((a, b) =>
       a.elapsedSeconds === b.elapsedSeconds
         ? b.yards - a.yards
-        : b.elapsedSeconds - a.elapsedSeconds
+        : a.elapsedSeconds - b.elapsedSeconds
     )
     .reduce(
       (prev, curr) =>
