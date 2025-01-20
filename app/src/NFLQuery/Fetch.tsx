@@ -144,6 +144,15 @@ function getGames(year: number): Promise<GameType[]> {
                           yardsToEndzone: number;
                           awayScore: number;
                           homeScore: number;
+                          type: { abbreviation: string };
+                          text: string;
+                          start: {
+                            shortDownDistanceText: string;
+                            yardsToEndzone: number;
+                          };
+                          period: { number: string };
+                          clock: { displayValue: string };
+                          statYardage: number;
                         }[];
                       }[];
                     };
@@ -196,9 +205,10 @@ function getGames(year: number): Promise<GameType[]> {
                         .map((drive) => ({
                           team: drive.team?.abbreviation || "",
                           result: drive.displayResult,
-                          plays: drive.plays.map((p: any) => ({
+                          plays: drive.plays.map((p) => ({
+                            type: p.type?.abbreviation || "",
                             down: p.start.shortDownDistanceText,
-                            text: p.text,
+                            text: p.text || "",
                             clock: `Q${p.period.number} ${p.clock.displayValue}`,
                             distance: p.statYardage,
                             startYardsToEndzone: p.start.yardsToEndzone,
