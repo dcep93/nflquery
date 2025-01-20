@@ -50,8 +50,9 @@ export default function March(datas: DataType[]): GraphType {
     .reduce(
       (prev, curr) =>
         prev.record >= curr.yards
-          ? prev
+          ? { ...prev, count: prev.count + 1 }
           : {
+              count: 0,
               record: curr.yards,
               rval: prev.rval.concat({
                 x: secondsToClock(totalGameSeconds - curr.elapsedSeconds),
@@ -64,10 +65,13 @@ export default function March(datas: DataType[]): GraphType {
                         .map((t) => t.name)
                         .join(" vs ")
                     : curr.g.teams.map((t) => t.name).join(" @ ")
-                } ${curr.d.year}w${curr.g.week}:${curr.g.gameId}`,
+                } ${curr.d.year}w${curr.g.week}:${curr.g.gameId}/c:${
+                  prev.count
+                }`,
               }),
             },
       {
+        count: 0,
         record: -1,
         rval: [] as GraphType,
       }
