@@ -98,6 +98,9 @@ export function secondsToClock(seconds: number): string {
 
 export function isPlay(p: PlayType): boolean {
   return (
+    p.type !== "TO" &&
+    p.type !== "EH" &&
+    p.down !== " & -1" &&
     p.text !== undefined &&
     !p.text.toLowerCase().startsWith("start of") &&
     !p.text.toLowerCase().startsWith("end of") &&

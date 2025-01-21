@@ -12,6 +12,44 @@ export const allYears = Array.from(new Array(endYear - startYear + 1)).map(
   (_, i) => startYear + i
 );
 
+const BAD_PLAY_IDS = [
+  "2509180100001",
+  "2509180030001",
+  "2509180031889",
+  "2509180260001",
+  "2509180263362",
+  "2509180263362",
+  "2509180043999",
+  "2509180130001",
+  "2509250021008",
+  "2509250022211",
+  "2509250022986",
+  "2509250024101",
+  "2509180210001",
+  "2509180210879",
+  "2509180270001",
+  "2509250141799",
+  "2509250262647",
+  //
+  "400554280350",
+  "4007915443540",
+  "4007916793624",
+  "4007916793624",
+  "4008746122706",
+  "4009517522936",
+  "401030931785",
+  "4010308312257",
+  "401030954611",
+  "4010308563241",
+  "401127963965",
+  "401127989330",
+  "401220161627",
+  "4012202542671",
+  "401326405790",
+  "4013264122580",
+  "401671770283",
+];
+
 var initialized = false;
 
 export default function Fetch() {
@@ -131,20 +169,30 @@ function getGames(year: number): Promise<GameType[]> {
                   (obj: {
                     header: {
                       week: number;
-                      season: { type: number };
+                      season: { type: number; year: number };
                       competitions: [{ date: string }];
                     };
                     drives: {
                       previous: {
+                        id: string;
                         team: { abbreviation: string };
                         description: string;
                         displayResult: string;
                         plays: {
+                          id: string;
                           shortDownDistanceText: string;
                           yardsToEndzone: number;
                           awayScore: number;
                           homeScore: number;
-                          type: { abbreviation: string };
+                          type: {
+                            abbreviation: string;
+                            id: string;
+                            text: string;
+                          };
+                          scoringType: {
+                            displayName: string;
+                            abbreviation: string;
+                          };
                           text: string;
                           start: {
                             shortDownDistanceText: string;
@@ -184,7 +232,9 @@ function getGames(year: number): Promise<GameType[]> {
                       timestamp: new Date(
                         obj.header.competitions[0].date
                       ).getTime(),
-                      week: obj.header.season.type === 3 ? -1 : obj.header.week,
+                      week:
+                        obj.header.week *
+                        (obj.header.season.type === 3 ? -1 : 1),
                       teams: obj.boxscore.teams.map((t, index) => ({
                         name: t.team.abbreviation,
                         statistics: Object.fromEntries(
@@ -203,12 +253,47 @@ function getGames(year: number): Promise<GameType[]> {
                       })),
                       drives: obj.drives.previous
                         .map((drive) => ({
-                          team: drive.team?.abbreviation || "",
+                          team: (drive.team?.abbreviation ||
+                            { "40095174822": "BUF", "4013265080": "WSH" }[
+                              drive.id
+                            ] ||
+                            ctag("team", { obj, drive, gameId }) ===
+                              null)!.toString(),
                           result: drive.displayResult,
                           plays: drive.plays.map((p) => ({
-                            type: p.type?.abbreviation || "",
+                            type: (p.type?.abbreviation ||
+                            p.scoringType?.abbreviation ||
+                            {
+                              3: "_PassIncomplete",
+                              7: "_Sack",
+                              9: "_FumbleRecoeryOwn",
+                              12: "_KickoffReturnOff",
+                              14: "_PuntReturn",
+                              15: "_TwoPointPass",
+                              16: "_TwoPointRush",
+                              29: "_FumbleRecoveryOpp",
+                              30: "_MuffedPuntRecoveryOpp",
+                              43: "_BlockedPat",
+                              70: "_CoinToss",
+                            }[p.type?.id] ||
+                            BAD_PLAY_IDS.includes(p.id)
+                              ? p.id
+                              : obj.header.season.year === 2004
+                              ? p.id
+                              : ctag("play.type", {
+                                  id: p.id,
+                                  text: p.text,
+                                  obj,
+                                  p,
+                                }) === null || p.id)!.toString(),
                             down: p.start.shortDownDistanceText,
-                            text: p.text || "",
+                            text: (p.text ||
+                            p.type?.text ||
+                            p.scoringType?.displayName ||
+                            BAD_PLAY_IDS.includes(p.id)
+                              ? p.id
+                              : ctag("text", { id: p.id, obj, p })
+                            ).toString(),
                             clock: `Q${p.period.number} ${p.clock.displayValue}`,
                             distance: p.statYardage,
                             startYardsToEndzone: p.start.yardsToEndzone,
@@ -228,17 +313,23 @@ function getGames(year: number): Promise<GameType[]> {
                 )
                 .then((game) => ({
                   ...game,
-                  scores: game.drives[game.drives.length - 1].scores,
+                  scores: [0, 0] as [number, number], //game.drives[game.drives.length - 1].scores,
                 }))
             )
+            .catch((e) => {
+              errored = true;
+              throw e;
+            })
         )
     )
     .then((ps) => Promise.all(ps));
 }
 
+var errored = false;
 var tickets = 64;
 const queue: (() => void)[] = [];
 function getTicket(): Promise<void> {
+  if (errored) return new Promise((resolve) => null);
   if (tickets > 0) {
     tickets -= 1;
     return Promise.resolve();
@@ -247,6 +338,7 @@ function getTicket(): Promise<void> {
 }
 
 function releaseTicket<T>(t: T) {
+  if (errored) return t;
   const p = queue.shift();
   if (p) {
     p();
@@ -257,12 +349,19 @@ function releaseTicket<T>(t: T) {
 }
 
 export function fClog<T>(t: T, f: (tt: T) => any): T {
-  console.log(f(t));
+  clog(f(t));
   return t;
 }
 
 export function clog<T>(t: T): T {
   console.log(t);
   console.log(" ");
+  return t;
+}
+
+const tags: { [tag: string]: number } = {};
+export function ctag<T>(tag: string, t: T): T {
+  tags[tag] = (tags[tag] || 0) + 1;
+  clog({ ctag: tags[tag], tag, ...t });
   return t;
 }
