@@ -277,7 +277,7 @@ function getGames(year: number): Promise<GameType[]> {
                                 70: "_CoinToss",
                               }[p.type?.id] ||
                               (BAD_PLAY_IDS.includes(p.id)
-                                ? p.id
+                                ? `bad.${p.id}`
                                 : obj.header.season.year === 2004
                                 ? `2004.${p.id}`
                                 : ctag("play.type", {
@@ -292,7 +292,7 @@ function getGames(year: number): Promise<GameType[]> {
                             p.type?.text ||
                             p.scoringType?.displayName ||
                             BAD_PLAY_IDS.includes(p.id)
-                              ? p.id
+                              ? `bad.${p.id}`
                               : ctag("text", { id: p.id, obj, p }) === null ||
                                 `ctag.play.type:${p.id}`
                             ).toString(),

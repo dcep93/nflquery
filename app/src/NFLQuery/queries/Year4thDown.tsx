@@ -4,7 +4,6 @@ import { GraphType, groupByF, isPlay } from "../Query";
 
 export default function Year4thDown(datas: DataType[]): GraphType {
   return datas
-    .filter(({ year }) => year === 2024)
     .map((d) => ({
       d,
       downs: d.games.flatMap((g) =>
@@ -21,9 +20,31 @@ export default function Year4thDown(datas: DataType[]): GraphType {
             .filter(({ p }) => isPlay(p))
             .map((o) => ({
               ...o,
+              next: dr.plays
+                .slice(o.pi + 1)
+                .filter((pp) => isPlay(pp))
+                .filter(
+                  (pp) =>
+                    ![
+                      "K",
+                      "XP",
+                      "EP",
+                      "EG",
+                      "ER",
+                      "SF",
+                      "_TwoPointPass",
+                      "_TwoPointRush",
+                    ].includes(pp.type)
+                )
+                .filter((pp) => !pp.type.startsWith("2004."))
+                .filter((pp) => !pp.down)
+                .map(clog)
+                .find((pp) => pp.down.startsWith("1st")),
+            }))
+            .map((o) => ({
+              ...o,
               outcome:
-                dr.plays.slice(o.pi + 1).find((pp) => isPlay(pp)) !==
-                  undefined || dr.result.toLowerCase().endsWith("td")
+                o.next !== undefined || dr.result.toLowerCase().endsWith("td")
                   ? "success"
                   : ["REC"].includes(o.p.type)
                   ? "failure"
