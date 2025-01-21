@@ -3,7 +3,6 @@ import { GameType, TeamStatistic } from "./Data";
 
 // https://gist.github.com/nntrn/ee26cb2a0716de0947a0a4e9a157bc1c
 
-// less src/NFLQuery/data_v4/datas.json
 // pbpaste | python3 pasteToFiles.py
 
 const startYear = 2004;

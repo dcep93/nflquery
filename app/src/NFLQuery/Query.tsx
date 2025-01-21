@@ -113,3 +113,15 @@ export function isPlay(p: PlayType): boolean {
     !p.text.toLowerCase().includes("penalty")
   );
 }
+
+export function mapDict<T, U>(
+  d: { [key: string]: T },
+  f: (t: T) => U,
+  g: (key: string, t: T) => boolean = () => true
+) {
+  return Object.fromEntries(
+    Object.entries(d)
+      .filter(([key, t]) => g(key, t))
+      .map(([key, t]) => [key, f(t)])
+  );
+}

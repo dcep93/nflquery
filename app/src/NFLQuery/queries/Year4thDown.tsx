@@ -1,5 +1,4 @@
 import { DataType } from "../Data";
-import { clog } from "../Fetch";
 import { GraphType, groupByF, isPlay } from "../Query";
 
 export default function Year4thDown(datas: DataType[]): GraphType {
@@ -16,8 +15,8 @@ export default function Year4thDown(datas: DataType[]): GraphType {
               p,
               pi,
             }))
-            .filter(({ p }) => p.down?.startsWith("4th"))
             .filter(({ p }) => isPlay(p))
+            .filter(({ p }) => p.down?.startsWith("4th"))
             .map((o) => ({
               ...o,
               next: dr.plays
@@ -36,19 +35,18 @@ export default function Year4thDown(datas: DataType[]): GraphType {
                       "_TwoPointRush",
                     ].includes(pp.type)
                 )
-                .filter((pp) => !pp.type.startsWith("2004."))
-                .filter((pp) => !pp.down)
-                .map(clog)
+                .filter((pp) => pp.down)
                 .find((pp) => pp.down.startsWith("1st")),
             }))
             .map((o) => ({
               ...o,
-              outcome:
-                o.next !== undefined || dr.result.toLowerCase().endsWith("td")
-                  ? "success"
-                  : ["REC"].includes(o.p.type)
-                  ? "failure"
-                  : "kick",
+              outcome: ["_MuffedPuntRecoveryOpp"].includes(o.p.type)
+                ? "kick"
+                : o.next !== undefined || dr.result.toLowerCase().endsWith("td")
+                ? "success"
+                : ["INT", "REC"].includes(o.p.type)
+                ? "failure"
+                : "kick",
             }))
         )
       ),
@@ -58,7 +56,6 @@ export default function Year4thDown(datas: DataType[]): GraphType {
       year: o.d.year,
       grouped: groupByF(o.downs, (oo) => oo.outcome),
     }))
-    .map(clog)
     .map((o) => ({
       x: o.d.year,
       y: parseFloat(
@@ -68,6 +65,5 @@ export default function Year4thDown(datas: DataType[]): GraphType {
         .map(([k, v]) => `${k}:${v.length}`)
         .sort()
         .join(",")}/${o.downs.length}`,
-    }))
-    .sort((a, b) => a.y - b.y);
+    }));
 }
