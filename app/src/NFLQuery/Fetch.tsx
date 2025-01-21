@@ -262,37 +262,39 @@ function getGames(year: number): Promise<GameType[]> {
                           result: drive.displayResult,
                           plays: drive.plays.map((p) => ({
                             type: (p.type?.abbreviation ||
-                            p.scoringType?.abbreviation ||
-                            {
-                              3: "_PassIncomplete",
-                              7: "_Sack",
-                              9: "_FumbleRecoeryOwn",
-                              12: "_KickoffReturnOff",
-                              14: "_PuntReturn",
-                              15: "_TwoPointPass",
-                              16: "_TwoPointRush",
-                              29: "_FumbleRecoveryOpp",
-                              30: "_MuffedPuntRecoveryOpp",
-                              43: "_BlockedPat",
-                              70: "_CoinToss",
-                            }[p.type?.id] ||
-                            BAD_PLAY_IDS.includes(p.id)
-                              ? p.id
-                              : obj.header.season.year === 2004
-                              ? p.id
-                              : ctag("play.type", {
-                                  id: p.id,
-                                  text: p.text,
-                                  obj,
-                                  p,
-                                }) === null || p.id)!.toString(),
+                              p.scoringType?.abbreviation ||
+                              {
+                                3: "_PassIncomplete",
+                                7: "_Sack",
+                                9: "_FumbleRecoeryOwn",
+                                12: "_KickoffReturnOff",
+                                14: "_PuntReturn",
+                                15: "_TwoPointPass",
+                                16: "_TwoPointRush",
+                                29: "_FumbleRecoveryOpp",
+                                30: "_MuffedPuntRecoveryOpp",
+                                43: "_BlockedPat",
+                                70: "_CoinToss",
+                              }[p.type?.id] ||
+                              (BAD_PLAY_IDS.includes(p.id)
+                                ? p.id
+                                : obj.header.season.year === 2004
+                                ? `2004.${p.id}`
+                                : ctag("play.type", {
+                                    id: p.id,
+                                    text: p.text,
+                                    obj,
+                                    p,
+                                  }) === null ||
+                                  `ctag.play.type:${p.id}`))!.toString(),
                             down: p.start.shortDownDistanceText,
                             text: (p.text ||
                             p.type?.text ||
                             p.scoringType?.displayName ||
                             BAD_PLAY_IDS.includes(p.id)
                               ? p.id
-                              : ctag("text", { id: p.id, obj, p })
+                              : ctag("text", { id: p.id, obj, p }) === null ||
+                                `ctag.play.type:${p.id}`
                             ).toString(),
                             clock: `Q${p.period.number} ${p.clock.displayValue}`,
                             distance: p.statYardage,
