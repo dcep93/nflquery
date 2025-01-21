@@ -288,13 +288,14 @@ function getGames(year: number): Promise<GameType[]> {
                                   }) === null ||
                                   `ctag.play.type:${p.id}`))!.toString(),
                             down: p.start.shortDownDistanceText,
-                            text: (p.text ||
-                            p.type?.text ||
-                            p.scoringType?.displayName ||
-                            BAD_PLAY_IDS.includes(p.id)
-                              ? `bad.${p.id}`
-                              : ctag("text", { id: p.id, obj, p }) === null ||
-                                `ctag.play.type:${p.id}`
+                            text: (
+                              p.text ||
+                              p.type?.text ||
+                              p.scoringType?.displayName ||
+                              (BAD_PLAY_IDS.includes(p.id)
+                                ? `bad.${p.id}`
+                                : ctag("text", { id: p.id, obj, p }) === null ||
+                                  `ctag.play.type:${p.id}`)
                             ).toString(),
                             clock: `Q${p.period.number} ${p.clock.displayValue}`,
                             distance: p.statYardage,
