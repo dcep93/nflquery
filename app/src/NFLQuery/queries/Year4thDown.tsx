@@ -40,13 +40,21 @@ export default function Year4thDown(datas: DataType[]): GraphType {
             }))
             .map((o) => ({
               ...o,
-              outcome: ["_MuffedPuntRecoveryOpp"].includes(o.p.type)
+              outcome: [
+                "_MuffedPuntRecoveryOpp",
+                "PUNT",
+                "AFG",
+                "BFG",
+                "FG",
+                "FGM",
+                "PUNT",
+                "_PuntReturn",
+                "BP",
+              ].includes(o.p.type)
                 ? "kick"
-                : o.next !== undefined || dr.result.toLowerCase().endsWith("td")
+                : o.next !== undefined || o.p.type === "TD"
                 ? "success"
-                : ["INT", "REC"].includes(o.p.type)
-                ? "failure"
-                : "kick",
+                : "failure",
             }))
         )
       ),
@@ -58,9 +66,7 @@ export default function Year4thDown(datas: DataType[]): GraphType {
     }))
     .map((o) => ({
       x: o.d.year,
-      y: parseFloat(
-        ((o.grouped.success?.length || 0) / o.downs.length).toFixed(2)
-      ),
+      y: o.downs.length,
       label: `${o.d.year}/${Object.entries(o.grouped)
         .map(([k, v]) => `${k}:${v.length}`)
         .sort()
