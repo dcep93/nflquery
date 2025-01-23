@@ -315,7 +315,7 @@ function getGames(year: number): Promise<GameType[]> {
                 )
                 .then((game) => ({
                   ...game,
-                  scores: [0, 0] as [number, number], //game.drives[game.drives.length - 1].scores,
+                  scores: game.drives[game.drives.length - 1].scores,
                 }))
             )
             .catch((e) => {

@@ -32,7 +32,7 @@ export default function March(datas: DataType[]): GraphType {
     )
     .filter(
       (o) =>
-        o.finalScoringDrive.dri > 0 &&
+        o.finalScoringDrive?.dri > 0 &&
         o.endHomeAdvantage *
           getHomeAdvantage(o.g.drives[o.finalScoringDrive.dri - 1].scores) <
           0
