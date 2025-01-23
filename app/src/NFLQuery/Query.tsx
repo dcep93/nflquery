@@ -14,6 +14,7 @@ import Year4thDown from "./queries/Year4thDown";
 
 var initialized = false;
 const allQueries = {
+  Q1Q3_4thDown,
   March,
   Team4thDown,
   Comeback,
@@ -23,7 +24,6 @@ const allQueries = {
   TeamHighScore,
   TotalHighScore,
   LongestDrive,
-  Q1Q3_4thDown,
 };
 
 export default function Query() {

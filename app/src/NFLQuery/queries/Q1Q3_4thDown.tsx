@@ -42,6 +42,7 @@ export default function Q1Q3_4thDown(datas: DataType[]): GraphType {
           p.type === "TD"
         ? "success"
         : "failure",
+    ({ grouped, filtered }) => (grouped.kick || []).length / filtered.length,
     datas
   );
 }

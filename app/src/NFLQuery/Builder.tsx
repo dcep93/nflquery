@@ -1,7 +1,7 @@
 import { DataType, DriveType, GameType, PlayType } from "./Data";
 import { GraphType, groupByF } from "./Query";
 
-type BuilderType = {
+export type BuilderType = {
   d: DataType;
   g: GameType;
   dr: DriveType;
@@ -10,8 +10,12 @@ type BuilderType = {
 };
 
 export default function Builder(
-  filterA: (o: BuilderType) => boolean,
+  filter: (o: BuilderType) => boolean,
   classify: (o: BuilderType) => string,
+  quantify: (o: {
+    filtered: BuilderType[];
+    grouped: { [key: string]: BuilderType[] };
+  }) => number,
   datas: DataType[]
 ): GraphType {
   return datas
@@ -27,7 +31,7 @@ export default function Builder(
               p,
               pi,
             }))
-            .filter(filterA)
+            .filter(filter)
         )
       ),
     }))
@@ -37,8 +41,8 @@ export default function Builder(
     }))
     .map((o) => ({
       x: o.d.year,
-      y: o.grouped.kick.length / o.filtered.length,
-      label: `${o.d.year}/${Object.entries(o.grouped)
+      y: quantify(o),
+      label: `${Object.entries(o.grouped)
         .map(([k, v]) => `${k}:${v.length}`)
         .sort()
         .join(",")}/${o.filtered.length}`,
