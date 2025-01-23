@@ -8,7 +8,7 @@ export default function Q1Q3_4thDown(datas: DataType[]): GraphType {
       ["Q1", "Q3"].includes(dr.plays?.[0].clock.split(" ")[0]) &&
       isPlay(p) &&
       p.down?.startsWith("4th"),
-    ({ dr, p, pi }) =>
+    ({ p }) =>
       [
         "_MuffedPuntRecoveryOpp",
         "PUNT",
@@ -21,25 +21,9 @@ export default function Q1Q3_4thDown(datas: DataType[]): GraphType {
         "BP",
       ].includes(p.type)
         ? "kick"
-        : dr.plays
-            .slice(pi + 1)
-            .filter((pp) => isPlay(pp))
-            .filter(
-              (pp) =>
-                ![
-                  "K",
-                  "XP",
-                  "EP",
-                  "EG",
-                  "ER",
-                  "SF",
-                  "_TwoPointPass",
-                  "_TwoPointRush",
-                ].includes(pp.type)
-            )
-            .filter((pp) => pp.down)
-            .find((pp) => pp.down.startsWith("1st")) !== undefined ||
-          p.type === "TD"
+        : p.type === "TD" ||
+          p.startYardsToEndzone === p.distance ||
+          p.distance >= parseInt(p.down.split(" ").reverse()[0])
         ? "success"
         : "failure",
     ({ grouped, filtered }) => (grouped.kick || []).length / filtered.length,

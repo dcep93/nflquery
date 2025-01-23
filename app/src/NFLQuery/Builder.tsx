@@ -6,7 +6,6 @@ export type BuilderType = {
   g: GameType;
   dr: DriveType;
   p: PlayType;
-  pi: number;
 };
 
 export default function Builder(
@@ -24,12 +23,11 @@ export default function Builder(
       filtered: d.games.flatMap((g) =>
         g.drives.flatMap((dr) =>
           dr.plays
-            .map((p, pi) => ({
+            .map((p) => ({
               d,
               g,
               dr,
               p,
-              pi,
             }))
             .filter(filter)
         )
