@@ -6,61 +6,57 @@ export default function Year4thDown(datas: DataType[]): GraphType {
     .map((d) => ({
       d,
       downs: d.games.flatMap((g) =>
-        g.drives
-          .filter((dr) =>
-            ["Q1", "Q2"].includes(dr.plays?.[0].clock.split(" ")[0])
-          )
-          .flatMap((dr) =>
-            dr.plays
-              .map((p, pi) => ({
-                d,
-                g,
-                dr,
-                p,
-                pi,
-              }))
-              .filter(({ p }) => isPlay(p))
-              .filter(({ p }) => p.down?.startsWith("4th"))
-              .map((o) => ({
-                ...o,
-                next: dr.plays
-                  .slice(o.pi + 1)
-                  .filter((pp) => isPlay(pp))
-                  .filter(
-                    (pp) =>
-                      ![
-                        "K",
-                        "XP",
-                        "EP",
-                        "EG",
-                        "ER",
-                        "SF",
-                        "_TwoPointPass",
-                        "_TwoPointRush",
-                      ].includes(pp.type)
-                  )
-                  .filter((pp) => pp.down)
-                  .find((pp) => pp.down.startsWith("1st")),
-              }))
-              .map((o) => ({
-                ...o,
-                outcome: [
-                  "_MuffedPuntRecoveryOpp",
-                  "PUNT",
-                  "AFG",
-                  "BFG",
-                  "FG",
-                  "FGM",
-                  "PUNT",
-                  "_PuntReturn",
-                  "BP",
-                ].includes(o.p.type)
-                  ? "kick"
-                  : o.next !== undefined || o.p.type === "TD"
-                  ? "success"
-                  : "failure",
-              }))
-          )
+        g.drives.flatMap((dr) =>
+          dr.plays
+            .map((p, pi) => ({
+              d,
+              g,
+              dr,
+              p,
+              pi,
+            }))
+            .filter(({ p }) => isPlay(p))
+            .filter(({ p }) => p.down?.startsWith("4th"))
+            .map((o) => ({
+              ...o,
+              next: dr.plays
+                .slice(o.pi + 1)
+                .filter((pp) => isPlay(pp))
+                .filter(
+                  (pp) =>
+                    ![
+                      "K",
+                      "XP",
+                      "EP",
+                      "EG",
+                      "ER",
+                      "SF",
+                      "_TwoPointPass",
+                      "_TwoPointRush",
+                    ].includes(pp.type)
+                )
+                .filter((pp) => pp.down)
+                .find((pp) => pp.down.startsWith("1st")),
+            }))
+            .map((o) => ({
+              ...o,
+              outcome: [
+                "_MuffedPuntRecoveryOpp",
+                "PUNT",
+                "AFG",
+                "BFG",
+                "FG",
+                "FGM",
+                "PUNT",
+                "_PuntReturn",
+                "BP",
+              ].includes(o.p.type)
+                ? "kick"
+                : o.next !== undefined || o.p.type === "TD"
+                ? "success"
+                : "failure",
+            }))
+        )
       ),
     }))
     .map((o) => ({

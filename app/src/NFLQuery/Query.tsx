@@ -6,6 +6,7 @@ import LongestDrive from "./queries/LongestDrive";
 import March from "./queries/March";
 import MinPossessionTime from "./queries/MinPossessionTime";
 import Penalty from "./queries/Penalty";
+import Q1Q3_4thDown from "./queries/Q1Q3_4thDown";
 import Team4thDown from "./queries/Team4thDown";
 import TeamHighScore from "./queries/TeamHighScore";
 import TotalHighScore from "./queries/TotalHighScore";
@@ -22,6 +23,7 @@ const allQueries = {
   TeamHighScore,
   TotalHighScore,
   LongestDrive,
+  Q1Q3_4thDown,
 };
 
 export default function Query() {
