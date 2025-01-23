@@ -1,14 +1,14 @@
-import Builder from "../Builder";
+import { YearBuilder } from "../Builder";
 import { DataType } from "../Data";
-import { GraphType, isPlay } from "../Query";
+import { isPlay, PointType } from "../Query";
 
-export default function Q1Q3_4thDown(datas: DataType[]): GraphType {
-  return Builder(
-    ({ dr, p }) =>
+export default function Q1Q3_4thDown(datas: DataType[]): PointType[] {
+  return YearBuilder({
+    filter: ({ dr, p }) =>
       ["Q1", "Q3"].includes(dr.plays?.[0].clock.split(" ")[0]) &&
       isPlay(p) &&
       p.down?.startsWith("4th"),
-    ({ p }) =>
+    classify: ({ p }) =>
       [
         "_MuffedPuntRecoveryOpp",
         "PUNT",
@@ -26,7 +26,8 @@ export default function Q1Q3_4thDown(datas: DataType[]): GraphType {
           p.distance >= parseInt(p.down.split(" ").reverse()[0])
         ? "success"
         : "failure",
-    ({ grouped, filtered }) => (grouped.kick || []).length / filtered.length,
-    datas
-  );
+    quantify: ({ grouped, filtered }) =>
+      (grouped.kick || []).length / filtered.length,
+    datas,
+  });
 }

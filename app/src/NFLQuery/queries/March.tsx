@@ -2,12 +2,12 @@ import { DataType } from "../Data";
 import {
   clockToSeconds,
   getHomeAdvantage,
-  GraphType,
+  PointType,
   secondsToClock,
   totalGameSeconds,
 } from "../Query";
 
-export default function March(datas: DataType[]): GraphType {
+export default function March(datas: DataType[]): PointType[] {
   return datas
     .flatMap((d) =>
       d.games
@@ -73,7 +73,7 @@ export default function March(datas: DataType[]): GraphType {
       {
         count: 0,
         record: -1,
-        rval: [] as GraphType,
+        rval: [] as PointType[],
       }
     )
     .rval.sort((a, b) => b.y - a.y);

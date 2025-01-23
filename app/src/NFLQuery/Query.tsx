@@ -61,7 +61,7 @@ export default function Query() {
   );
 }
 
-export type GraphType = { x: number | string; y: number; label: string }[];
+export type PointType = { x: number | string; y: number; label: string };
 
 export function groupByF<T>(
   ts: T[],

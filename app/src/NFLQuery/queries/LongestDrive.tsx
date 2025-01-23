@@ -1,7 +1,7 @@
 import { DataType } from "../Data";
-import { clockToSeconds, GraphType } from "../Query";
+import { clockToSeconds, PointType } from "../Query";
 
-export default function LongestDrive(datas: DataType[]): GraphType {
+export default function LongestDrive(datas: DataType[]): PointType[] {
   return datas
     .filter((d) => d.year >= 2022)
     .flatMap((d) =>

@@ -1,7 +1,7 @@
 import { DataType } from "../Data";
-import { GraphType, groupByF, isPlay } from "../Query";
+import { groupByF, isPlay, PointType } from "../Query";
 
-export default function Team4thDown(datas: DataType[]): GraphType {
+export default function Team4thDown(datas: DataType[]): PointType[] {
   return Object.entries(
     groupByF(
       datas.flatMap((d) =>

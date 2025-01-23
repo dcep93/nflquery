@@ -1,7 +1,7 @@
 import { DataType } from "../Data";
-import { clockToSeconds, GraphType } from "../Query";
+import { clockToSeconds, PointType } from "../Query";
 
-export default function MinPossessionTime(datas: DataType[]): GraphType {
+export default function MinPossessionTime(datas: DataType[]): PointType[] {
   return datas
     .flatMap((d) =>
       d.games.flatMap((g) =>

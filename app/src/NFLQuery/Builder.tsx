@@ -1,5 +1,5 @@
 import { DataType, DriveType, GameType, PlayType } from "./Data";
-import { GraphType, groupByF } from "./Query";
+import { groupByF, PointType } from "./Query";
 
 export type BuilderType = {
   d: DataType;
@@ -8,16 +8,40 @@ export type BuilderType = {
   p: PlayType;
 };
 
-export default function Builder(
-  filter: (o: BuilderType) => boolean,
-  classify: (o: BuilderType) => string,
+export function MaxBuilder(args: {
+  filter: (o: BuilderType) => boolean;
+  map: (o: BuilderType) => PointType;
+  datas: DataType[];
+}): PointType[] {
+  return args.datas
+    .flatMap((d) =>
+      d.games.flatMap((g) =>
+        g.drives.flatMap((dr) =>
+          dr.plays.map((p) => ({
+            d,
+            g,
+            dr,
+            p,
+          }))
+        )
+      )
+    )
+    .filter(args.filter)
+    .map(args.map)
+    .sort((a, b) => b.y - a.y)
+    .slice(0, 50);
+}
+
+export function YearBuilder(args: {
+  filter: (o: BuilderType) => boolean;
+  classify: (o: BuilderType) => string;
   quantify: (o: {
     filtered: BuilderType[];
     grouped: { [key: string]: BuilderType[] };
-  }) => number,
-  datas: DataType[]
-): GraphType {
-  return datas
+  }) => number;
+  datas: DataType[];
+}): PointType[] {
+  return args.datas
     .map((d) => ({
       d,
       filtered: d.games.flatMap((g) =>
@@ -29,17 +53,17 @@ export default function Builder(
               dr,
               p,
             }))
-            .filter(filter)
+            .filter(args.filter)
         )
       ),
     }))
     .map((o) => ({
       ...o,
-      grouped: groupByF(o.filtered, (oo) => classify(oo)),
+      grouped: groupByF(o.filtered, (oo) => args.classify(oo)),
     }))
     .map((o) => ({
       x: o.d.year,
-      y: quantify(o),
+      y: args.quantify(o),
       label: `${Object.entries(o.grouped)
         .map(([k, v]) => `${k}:${v.length}`)
         .sort()

@@ -1,7 +1,7 @@
 import { DataType } from "../Data";
-import { GraphType, groupByF } from "../Query";
+import { groupByF, PointType } from "../Query";
 
-export default function Penalty(datas: DataType[]): GraphType {
+export default function Penalty(datas: DataType[]): PointType[] {
   return Object.entries(
     groupByF(
       datas

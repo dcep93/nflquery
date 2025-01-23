@@ -1,7 +1,7 @@
 import { DataType } from "../Data";
-import { GraphType } from "../Query";
+import { PointType } from "../Query";
 
-export default function TeamHighScore(datas: DataType[]): GraphType {
+export default function TeamHighScore(datas: DataType[]): PointType[] {
   return datas
     .flatMap((d) =>
       d.games.flatMap((g) =>

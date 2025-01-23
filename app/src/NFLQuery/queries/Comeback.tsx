@@ -1,7 +1,7 @@
 import { DataType } from "../Data";
-import { clockToSeconds, getHomeAdvantage, GraphType } from "../Query";
+import { clockToSeconds, getHomeAdvantage, PointType } from "../Query";
 
-export default function Comeback(datas: DataType[]): GraphType {
+export default function Comeback(datas: DataType[]): PointType[] {
   return datas
     .flatMap((d) =>
       d.games
@@ -54,7 +54,7 @@ export default function Comeback(datas: DataType[]): GraphType {
             },
       {
         record: -1,
-        rval: [] as GraphType,
+        rval: [] as PointType[],
       }
     )
     .rval.sort((a, b) => b.y - a.y);
