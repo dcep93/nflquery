@@ -4,6 +4,7 @@ import { clockToSeconds, PointType } from "../Query";
 
 export default function MinPossessionTime(datas: DataType[]): PointType[] {
   return MaxBuilder({
+    transform: (o) => o,
     filter: ({ dri, pi }) => dri <= 1 && pi === 0,
     map: ({ d, g, dri }) =>
       ((o) =>

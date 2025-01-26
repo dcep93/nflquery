@@ -4,6 +4,7 @@ import { PointType } from "../Query";
 
 export default function TeamHighScore(datas: DataType[]): PointType[] {
   return MaxBuilder({
+    transform: (o) => o,
     filter: ({ dri, pi }) => dri <= 1 && pi === 0,
     map: ({ d, g, dri }) => ({
       x: g.scores[1 - dri],

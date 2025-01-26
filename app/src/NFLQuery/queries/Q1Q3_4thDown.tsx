@@ -4,6 +4,7 @@ import { isPlay, PointType } from "../Query";
 
 export default function Q1Q3_4thDown(datas: DataType[]): PointType[] {
   return YearBuilder({
+    transform: (o) => o,
     filter: ({ dr, p }) =>
       ["Q1", "Q3"].includes(dr.plays?.[0].clock.split(" ")[0]) &&
       isPlay(p) &&

@@ -11,9 +11,10 @@ export type BuilderType = {
 };
 
 // todo
-export function BestInTime(args: {
-  filter: (o: BuilderType) => boolean;
-  map: (o: BuilderType) => PointType | null;
+export function BestInTime<T>(args: {
+  transform: (o: BuilderType) => T;
+  filter: (o: T) => boolean;
+  map: (o: T) => PointType | null;
   datas: DataType[];
 }): PointType[] {
   return args.datas
@@ -76,9 +77,10 @@ export function BestInTime(args: {
     .rval.sort((a, b) => b.y - a.y);
 }
 
-export function MaxBuilder(args: {
-  filter: (o: BuilderType) => boolean;
-  map: (o: BuilderType) => PointType | null;
+export function MaxBuilder<T>(args: {
+  transform: (o: BuilderType) => T;
+  filter: (o: T) => boolean;
+  map: (o: T) => PointType | null;
   datas: DataType[];
 }): PointType[] {
   return args.datas
@@ -96,6 +98,7 @@ export function MaxBuilder(args: {
         )
       )
     )
+    .map(args.transform)
     .filter(args.filter)
     .map(args.map)
     .filter((o) => o)
@@ -104,13 +107,11 @@ export function MaxBuilder(args: {
     .slice(0, 50);
 }
 
-export function YearBuilder(args: {
-  filter: (o: BuilderType) => boolean;
-  classify: (o: BuilderType) => string;
-  quantify: (o: {
-    filtered: BuilderType[];
-    grouped: { [key: string]: BuilderType[] };
-  }) => number;
+export function YearBuilder<T>(args: {
+  transform: (o: BuilderType) => T;
+  filter: (o: T) => boolean;
+  classify: (o: T) => string;
+  quantify: (o: { filtered: T[]; grouped: { [key: string]: T[] } }) => number;
   datas: DataType[];
 }): PointType[] {
   return args.datas
@@ -127,6 +128,7 @@ export function YearBuilder(args: {
               p,
               pi,
             }))
+            .map(args.transform)
             .filter(args.filter)
         )
       ),
@@ -137,6 +139,46 @@ export function YearBuilder(args: {
     }))
     .map((o) => ({
       x: o.d.year,
+      y: args.quantify(o),
+      label: `${Object.entries(o.grouped)
+        .map(([k, v]) => `${k}:${v.length}`)
+        .sort()
+        .join(",")}/${o.filtered.length}`,
+    }));
+}
+
+export function PointBuilder<T>(args: {
+  transform: (o: BuilderType) => T;
+  filter: (o: T) => boolean;
+  classify: (o: T) => string;
+  quantify: (o: { filtered: T[]; grouped: { [key: string]: T[] } }) => number;
+  datas: DataType[];
+}): PointType[] {
+  return [
+    args.datas.flatMap((d) =>
+      d.games.flatMap((g) =>
+        g.drives.flatMap((dr, dri) =>
+          dr.plays
+            .map((p, pi) => ({
+              d,
+              g,
+              dr,
+              dri,
+              p,
+              pi,
+            }))
+            .map(args.transform)
+            .filter(args.filter)
+        )
+      )
+    ),
+  ]
+    .map((filtered) => ({
+      filtered,
+      grouped: groupByF(filtered, (oo) => args.classify(oo)),
+    }))
+    .map((o) => ({
+      x: "point",
       y: args.quantify(o),
       label: `${Object.entries(o.grouped)
         .map(([k, v]) => `${k}:${v.length}`)

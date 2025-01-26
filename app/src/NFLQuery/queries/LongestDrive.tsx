@@ -4,6 +4,7 @@ import { clockToSeconds, PointType } from "../Query";
 
 export default function LongestDrive(datas: DataType[]): PointType[] {
   return MaxBuilder({
+    transform: (o) => o,
     filter: ({ dr }) => dr.description !== undefined,
     map: ({ d, g, dr }) => ({
       x: dr.plays.length,

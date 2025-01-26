@@ -9,11 +9,13 @@ import Penalty from "./queries/Penalty";
 import Q1Q3_4thDown from "./queries/Q1Q3_4thDown";
 import Team4thDown from "./queries/Team4thDown";
 import TeamHighScore from "./queries/TeamHighScore";
+import ThirtyFourToZero from "./queries/ThirtyFourToZero";
 import TotalHighScore from "./queries/TotalHighScore";
 import Year4thDown from "./queries/Year4thDown";
 
 var initialized = false;
 const allQueries = {
+  ThirtyFourToZero,
   Q1Q3_4thDown,
   March,
   Team4thDown,

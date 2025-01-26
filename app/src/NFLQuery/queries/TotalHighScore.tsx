@@ -4,6 +4,7 @@ import { PointType } from "../Query";
 
 export default function TotalHighScore(datas: DataType[]): PointType[] {
   return MaxBuilder({
+    transform: (o) => o,
     filter: ({ dri, pi }) => dri === 0 && pi === 0,
     map: ({ d, g }) => ({
       x: g.scores.reduce((a, b) => a + b, 0),

@@ -4,6 +4,7 @@ import { isPlay, PointType } from "../Query";
 
 export default function Year4thDown(datas: DataType[]): PointType[] {
   return YearBuilder({
+    transform: (o) => o,
     filter: ({ p }) => isPlay(p) && p.down?.startsWith("4th"),
     classify: ({ p }) =>
       [
