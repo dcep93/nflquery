@@ -19,10 +19,10 @@ export default function ThirtyFourToZero(datas: DataType[]): PointType[] {
     classify: ({ g, found }) =>
       found === undefined
         ? "n/a"
-        : // eslint-disable-next-line no-mixed-operators
-        found.scores[0] < found.scores[1] === g.scores[0] < g.scores[1]
-        ? "stomp"
-        : "upset",
+        : ((fs, gs) => (fs === gs ? "stomp" : "upset"))(
+            found.scores[0] < found.scores[1],
+            g.scores[0] < g.scores[1]
+          ),
     quantify: ({ filtered }) => filtered.length,
     datas,
   });
