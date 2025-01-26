@@ -3,6 +3,7 @@ import Data, { DataType, PlayType } from "./Data";
 import { allYears } from "./Fetch";
 import Comeback from "./queries/Comeback";
 import Encroachments from "./queries/Encroachments";
+import GamePenalties from "./queries/GamePenalties";
 import LongestDrive from "./queries/LongestDrive";
 import March from "./queries/March";
 import MinPossessionTime from "./queries/MinPossessionTime";
@@ -16,6 +17,7 @@ import Year4thDown from "./queries/Year4thDown";
 
 var initialized = false;
 const allQueries = {
+  GamePenalties,
   Encroachments,
   ThirtyFourToZero,
   Q1Q3_4thDown,
