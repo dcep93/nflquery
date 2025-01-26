@@ -27,11 +27,8 @@ export default function Comeback(datas: DataType[]): PointType[] {
       ...o,
       elapsedSeconds: clockToSeconds(o.dr.plays[o.dr.plays.length - 1].clock),
     }))
-    .sort((a, b) =>
-      a.elapsedSeconds === b.elapsedSeconds
-        ? b.y - a.y
-        : a.elapsedSeconds - b.elapsedSeconds
-    )
+    .sort((a, b) => b.y - a.y)
+    .sort((a, b) => a.elapsedSeconds - b.elapsedSeconds)
     .reduce(
       (prev, curr) =>
         prev.record >= curr.y
