@@ -30,7 +30,7 @@ export default function Comeback(datas: DataType[]): PointType[] {
     .sort((a, b) =>
       a.elapsedSeconds === b.elapsedSeconds
         ? b.y - a.y
-        : b.elapsedSeconds - a.elapsedSeconds
+        : a.elapsedSeconds - b.elapsedSeconds
     )
     .reduce(
       (prev, curr) =>
