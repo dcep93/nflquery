@@ -4,9 +4,10 @@ set -euo pipefail
 
 SA_KEY="$1"
 
-# # disable billing, enable api https://console.cloud.google.com/apis/library/firebase.googleapis.com
+# # disable billing
 # set -e
 # nvm install 16.4.0
+# gcloud services enable firebase
 # firebase projects:addfirebase $GOOGLE_CLOUD_PROJECT
 # yes "" | firebase init hosting --project "$GOOGLE_CLOUD_PROJECT"
 # gcloud iam service-accounts create deployer-github
