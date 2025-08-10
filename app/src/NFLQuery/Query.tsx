@@ -8,6 +8,7 @@ import LongestDrive from "./queries/LongestDrive";
 import March from "./queries/March";
 import MinPossessionTime from "./queries/MinPossessionTime";
 import Penalty from "./queries/Penalty";
+import PuntAverages from "./queries/PuntAverages";
 import Q1Q3_4thDown from "./queries/Q1Q3_4thDown";
 import Team4thDown from "./queries/Team4thDown";
 import TeamHighScore from "./queries/TeamHighScore";
@@ -17,6 +18,7 @@ import Year4thDown from "./queries/Year4thDown";
 
 var initialized = false;
 const allQueries = {
+  PuntAverages,
   GamePenalties,
   Encroachments,
   ThirtyFourToZero,

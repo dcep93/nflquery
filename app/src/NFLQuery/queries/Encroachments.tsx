@@ -11,7 +11,9 @@ export default function Encroachments(datas: DataType[]): PointType[] {
       y: o.g.drives.flatMap((dr) =>
         dr.plays.filter((p) => p.text.toLowerCase().includes("encroachment"))
       ).length,
-      label: `${o.d.year}w${o.g.week}`,
+      label: `${o.g.teams.map((t) => t.name).join(" @ ")} ${o.d.year}w${
+        o.g.week
+      }`,
     }),
     datas,
   });

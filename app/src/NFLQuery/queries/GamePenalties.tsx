@@ -10,7 +10,9 @@ export default function GamePenalties(datas: DataType[]): PointType[] {
       x: o.g.gameId,
       y: o.g.drives.flatMap((dr) => dr.plays.filter((p) => p.type === "PEN"))
         .length,
-      label: `${o.d.year}w${o.g.week}`,
+      label: `${o.g.teams.map((t) => t.name).join(" @ ")} ${o.d.year}w${
+        o.g.week
+      }`,
     }),
     datas,
   });
