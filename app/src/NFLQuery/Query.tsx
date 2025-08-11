@@ -26,7 +26,7 @@ export default function Query() {
     initialized = true;
     Data(allYears).then(updateDatas);
   }
-  const rawHash = true ? "PuntAverages" : window.location.hash.slice(1);
+  const rawHash = window.location.hash.slice(1);
   const [hash, updateHash] = useState<string>(
     allQueries[rawHash.split(".")[0] as keyof typeof allQueries]
       ? rawHash
@@ -58,7 +58,7 @@ export default function Query() {
         </div>
         <div>
           <CustomQueryEditor
-            key={hash}
+            key={output}
             updateHash={updateHash}
             custom={getQuery(hash).custom}
             datas={datas}
