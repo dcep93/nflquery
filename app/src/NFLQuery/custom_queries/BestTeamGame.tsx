@@ -1,35 +1,55 @@
-import { MaxBuilder } from "../Builder";
+import { BuilderType, MaxBuilder } from "../Builder";
 import { DataType } from "../Data";
+import { PointType } from "../Query";
 
-export default function BestTeamGame(props: { datas: DataType[] }) {
-  const points = MaxBuilder({
-    transform: (o) => o,
+export function getBestTeamGamePoints<T>(args: {
+  datas: DataType[];
+  extract: (o: BuilderType) => T;
+  mapToPoint: (x: {
+    o: BuilderType;
+    label: string;
+    extraction: T;
+  }) => PointType | null;
+}): PointType[] {
+  return MaxBuilder({
     filter: ({ dri, pi }) => dri <= 1 && pi === 0,
-    map: ({ d, g, dri }) =>
-      ((o) =>
-        o.punts.length === 0
-          ? null
-          : {
-              x: o.punts.join(","),
-              y: o.punts.reduce((a, b) => a + b, 0) / o.punts.length,
-              label: `${o.matchup} ${d.year}w${g.week}:${g.gameId}`,
-            })({
-        punts: g.drives
-          .filter((d) => d.team === g.teams[dri].name)
-          .flatMap((d) => d.plays)
-          .map((p) => p.text.match(/punts (\d+) yard/))
-          .filter((match) => match)
-          .map((match) => parseInt(match![1])),
-        matchup:
-          dri === 0
-            ? g.teams.map((t) => t.name).join(" @ ")
-            : g.teams
+    extract: (o) => ({
+      o,
+      label: ((matchup) => `${matchup} ${o.d.year}w${o.g.week}:${o.g.gameId}`)(
+        ((teams) =>
+          o.dri === 0
+            ? teams.map((t) => t.name).join(" @ ")
+            : teams
                 .slice()
                 .reverse()
                 .map((t) => t.name)
-                .join(" vs "),
-      }),
-    ...props,
+                .join(" vs "))(o.g.teams)
+      ),
+      extraction: args.extract(o),
+    }),
+    mapToPoint: args.mapToPoint,
+    datas: args.datas,
+  });
+}
+
+export default function BestTeamGame(props: { datas: DataType[] }) {
+  const points = getBestTeamGamePoints({
+    datas: props.datas,
+    extract: (o) =>
+      o.g.drives
+        .filter((d) => d.team === o.g.teams[o.dri].name)
+        .flatMap((d) => d.plays)
+        .map((p) => p.text.match(/punts (\d+) yard/))
+        .filter((match) => match)
+        .map((match) => parseInt(match![1])),
+    mapToPoint: ({ extraction, label }) =>
+      extraction.length === 0
+        ? null
+        : {
+            x: extraction.join(","),
+            y: extraction.reduce((a, b) => a + b, 0) / extraction.length,
+            label,
+          },
   });
   return (
     <div>

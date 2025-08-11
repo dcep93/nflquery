@@ -11,9 +11,9 @@ export type BuilderType = {
 };
 
 export function MaxBuilder<T>(args: {
-  transform: (o: BuilderType) => T;
-  filter: (o: T) => boolean;
-  map: (o: T) => PointType | null;
+  filter: (o: BuilderType) => boolean;
+  extract: (o: BuilderType) => T;
+  mapToPoint: (o: T) => PointType | null;
   datas: DataType[];
 }): PointType[] {
   return args.datas
@@ -31,9 +31,9 @@ export function MaxBuilder<T>(args: {
         )
       )
     )
-    .map(args.transform)
     .filter(args.filter)
-    .map(args.map)
+    .map(args.extract)
+    .map(args.mapToPoint)
     .filter((o) => o)
     .map((o) => o!)
     .sort((a, b) => b.y - a.y)
@@ -41,8 +41,8 @@ export function MaxBuilder<T>(args: {
 }
 
 export function YearBuilder<T>(args: {
-  transform: (o: BuilderType) => T;
-  filter: (o: T) => boolean;
+  filter: (o: BuilderType) => boolean;
+  extract: (o: BuilderType) => T;
   classify: (o: T) => string;
   quantify: (o: { filtered: T[]; grouped: { [key: string]: T[] } }) => number;
   datas: DataType[];
@@ -61,8 +61,8 @@ export function YearBuilder<T>(args: {
               p,
               pi,
             }))
-            .map(args.transform)
             .filter(args.filter)
+            .map(args.extract)
         )
       ),
     }))
@@ -81,8 +81,8 @@ export function YearBuilder<T>(args: {
 }
 
 export function PointBuilder<T>(args: {
-  transform: (o: BuilderType) => T;
-  filter: (o: T) => boolean;
+  filter: (o: BuilderType) => boolean;
+  extract: (o: BuilderType) => T;
   classify: (o: T) => string;
   quantify: (o: { filtered: T[]; grouped: { [key: string]: T[] } }) => number;
   datas: DataType[];
@@ -100,8 +100,8 @@ export function PointBuilder<T>(args: {
               p,
               pi,
             }))
-            .map(args.transform)
             .filter(args.filter)
+            .map(args.extract)
         )
       )
     ),
