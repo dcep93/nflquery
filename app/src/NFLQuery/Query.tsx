@@ -1,38 +1,26 @@
 import { useEffect, useState } from "react";
-import Data, { DataType, PlayType } from "./Data";
+import Data, { DataType } from "./Data";
 import { allYears } from "./Fetch";
-import Comeback from "./queries/Comeback";
-import { BestTeamGameQuery } from "./queries/custom/BuildBestTeamGameQuery";
-import { CustomQueryEditor, CustomType } from "./queries/custom/CustomQuery";
-import Encroachments from "./queries/Encroachments";
-import GamePenalties from "./queries/GamePenalties";
-import LongestDrive from "./queries/LongestDrive";
-import MinPossessionTime from "./queries/MinPossessionTime";
-import PuntAverages from "./queries/PuntAverages";
-import TeamHighScore from "./queries/TeamHighScore";
-import TotalHighScore from "./queries/TotalHighScore";
+import QueryBuilder, { QueryConfig } from "./QueryBuilder";
+import CustomQueryEditor from "./QueryBuilder/CustomQueryEditor";
+import getPoints from "./QueryBuilder/getPoints";
 
 var initialized = false;
-const allQueries = {
-  TotalHighScore,
-  TeamHighScore,
-  MinPossessionTime,
-  LongestDrive,
-  GamePenalties,
-  Encroachments,
-  PuntAverages,
-  Comeback,
-  BestTeamGameQuery,
+const allQueries: { [k: string]: QueryConfig } = {
+  // TotalHighScore,
+  // TeamHighScore,
+  // MinPossessionTime,
+  // LongestDrive,
+  // GamePenalties,
+  // Encroachments,
+  // PuntAverages,
+  // Comeback,
+  [QueryBuilder.name]: QueryBuilder,
 };
 
 const getQueryName = (hash: string) => hash.split(".")[0];
 const getQuery = (hash: string) =>
-  allQueries[getQueryName(hash) as keyof typeof allQueries]();
-
-export type QueryType = {
-  custom: CustomType;
-  getPoints: (datas: DataType[]) => PointType[];
-};
+  allQueries[getQueryName(hash) as keyof typeof allQueries];
 
 export default function Query() {
   const [datas, updateDatas] = useState<DataType[] | null>(null);
@@ -50,8 +38,8 @@ export default function Query() {
   useEffect(() => {
     window.location.hash = hash;
     datas &&
-      Promise.resolve(datas)
-        .then(getQuery(hash).query.getPoints)
+      Promise.resolve()
+        .then(() => getPoints(getQuery(hash).queryFunctions(), datas))
         .then((points) => points.map((p, index) => ({ ...p, index })))
         .then((o) => JSON.stringify(o, null, 2))
         .then(updateOutput)
@@ -83,7 +71,7 @@ export default function Query() {
           <CustomQueryEditor
             key={output}
             updateHash={updateHash}
-            custom={getQuery(hash).query.custom}
+            customFunctions={getQuery(hash).queryFunctions()}
             datas={datas}
           />
         </div>
@@ -109,68 +97,3 @@ export type PointType = {
   y: number;
   label: string;
 };
-
-export function groupByF<T>(
-  ts: T[],
-  f: (t: T) => string
-): { [key: string]: T[] } {
-  return ts.reduce((prev, curr) => {
-    const key = f(curr);
-    if (!prev[key]) prev[key] = [];
-    prev[key]!.push(curr);
-    return prev;
-  }, {} as { [key: string]: T[] });
-}
-
-export function clockToSeconds(clock: string): number {
-  const parts = clock.split(" ").reverse();
-  return (
-    parts[0]
-      .split(":")
-      .map((p, i) => (i === 0 ? 60 : 1) * parseInt(p))
-      .reduce((a, b) => a + b, 0) +
-    (parts.length === 1 ? 0 : 15 * 60 * (4 - parseInt(parts[1][1])))
-  );
-}
-
-export const totalGameSeconds = clockToSeconds("Q0 00:00");
-
-export function getHomeAdvantage(scores: [number, number]): number {
-  return scores[1] - scores[0];
-}
-
-export function secondsToClock(seconds: number): string {
-  return `${Math.floor(seconds / 60)}:${"0"
-    .concat((seconds % 60).toString())
-    .slice(-2)}`;
-}
-
-export function isPlay(p: PlayType): boolean {
-  return (
-    p.type !== "TO" &&
-    p.type !== "Off TO" &&
-    p.type !== "EH" &&
-    p.type !== "2Min Warn" &&
-    p.type !== "PEN" &&
-    p.down !== " & -1" &&
-    p.text !== undefined &&
-    !p.text.toLowerCase().startsWith("start of") &&
-    !p.text.toLowerCase().startsWith("end of") &&
-    !p.text.toLowerCase().includes("two-minute warning") &&
-    !p.text.toLowerCase().includes("2 minute warning") &&
-    !p.text.toLowerCase().includes("timeout") &&
-    !p.text.toLowerCase().includes("penalty")
-  );
-}
-
-export function mapDict<T, U>(
-  d: { [key: string]: T },
-  f: (t: T) => U,
-  g: (key: string, t: T) => boolean = () => true
-) {
-  return Object.fromEntries(
-    Object.entries(d)
-      .filter(([key, t]) => g(key, t))
-      .map(([key, t]) => [key, f(t)])
-  );
-}
