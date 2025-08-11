@@ -1,121 +1,46 @@
-import { DataType, DriveType, GameType, PlayType } from "./Data";
-import { groupByF, PointType } from "./Query";
+import { CustomType } from "./custom_queries";
+import { DataType, GameType } from "./Data";
+import { PointType } from "./Query";
 
-export type BuilderType = {
-  d: DataType;
-  g: GameType;
-  dr: DriveType;
-  dri: number;
-  p: PlayType;
-  pi: number;
+export type QueryType = {
+  custom: CustomType;
+  getPoints: (datas: DataType[]) => PointType[];
 };
 
-export function MaxBuilder<T>(args: {
-  filter: (o: BuilderType) => boolean;
-  extract: (o: BuilderType) => T;
-  mapToPoint: (o: T) => PointType | null;
-  datas: DataType[];
-}): PointType[] {
-  return args.datas
-    .flatMap((d) =>
-      d.games.flatMap((g) =>
-        g.drives.flatMap((dr, dri) =>
-          dr.plays.map((p, pi) => ({
-            d,
-            g,
-            dr,
-            dri,
-            p,
-            pi,
-          }))
+export function BestTeamGameQuery<T>(functions: {
+  extract: (o: { d: DataType; g: GameType; tI: number }) => T;
+  mapToPoint: (o: {
+    timestamp: number;
+    extraction: T;
+    label: string;
+  }) => PointType | null;
+}): QueryType {
+  return {
+    custom: { name: BestTeamGameQuery.name, functions },
+    getPoints: (datas) =>
+      datas
+        .flatMap((d) =>
+          d.games.flatMap((g) => g.teams.map((_, tI) => ({ d, g, tI })))
         )
-      )
-    )
-    .filter(args.filter)
-    .map(args.extract)
-    .map(args.mapToPoint)
-    .filter((o) => o)
-    .map((o) => o!)
-    .sort((a, b) => b.y - a.y)
-    .slice(0, 50);
-}
-
-export function YearBuilder<T>(args: {
-  filter: (o: BuilderType) => boolean;
-  extract: (o: BuilderType) => T;
-  classify: (o: T) => string;
-  quantify: (o: { filtered: T[]; grouped: { [key: string]: T[] } }) => number;
-  datas: DataType[];
-}): PointType[] {
-  return args.datas
-    .map((d) => ({
-      d,
-      filtered: d.games.flatMap((g) =>
-        g.drives.flatMap((dr, dri) =>
-          dr.plays
-            .map((p, pi) => ({
-              d,
-              g,
-              dr,
-              dri,
-              p,
-              pi,
-            }))
-            .filter(args.filter)
-            .map(args.extract)
-        )
-      ),
-    }))
-    .map((o) => ({
-      ...o,
-      grouped: groupByF(o.filtered, (oo) => args.classify(oo)),
-    }))
-    .map((o) => ({
-      x: o.d.year,
-      y: args.quantify(o),
-      label: `${Object.entries(o.grouped)
-        .map(([k, v]) => `${k}:${v.length}`)
-        .sort()
-        .join(",")}/${o.filtered.length}`,
-    }));
-}
-
-export function PointBuilder<T>(args: {
-  filter: (o: BuilderType) => boolean;
-  extract: (o: BuilderType) => T;
-  classify: (o: T) => string;
-  quantify: (o: { filtered: T[]; grouped: { [key: string]: T[] } }) => number;
-  datas: DataType[];
-}): PointType[] {
-  return [
-    args.datas.flatMap((d) =>
-      d.games.flatMap((g) =>
-        g.drives.flatMap((dr, dri) =>
-          dr.plays
-            .map((p, pi) => ({
-              d,
-              g,
-              dr,
-              dri,
-              p,
-              pi,
-            }))
-            .filter(args.filter)
-            .map(args.extract)
-        )
-      )
-    ),
-  ]
-    .map((filtered) => ({
-      filtered,
-      grouped: groupByF(filtered, (oo) => args.classify(oo)),
-    }))
-    .map((o) => ({
-      x: "point",
-      y: args.quantify(o),
-      label: `${Object.entries(o.grouped)
-        .map(([k, v]) => `${k}:${v.length}`)
-        .sort()
-        .join(",")}/${o.filtered.length}`,
-    }));
+        .map((o) => ({
+          extraction: functions.extract(o),
+          timestamp: o.g.timestamp,
+          label: ((matchup) =>
+            `${matchup} ${o.d.year}w${o.g.week}:${o.g.gameId}`)(
+            ((teams) =>
+              o.tI === 0
+                ? teams.map((t) => t.name).join(" @ ")
+                : teams
+                    .slice()
+                    .reverse()
+                    .map((t) => t.name)
+                    .join(" vs "))(o.g.teams)
+          ),
+        }))
+        .map(functions.mapToPoint)
+        .filter((o) => o)
+        .map((o) => o!)
+        .sort((a, b) => b.y - a.y)
+        .slice(0, 50),
+  };
 }

@@ -1,5 +1,5 @@
-import { BuilderType, MaxBuilder } from "../Builder";
 import { DataType } from "../Data";
+import { BuilderType, MaxBuilder } from "../OldBuilder";
 import { PointType } from "../Query";
 
 export function getBestTeamGamePoints<T>(args: {

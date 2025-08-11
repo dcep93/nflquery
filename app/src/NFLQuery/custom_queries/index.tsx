@@ -1,45 +1,47 @@
-import { useState } from "react";
-import Data, { DataType } from "../Data";
-import { allYears } from "../Fetch";
-import BestTeamGame from "./BestTeamGame";
+import { createRef, useState } from "react";
+import { DataType } from "../Data";
 
-const allQueryTypes = { BestTeamGame };
+const allQueryTypes = {};
 
-var initialized = false;
+export type CustomType = { name: string; functions: { [k: string]: any } };
 
-export default function CustomQuery() {
-  const [datas, updateDatas] = useState<DataType[] | null>(null);
-  if (!initialized) {
-    initialized = true;
-    Data(allYears).then(updateDatas);
-  }
-  const [queryType, updateQueryType] = useState<string>(
-    window.location.hash.slice(1).split(".")[0] || Object.keys(allQueryTypes)[0]
+export default function CustomQuery(props: {
+  custom: CustomType;
+  datas: DataType[];
+}) {
+  const [queryType, updateQueryType] = useState<string>(props.custom.name);
+  const refs = Object.fromEntries(
+    Object.entries(props.custom.functions).map(([k, v]) => [
+      k,
+      createRef<HTMLTextAreaElement>(),
+    ])
   );
-  window.location.hash = queryType;
-  if (!datas) return <div></div>;
-  const Element = allQueryTypes[queryType as keyof typeof allQueryTypes];
   return (
     <div>
+      <select
+        defaultValue={queryType}
+        onChange={(e) => updateQueryType((e.target as HTMLSelectElement).value)}
+      >
+        {Object.keys(allQueryTypes).map((q) => (
+          <option key={q}>{q}</option>
+        ))}
+      </select>
       <div>
-        <a href="/">home</a>
+        {Object.entries(props.custom.functions).map(([k, v], i) => (
+          <div key={i}>
+            <div>{k}</div>
+            <div>
+              <textarea
+                defaultValue={v.toString()}
+                ref={refs[k]}
+                style={{ width: "42em", height: "12em" }}
+              ></textarea>
+            </div>
+          </div>
+        ))}
       </div>
       <div>
-        <div>
-          <select
-            defaultValue={queryType}
-            onChange={(e) =>
-              updateQueryType((e.target as HTMLSelectElement).value)
-            }
-          >
-            {Object.keys(allQueryTypes).map((q) => (
-              <option key={q}>{q}</option>
-            ))}
-          </select>
-        </div>
-        <pre style={{ whiteSpace: "pre-wrap" }}>
-          {<Element datas={datas} />}
-        </pre>
+        <button>customize</button>
       </div>
     </div>
   );

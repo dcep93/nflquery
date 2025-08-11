@@ -1,37 +1,12 @@
 import { useEffect, useState } from "react";
+import CustomQuery from "./custom_queries";
 import Data, { DataType, PlayType } from "./Data";
 import { allYears } from "./Fetch";
-import Comeback from "./queries/Comeback";
-import Encroachments from "./queries/Encroachments";
-import GamePenalties from "./queries/GamePenalties";
-import LongestDrive from "./queries/LongestDrive";
-import March from "./queries/March";
-import MinPossessionTime from "./queries/MinPossessionTime";
-import Penalty from "./queries/Penalty";
 import PuntAverages from "./queries/PuntAverages";
-import Q1Q3_4thDown from "./queries/Q1Q3_4thDown";
-import Team4thDown from "./queries/Team4thDown";
-import TeamHighScore from "./queries/TeamHighScore";
-import ThirtyFourToZero from "./queries/ThirtyFourToZero";
-import TotalHighScore from "./queries/TotalHighScore";
-import Year4thDown from "./queries/Year4thDown";
 
 var initialized = false;
 const allQueries = {
   PuntAverages,
-  GamePenalties,
-  Encroachments,
-  ThirtyFourToZero,
-  Q1Q3_4thDown,
-  March,
-  Team4thDown,
-  Comeback,
-  MinPossessionTime,
-  Year4thDown,
-  Penalty,
-  TeamHighScore,
-  TotalHighScore,
-  LongestDrive,
 };
 
 export default function Query() {
@@ -40,34 +15,45 @@ export default function Query() {
     initialized = true;
     Data(allYears).then(updateDatas);
   }
-  const [query, updateQuery] = useState<string>(
-    window.location.hash.slice(1) || Object.keys(allQueries)[0]
+  const [queryName, updateQueryName] = useState<string>(
+    ((hash) =>
+      allQueries[hash as keyof typeof allQueries]
+        ? hash
+        : Object.keys(allQueries)[0])(window.location.hash.slice(1))
   );
-  window.location.hash = query;
+  window.location.hash = queryName;
+  const query = allQueries[queryName as keyof typeof allQueries];
   const [output, updateOutput] = useState("NFLQuery");
   useEffect(() => {
     datas &&
-      Promise.resolve()
-        .then(() => allQueries[query as keyof typeof allQueries](datas))
+      Promise.resolve(datas)
+        .then(query.getPoints)
         .then((o) => JSON.stringify(o, null, 2))
         .then(updateOutput);
-  }, [query, datas]);
+  }, [queryName, datas]);
+  if (!datas) return <div>fetching...</div>;
   return (
     <div>
-      <div>
-        <a href="/custom">custom</a>
+      <div style={{ display: "flex" }}>
+        <div>
+          <select
+            defaultValue={queryName}
+            onChange={(e) =>
+              updateQueryName((e.target as HTMLSelectElement).value)
+            }
+          >
+            {Object.keys(allQueries).map((q) => (
+              <option key={q}>{q}</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <CustomQuery custom={query.custom} datas={datas} />
+        </div>
       </div>
       <div>
-        <select
-          defaultValue={query}
-          onChange={(e) => updateQuery((e.target as HTMLSelectElement).value)}
-        >
-          {Object.keys(allQueries).map((q) => (
-            <option key={q}>{q}</option>
-          ))}
-        </select>
+        <pre style={{ whiteSpace: "pre-wrap" }}>{output}</pre>
       </div>
-      <pre style={{ whiteSpace: "pre-wrap" }}>{output}</pre>
     </div>
   );
 }
