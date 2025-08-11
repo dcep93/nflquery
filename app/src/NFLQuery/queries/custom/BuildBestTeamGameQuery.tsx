@@ -6,6 +6,7 @@ export const BestTeamGameQuery = () => {
   const evaledFunctions = getCustomFunctions({
     extract: (o: any) => [Object.keys(o)],
     mapToPoint: (o: any) => o,
+    transform: (points: any) => points,
   });
   // @ts-ignore
   return {

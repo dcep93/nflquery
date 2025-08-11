@@ -1,14 +1,26 @@
-import { DataType } from "../Data";
+import { clockToSeconds } from "../Query";
+import BuildBestTeamGameQuery from "./custom/BuildBestTeamGameQuery";
 
-export default function LongestDrive(datas: DataType[]) {
-  // return MaxBuilder({
-  //   transform: (o) => o,
-  //   filter: ({ dr }) => dr.description !== undefined,
-  //   map: ({ d, g, dr }) => ({
-  //     x: dr.plays.length,
-  //     y: clockToSeconds(dr.description.split(" ").reverse()[0]),
-  //     label: `${dr.description}/${d.year}w${g.week}:${g.gameId}`,
-  //   }),
-  //   datas,
-  // });
+export default function LongestDrive() {
+  return {
+    tooltip: "longest drive durations",
+    query: BuildBestTeamGameQuery({
+      extract: (o) =>
+        o.tI !== 0
+          ? []
+          : o.g.drives
+              .filter((dr) => dr.description)
+              .map((dr) => ({
+                description: dr.description,
+                seconds: clockToSeconds(dr.description.split(" ").reverse()[0]),
+              })),
+
+      mapToPoint: (o) => ({
+        x: o.extraction.description,
+        y: o.extraction.seconds,
+        label: o.label,
+      }),
+      transform: (points) => points,
+    }),
+  };
 }

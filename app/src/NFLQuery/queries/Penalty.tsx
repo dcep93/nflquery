@@ -1,6 +1,8 @@
 import { DataType } from "../Data";
 import { groupByF, PointType } from "../Query";
 
+// todo
+
 export default function Penalty(datas: DataType[]): PointType[] {
   return Object.entries(
     groupByF(

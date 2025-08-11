@@ -1,16 +1,16 @@
-import { DataType } from "../Data";
+import BuildBestTeamGameQuery from "./custom/BuildBestTeamGameQuery";
 
-export default function TeamHighScore(datas: DataType[]) {
-  // return MaxBuilder({
-  //   transform: (o) => o,
-  //   filter: ({ dri, pi }) => dri <= 1 && pi === 0,
-  //   map: ({ d, g, dri }) => ({
-  //     x: g.scores[1 - dri],
-  //     y: g.scores[dri],
-  //     label: `team:${g.teams.map((t) => t.name).join(" @ ")} ${d.year}w${
-  //       g.week
-  //     }:${g.gameId}`,
-  //   }),
-  //   datas,
-  // });
+export default function TeamHighScore() {
+  return {
+    tooltip: "highest score by a team",
+    query: BuildBestTeamGameQuery({
+      extract: (o) => [{ scores: o.g.scores, tI: o.tI }],
+      mapToPoint: (o) => ({
+        x: o.extraction.scores.join(" "),
+        y: o.extraction.scores[o.extraction.tI],
+        label: o.label,
+      }),
+      transform: (points) => points,
+    }),
+  };
 }

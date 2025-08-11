@@ -4,10 +4,22 @@ import { allYears } from "./Fetch";
 import Comeback from "./queries/Comeback";
 import { BestTeamGameQuery } from "./queries/custom/BuildBestTeamGameQuery";
 import { CustomQueryEditor, CustomType } from "./queries/custom/CustomQuery";
+import Encroachments from "./queries/Encroachments";
+import GamePenalties from "./queries/GamePenalties";
+import LongestDrive from "./queries/LongestDrive";
+import MinPossessionTime from "./queries/MinPossessionTime";
 import PuntAverages from "./queries/PuntAverages";
+import TeamHighScore from "./queries/TeamHighScore";
+import TotalHighScore from "./queries/TotalHighScore";
 
 var initialized = false;
 const allQueries = {
+  TotalHighScore,
+  TeamHighScore,
+  MinPossessionTime,
+  LongestDrive,
+  GamePenalties,
+  Encroachments,
   PuntAverages,
   Comeback,
   BestTeamGameQuery,
