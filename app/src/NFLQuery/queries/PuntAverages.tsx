@@ -1,4 +1,4 @@
-import { BuildBestTeamGameQuery } from "./BestTeamGame";
+import BuildBestTeamGameQuery from "./BuildBestTeamGameQuery";
 
 export default BuildBestTeamGameQuery({
   extract: (o) =>

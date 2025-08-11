@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
 import Data, { DataType, PlayType } from "./Data";
 import { allYears } from "./Fetch";
-import BestTeamGame from "./queries/BestTeamGame";
-import { CustomQueryEditor } from "./queries/CustomQuery";
+import { BestTeamGameQuery } from "./queries/BuildBestTeamGameQuery";
+import { CustomQueryEditor, CustomType } from "./queries/CustomQuery";
 import PuntAverages from "./queries/PuntAverages";
 
 var initialized = false;
 const allQueries = {
   PuntAverages,
-  BestTeamGame,
+  BestTeamGameQuery,
+};
+
+export type QueryType = {
+  custom: CustomType;
+  getPoints: (datas: DataType[]) => PointType[];
 };
 
 export default function Query() {
@@ -25,6 +30,7 @@ export default function Query() {
   );
   const queryName = hash.split(".")[0];
   const query = allQueries[queryName as keyof typeof allQueries];
+  console.log({ query, queryName, hash });
   const [output, updateOutput] = useState("NFLQuery");
   useEffect(() => {
     window.location.hash = hash;
@@ -40,12 +46,11 @@ export default function Query() {
       <div style={{ display: "flex" }}>
         <div>
           <select
+            defaultValue={queryName}
             onChange={(e) => updateHash((e.target as HTMLSelectElement).value)}
           >
             {Object.keys(allQueries).map((q) => (
-              <option key={q} selected={q === queryName}>
-                {q}
-              </option>
+              <option key={q}>{q}</option>
             ))}
           </select>
         </div>

@@ -1,8 +1,7 @@
-import { QueryType } from "../Builder";
 import { DataType, GameType } from "../Data";
-import { PointType } from "../Query";
+import { PointType, QueryType } from "../Query";
 
-export default BuildBestTeamGameQuery({
+export const BestTeamGameQuery = BuildBestTeamGameQuery({
   extract: (o) =>
     o.g.drives
       .filter((d) => d.team === o.g.teams[o.tI].name)
@@ -20,7 +19,7 @@ export default BuildBestTeamGameQuery({
   }),
 });
 
-export function BuildBestTeamGameQuery<T>(functions: {
+export default function BuildBestTeamGameQuery<T>(functions: {
   extract: (o: { d: DataType; g: GameType; tI: number }) => T;
   mapToPoint: (o: {
     timestamp: number;
@@ -29,7 +28,7 @@ export function BuildBestTeamGameQuery<T>(functions: {
   }) => PointType | null;
 }): QueryType {
   return {
-    custom: { name: "BestTeamGame", functions },
+    custom: { name: "BestTeamGameQuery", functions },
     getPoints: (datas) =>
       datas
         .flatMap((d) =>

@@ -34,7 +34,13 @@ export function CustomQueryEditor(props: {
         <button
           onClick={() =>
             Promise.resolve().then(() =>
-              props.updateHash(`${props.custom.name}.`)
+              props.updateHash(
+                `${props.custom.name}.${JSON.stringify(
+                  Object.fromEntries(
+                    Object.entries(refs).map(([k, v]) => [k, v.current!.value])
+                  )
+                )}`
+              )
             )
           }
         >
