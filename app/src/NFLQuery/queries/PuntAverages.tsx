@@ -1,6 +1,6 @@
-import { BestTeamGameQuery } from "../Builder";
+import { BuildBestTeamGameQuery } from "./BestTeamGame";
 
-export default BestTeamGameQuery({
+export default BuildBestTeamGameQuery({
   extract: (o) =>
     o.g.drives
       .filter((d) => d.team === o.g.teams[o.tI].name)

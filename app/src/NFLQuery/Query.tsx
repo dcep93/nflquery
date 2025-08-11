@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import Data, { DataType, PlayType } from "./Data";
 import { allYears } from "./Fetch";
-import CustomQuery, { CustomQueryEditor } from "./queries/CustomQuery";
+import BestTeamGame from "./queries/BestTeamGame";
+import { CustomQueryEditor } from "./queries/CustomQuery";
 import PuntAverages from "./queries/PuntAverages";
 
 var initialized = false;
 const allQueries = {
   PuntAverages,
-  CustomQuery,
+  BestTeamGame,
 };
 
 export default function Query() {
