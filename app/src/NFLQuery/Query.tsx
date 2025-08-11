@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import CustomQuery from "./custom_queries";
 import Data, { DataType, PlayType } from "./Data";
 import { allYears } from "./Fetch";
+import CustomQuery, { CustomQueryEditor } from "./queries/CustomQuery";
 import PuntAverages from "./queries/PuntAverages";
 
 var initialized = false;
 const allQueries = {
   PuntAverages,
+  CustomQuery,
 };
 
 export default function Query() {
@@ -15,40 +16,44 @@ export default function Query() {
     initialized = true;
     Data(allYears).then(updateDatas);
   }
-  const [queryName, updateQueryName] = useState<string>(
-    ((hash) =>
-      allQueries[hash as keyof typeof allQueries]
-        ? hash
-        : Object.keys(allQueries)[0])(window.location.hash.slice(1))
+  const rawHash = window.location.hash.slice(1);
+  const [hash, updateHash] = useState<string>(
+    allQueries[rawHash.split(".")[0] as keyof typeof allQueries]
+      ? rawHash
+      : Object.keys(allQueries)[0]
   );
-  window.location.hash = queryName;
+  const queryName = hash.split(".")[0];
   const query = allQueries[queryName as keyof typeof allQueries];
   const [output, updateOutput] = useState("NFLQuery");
   useEffect(() => {
+    window.location.hash = hash;
     datas &&
       Promise.resolve(datas)
         .then(query.getPoints)
         .then((o) => JSON.stringify(o, null, 2))
         .then(updateOutput);
-  }, [queryName, datas]);
+  }, [hash, datas]);
   if (!datas) return <div>fetching...</div>;
   return (
     <div>
       <div style={{ display: "flex" }}>
         <div>
           <select
-            defaultValue={queryName}
-            onChange={(e) =>
-              updateQueryName((e.target as HTMLSelectElement).value)
-            }
+            onChange={(e) => updateHash((e.target as HTMLSelectElement).value)}
           >
             {Object.keys(allQueries).map((q) => (
-              <option key={q}>{q}</option>
+              <option key={q} selected={q === queryName}>
+                {q}
+              </option>
             ))}
           </select>
         </div>
         <div>
-          <CustomQuery custom={query.custom} datas={datas} />
+          <CustomQueryEditor
+            updateHash={updateHash}
+            custom={query.custom}
+            datas={datas}
+          />
         </div>
       </div>
       <div>

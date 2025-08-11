@@ -1,5 +1,5 @@
-import { CustomType } from "./custom_queries";
 import { DataType, GameType } from "./Data";
+import { CustomType } from "./queries/CustomQuery";
 import { PointType } from "./Query";
 
 export type QueryType = {
