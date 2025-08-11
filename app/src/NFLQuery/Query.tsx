@@ -11,6 +11,10 @@ const allQueries = {
   BestTeamGameQuery,
 };
 
+const getQueryName = (hash: string) => hash.split(".")[0];
+const getQuery = (hash: string) =>
+  allQueries[getQueryName(hash) as keyof typeof allQueries]();
+
 export type QueryType = {
   custom: CustomType;
   getPoints: (datas: DataType[]) => PointType[];
@@ -22,31 +26,29 @@ export default function Query() {
     initialized = true;
     Data(allYears).then(updateDatas);
   }
-  const rawHash = window.location.hash.slice(1);
+  const rawHash = true ? "PuntAverages" : window.location.hash.slice(1);
   const [hash, updateHash] = useState<string>(
     allQueries[rawHash.split(".")[0] as keyof typeof allQueries]
       ? rawHash
       : Object.keys(allQueries)[0]
   );
-  const queryName = hash.split(".")[0];
-  const getQuery = () => allQueries[queryName as keyof typeof allQueries]();
   const [output, updateOutput] = useState("NFLQuery");
   useEffect(() => {
     window.location.hash = hash;
     datas &&
       Promise.resolve(datas)
-        .then(getQuery().getPoints)
+        .then(getQuery(hash).getPoints)
         .then((o) => JSON.stringify(o, null, 2))
         .then(updateOutput)
         .catch((err) => alert(err));
-  }, [hash, datas, getQuery]);
+  }, [hash, datas]);
   if (!datas) return <div>fetching...</div>;
   return (
     <div>
       <div style={{ display: "flex" }}>
         <div>
           <select
-            defaultValue={queryName}
+            value={getQueryName(hash)}
             onChange={(e) => updateHash((e.target as HTMLSelectElement).value)}
           >
             {Object.keys(allQueries).map((q) => (
@@ -58,7 +60,7 @@ export default function Query() {
           <CustomQueryEditor
             key={hash}
             updateHash={updateHash}
-            custom={getQuery().custom}
+            custom={getQuery(hash).custom}
             datas={datas}
           />
         </div>
