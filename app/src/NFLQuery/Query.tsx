@@ -40,9 +40,13 @@ export default function Query() {
     datas &&
       Promise.resolve(datas)
         .then(getQuery(hash).query.getPoints)
+        .then((points) => points.map((p, index) => ({ ...p, index })))
         .then((o) => JSON.stringify(o, null, 2))
         .then(updateOutput)
-        .catch((err) => alert(err));
+        .catch((err) => {
+          alert(err);
+          console.trace(err);
+        });
   }, [hash, datas]);
   if (!datas) return <div>fetching...</div>;
   return (
@@ -88,7 +92,11 @@ export const bubbleStyle = {
   margin: "0.5em",
 };
 
-export type PointType = { x: number | string; y: number; label: string };
+export type PointType = {
+  x: number | string;
+  y: number;
+  label: string;
+};
 
 export function groupByF<T>(
   ts: T[],

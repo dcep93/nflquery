@@ -6,7 +6,7 @@ export default function PuntAverages() {
     query: BuildBestTeamGameQuery({
       extract: (o) => [
         o.g.drives
-          .filter((d) => d.team === o.g.teams[o.tI].name)
+          .filter((dr) => dr.team === o.g.teams[o.tI].name)
           .flatMap((d) => d.plays)
           .map((p) => p.text.match(/punts (\d+) yard/))
           .filter((match) => match)
@@ -20,6 +20,7 @@ export default function PuntAverages() {
             : o.extraction.reduce((a, b) => a + b, 0) / o.extraction.length,
         label: `${o.extraction.join(",")} ${o.label}`,
       }),
+      transform: (points) => points,
     }),
   };
 }
