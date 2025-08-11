@@ -55,6 +55,9 @@ export default function Query() {
   return (
     <div>
       <div>
+        <a href="/custom">custom</a>
+      </div>
+      <div>
         <select
           defaultValue={query}
           onChange={(e) => updateQuery((e.target as HTMLSelectElement).value)}
