@@ -54,7 +54,9 @@ export function CustomQueryEditor(props: {
       <div>
         <button
           onClick={() =>
-            Promise.resolve().then(() => props.updateHash(`${CustomQueryName}`))
+            Promise.resolve().then(() =>
+              props.updateHash(`${CustomQueryName}.`)
+            )
           }
         >
           customize {props.custom.name}
