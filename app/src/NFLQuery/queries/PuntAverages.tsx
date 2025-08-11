@@ -1,7 +1,7 @@
 import BuildBestTeamGameQuery from "./custom/BuildBestTeamGameQuery";
 
-export default () =>
-  BuildBestTeamGameQuery({
+export default function PuntAverages() {
+  return BuildBestTeamGameQuery({
     extract: (o) =>
       o.g.drives
         .filter((d) => d.team === o.g.teams[o.tI].name)
@@ -18,3 +18,4 @@ export default () =>
       label: `${o.extraction.join(",")} ${o.label}`,
     }),
   });
+}
