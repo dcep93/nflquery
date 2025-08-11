@@ -1,15 +1,6 @@
-import { DataType, GameType } from "../Data";
+import { QueryFunctions } from ".";
+import { DataType } from "../Data";
 import { PointType } from "../Query";
-
-export type QueryFunctions<T, U> = {
-  extract: (o: { d: DataType; g: GameType; tI: number }) => T[];
-  mapToPoint: (o: {
-    timestamp: number;
-    extraction: T;
-    label: string;
-  }) => U | null;
-  transform: (points: U[]) => PointType[];
-};
 
 export default function getPoints<T, U>(
   customFunctions: QueryFunctions<T, U>,
@@ -19,7 +10,9 @@ export default function getPoints<T, U>(
     .transform(
       datas
         .flatMap((d) =>
-          d.games.flatMap((g) => g.teams.map((_, tI) => ({ d, g, tI })))
+          d.games.flatMap((g) =>
+            g.teams.map((_, teamIndex) => ({ d, g, teamIndex }))
+          )
         )
         .flatMap((o) =>
           customFunctions.extract(o).map((extraction) => ({
@@ -28,7 +21,7 @@ export default function getPoints<T, U>(
             label: ((matchup) =>
               `${matchup} ${o.d.year}w${o.g.week}:${o.g.gameId}`)(
               ((teams) =>
-                o.tI === 0
+                o.teamIndex === 0
                   ? teams.map((t) => t.name).join(" @ ")
                   : teams
                       .slice()

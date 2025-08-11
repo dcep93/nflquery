@@ -1,9 +1,5 @@
-import { QueryFunctions } from "./getPoints";
-
-export type QueryConfig = {
-  tooltip: string;
-  queryFunctions: () => QueryFunctions<any, any>;
-};
+import { DataType, GameType } from "../Data";
+import { PointType } from "../Query";
 
 export default {
   name: "QueryBuilder",
@@ -14,6 +10,16 @@ export default {
       mapToPoint: (o: any) => o,
       transform: (points: any) => points,
     }),
+};
+
+export type QueryFunctions<T, U> = {
+  extract: (o: { d: DataType; g: GameType; teamIndex: number }) => T[];
+  mapToPoint: (o: {
+    timestamp: number;
+    extraction: T;
+    label: string;
+  }) => U | null;
+  transform: (points: U[]) => PointType[];
 };
 
 function safeEval(v: string) {

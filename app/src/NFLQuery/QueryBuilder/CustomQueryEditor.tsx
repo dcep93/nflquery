@@ -1,7 +1,6 @@
 import { createRef } from "react";
-import QueryBuilder from ".";
+import QueryBuilder, { QueryFunctions } from ".";
 import { DataType } from "../Data";
-import { QueryFunctions } from "./getPoints";
 
 export default function CustomQueryEditor(props: {
   updateHash: (hash: string) => void;

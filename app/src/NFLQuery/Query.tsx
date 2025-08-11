@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import Data, { DataType } from "./Data";
 import { allYears } from "./Fetch";
-import QueryBuilder, { QueryConfig } from "./QueryBuilder";
+import QueryBuilder, { getPoints, QueryConfig } from "./QueryBuilder";
 import CustomQueryEditor from "./QueryBuilder/CustomQueryEditor";
-import getPoints from "./QueryBuilder/getPoints";
+import QueryHelpers from "./QueryBuilder/QueryHelpers";
 
 var initialized = false;
 const allQueries: { [k: string]: QueryConfig } = {
@@ -27,6 +27,7 @@ export default function Query() {
   if (!initialized) {
     initialized = true;
     Data(allYears).then(updateDatas);
+    window.QueryHelpers = QueryHelpers;
   }
   const rawHash = window.location.hash.slice(1);
   const [hash, updateHash] = useState<string>(
