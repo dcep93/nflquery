@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Data, { DataType, PlayType } from "./Data";
 import { allYears } from "./Fetch";
+import Comeback from "./queries/Comeback";
 import { BestTeamGameQuery } from "./queries/custom/BuildBestTeamGameQuery";
 import { CustomQueryEditor, CustomType } from "./queries/custom/CustomQuery";
 import PuntAverages from "./queries/PuntAverages";
@@ -8,6 +9,7 @@ import PuntAverages from "./queries/PuntAverages";
 var initialized = false;
 const allQueries = {
   PuntAverages,
+  Comeback,
   BestTeamGameQuery,
 };
 

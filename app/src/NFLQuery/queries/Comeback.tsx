@@ -1,7 +1,37 @@
 import { DataType } from "../Data";
 import { clockToSeconds, getHomeAdvantage, PointType } from "../Query";
+import BuildBestTeamGameQuery from "./custom/BuildBestTeamGameQuery";
 
-export default function Comeback(datas: DataType[]): PointType[] {
+export default function Comeback() {
+  return {
+    tooltip: "biggest point deficit in smallest time",
+    query: BuildBestTeamGameQuery({
+      extract: (o) =>
+        (({ endHomeAdvantage }) =>
+          o.g.drives
+            .filter((d) => d.team === o.g.teams[o.tI].name)
+            .map((dr, i) => ({
+              o,
+              dr,
+              endHomeAdvantage,
+              clock: dr.plays[dr.plays.length - 1].clock,
+              pointsDeficit: (i === 0
+                ? null
+                : endHomeAdvantage === 0
+                ? null
+                : getHomeAdvantage(o.g.drives[i - 1].scores) *
+                  (endHomeAdvantage > 0 ? -1 : 1))!,
+            })))({ endHomeAdvantage: getHomeAdvantage(o.g.scores) }),
+      mapToPoint: (o) => ({
+        x: o.extraction.clock,
+        y: o.extraction.pointsDeficit,
+        label: o.label,
+      }),
+    }),
+  };
+}
+
+export function Comebackx(datas: DataType[]): PointType[] {
   return datas
     .flatMap((d) =>
       d.games

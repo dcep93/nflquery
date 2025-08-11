@@ -4,13 +4,14 @@ export default function PuntAverages() {
   return {
     tooltip: "punter's games with furthest average distance",
     query: BuildBestTeamGameQuery({
-      extract: (o) =>
+      extract: (o) => [
         o.g.drives
           .filter((d) => d.team === o.g.teams[o.tI].name)
           .flatMap((d) => d.plays)
           .map((p) => p.text.match(/punts (\d+) yard/))
           .filter((match) => match)
           .map((match) => parseInt(match![1])),
+      ],
       mapToPoint: (o) => ({
         x: o.timestamp,
         y:
