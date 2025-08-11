@@ -3,13 +3,18 @@ import { DataType } from "../../Data";
 
 export type CustomType = { name: string; functions: { [k: string]: any } };
 
+function safeEval(v: string) {
+  // eslint-disable-next-line
+  return eval(v);
+}
+
 export function getCustomFunctions(defaultFunctions: any) {
   try {
     const matched = window.location.hash.match(/.*?\.(.*)/);
     if (!matched) return defaultFunctions;
     const functions = JSON.parse(decodeURIComponent(matched![1]));
     const evaledFunctions = Object.fromEntries(
-      Object.entries(functions).map(([k, v]) => [k, eval(v as string)])
+      Object.entries(functions).map(([k, v]) => [k, safeEval(v as string)])
     );
     return evaledFunctions;
   } catch (e) {

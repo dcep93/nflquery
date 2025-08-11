@@ -39,7 +39,7 @@ export default function Query() {
         .then((o) => JSON.stringify(o, null, 2))
         .then(updateOutput)
         .catch((err) => alert(err));
-  }, [hash, datas]);
+  }, [hash, datas, getQuery]);
   if (!datas) return <div>fetching...</div>;
   return (
     <div>
