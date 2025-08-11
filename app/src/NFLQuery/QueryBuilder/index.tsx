@@ -3,14 +3,27 @@ import { PointType } from "../Query";
 
 export default {
   name: "QueryBuilder",
-  tooltip: "execute a custom query",
-  queryFunctions: () =>
-    getCustomFunctions({
-      extract: (o: any) => [Object.keys(o)],
-      mapToPoint: (o: any) => o,
-      transform: (points: any) => points,
-    }),
+  ...BuildQueryConfig({
+    tooltip: "execute a custom query",
+    queryFunctions: () =>
+      getCustomFunctions({
+        extract: (o: any) => [Object.keys(o)],
+        mapToPoint: (o: any) => o,
+        transform: (points: any) => points,
+      }),
+  }),
 };
+
+type QueryConfig<T, U> = {
+  tooltip: string;
+  queryFunctions: () => QueryFunctions<T, U>;
+};
+
+export function BuildQueryConfig<T, U>(
+  args: QueryConfig<T, U>
+): QueryConfig<T, U> {
+  return args;
+}
 
 export type QueryFunctions<T, U> = {
   extract: (o: { d: DataType; g: GameType; teamIndex: number }) => T[];

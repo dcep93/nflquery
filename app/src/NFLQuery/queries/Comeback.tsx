@@ -1,6 +1,7 @@
 import { PointType } from "../Query";
+import { BuildQueryConfig } from "../QueryBuilder";
 
-export default {
+export default BuildQueryConfig({
   tooltip: "biggest point deficit overcome in smallest time",
   queryFunctions: () => ({
     extract: (o) =>
@@ -53,4 +54,4 @@ export default {
         .rval.map((point) => point)
         .sort((a, b) => b.y - a.y),
   }),
-};
+});

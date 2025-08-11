@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import Data, { DataType } from "./Data";
 import { allYears } from "./Fetch";
-import QueryBuilder, { getPoints, QueryConfig } from "./QueryBuilder";
+import QueryBuilder from "./QueryBuilder";
 import CustomQueryEditor from "./QueryBuilder/CustomQueryEditor";
 import QueryHelpers from "./QueryBuilder/QueryHelpers";
+import getPoints from "./QueryBuilder/getPoints";
 
 var initialized = false;
-const allQueries: { [k: string]: QueryConfig } = {
+const allQueries = {
   // TotalHighScore,
   // TeamHighScore,
   // MinPossessionTime,
