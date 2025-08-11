@@ -8,7 +8,10 @@ export const BestTeamGameQuery = () => {
     mapToPoint: (o: any) => o,
   });
   // @ts-ignore
-  return BuildBestTeamGameQuery(evaledFunctions);
+  return {
+    tooltip: "iterate over each game for each team",
+    query: BuildBestTeamGameQuery(evaledFunctions),
+  };
 };
 
 export default function BuildBestTeamGameQuery<T>(functions: {

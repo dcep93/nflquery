@@ -37,7 +37,7 @@ export default function Query() {
     window.location.hash = hash;
     datas &&
       Promise.resolve(datas)
-        .then(getQuery(hash).getPoints)
+        .then(getQuery(hash).query.getPoints)
         .then((o) => JSON.stringify(o, null, 2))
         .then(updateOutput)
         .catch((err) => alert(err));
@@ -46,21 +46,26 @@ export default function Query() {
   return (
     <div>
       <div style={{ display: "flex" }}>
-        <div>
-          <select
-            value={getQueryName(hash)}
-            onChange={(e) => updateHash((e.target as HTMLSelectElement).value)}
-          >
-            {Object.keys(allQueries).map((q) => (
-              <option key={q}>{q}</option>
-            ))}
-          </select>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <div>
+            <select
+              value={getQueryName(hash)}
+              onChange={(e) =>
+                updateHash((e.target as HTMLSelectElement).value)
+              }
+            >
+              {Object.keys(allQueries).map((q) => (
+                <option key={q}>{q}</option>
+              ))}
+            </select>
+          </div>
+          <pre style={bubbleStyle}>{getQuery(hash).tooltip}</pre>
         </div>
         <div>
           <CustomQueryEditor
             key={output}
             updateHash={updateHash}
-            custom={getQuery(hash).custom}
+            custom={getQuery(hash).query.custom}
             datas={datas}
           />
         </div>
@@ -71,6 +76,15 @@ export default function Query() {
     </div>
   );
 }
+
+export const bubbleStyle = {
+  backgroundColor: "white",
+  display: "inline-block",
+  borderRadius: "1em",
+  border: "2px solid black",
+  padding: "0.7em",
+  margin: "0.5em",
+};
 
 export type PointType = { x: number | string; y: number; label: string };
 
