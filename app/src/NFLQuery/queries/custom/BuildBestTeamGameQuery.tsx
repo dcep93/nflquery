@@ -1,23 +1,15 @@
-import { DataType, GameType } from "../Data";
-import { PointType, QueryType } from "../Query";
+import { DataType, GameType } from "../../Data";
+import { PointType, QueryType } from "../../Query";
+import { getCustomFunctions } from "./CustomQuery";
 
-export const BestTeamGameQuery = BuildBestTeamGameQuery({
-  extract: (o) =>
-    o.g.drives
-      .filter((d) => d.team === o.g.teams[o.tI].name)
-      .flatMap((d) => d.plays)
-      .map((p) => p.text.match(/punts (\d+) yard/))
-      .filter((match) => match)
-      .map((match) => parseInt(match![1])),
-  mapToPoint: (o) => ({
-    x: o.timestamp,
-    y:
-      o.extraction.length === 0
-        ? 0
-        : o.extraction.reduce((a, b) => a + b, 0) / o.extraction.length,
-    label: `${o.extraction.join(",")} ${o.label}`,
-  }),
-});
+export const BestTeamGameQuery = () => {
+  const evaledFunctions = getCustomFunctions({
+    extract: (o: any) => Object.keys(o),
+    mapToPoint: (o: any) => o,
+  });
+  // @ts-ignore
+  return BuildBestTeamGameQuery(evaledFunctions);
+};
 
 export default function BuildBestTeamGameQuery<T>(functions: {
   extract: (o: { d: DataType; g: GameType; tI: number }) => T;

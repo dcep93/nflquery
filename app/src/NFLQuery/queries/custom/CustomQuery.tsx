@@ -1,7 +1,22 @@
 import { createRef } from "react";
-import { DataType } from "../Data";
+import { DataType } from "../../Data";
 
 export type CustomType = { name: string; functions: { [k: string]: any } };
+
+export function getCustomFunctions(defaultFunctions: any) {
+  try {
+    const matched = window.location.hash.match(/.*?\.(.*)/);
+    if (!matched) return defaultFunctions;
+    const functions = JSON.parse(decodeURIComponent(matched![1]));
+    const evaledFunctions = Object.fromEntries(
+      Object.entries(functions).map(([k, v]) => [k, eval(v as string)])
+    );
+    return evaledFunctions;
+  } catch (e) {
+    alert(e);
+  }
+  return defaultFunctions;
+}
 
 export function CustomQueryEditor(props: {
   updateHash: (hash: string) => void;

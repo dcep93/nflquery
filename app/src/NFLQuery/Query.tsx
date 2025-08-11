@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import Data, { DataType, PlayType } from "./Data";
 import { allYears } from "./Fetch";
-import { BestTeamGameQuery } from "./queries/BuildBestTeamGameQuery";
-import { CustomQueryEditor, CustomType } from "./queries/CustomQuery";
+import { BestTeamGameQuery } from "./queries/custom/BuildBestTeamGameQuery";
+import { CustomQueryEditor, CustomType } from "./queries/custom/CustomQuery";
 import PuntAverages from "./queries/PuntAverages";
 
 var initialized = false;
@@ -29,16 +29,16 @@ export default function Query() {
       : Object.keys(allQueries)[0]
   );
   const queryName = hash.split(".")[0];
-  const query = allQueries[queryName as keyof typeof allQueries];
-  console.log({ query, queryName, hash });
+  const getQuery = () => allQueries[queryName as keyof typeof allQueries]();
   const [output, updateOutput] = useState("NFLQuery");
   useEffect(() => {
     window.location.hash = hash;
     datas &&
       Promise.resolve(datas)
-        .then(query.getPoints)
+        .then(getQuery().getPoints)
         .then((o) => JSON.stringify(o, null, 2))
-        .then(updateOutput);
+        .then(updateOutput)
+        .catch((err) => alert(err));
   }, [hash, datas]);
   if (!datas) return <div>fetching...</div>;
   return (
@@ -56,8 +56,9 @@ export default function Query() {
         </div>
         <div>
           <CustomQueryEditor
+            key={hash}
             updateHash={updateHash}
-            custom={query.custom}
+            custom={getQuery().custom}
             datas={datas}
           />
         </div>
