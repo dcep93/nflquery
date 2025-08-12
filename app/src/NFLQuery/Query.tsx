@@ -1,21 +1,28 @@
 import { useEffect, useState } from "react";
 import Data, { DataType } from "./Data";
 import { allYears } from "./Fetch";
-import QueryBuilder, { QueryBuilderName } from "./QueryBuilder";
+import QueryBuilder, { QueryBuilderName, QueryFunctions } from "./QueryBuilder";
 import CustomQueryEditor from "./QueryBuilder/CustomQueryEditor";
 import QueryHelpers from "./QueryBuilder/QueryHelpers";
 import getPoints from "./QueryBuilder/getPoints";
 import Comeback from "./queries/Comeback";
+import Encroachments from "./queries/Encroachments";
+import GamePenalties from "./queries/GamePenalties";
+import LongestDrive from "./queries/LongestDrive";
+import MinPossessionTime from "./queries/MinPossessionTime";
+import PuntAverages from "./queries/PuntAverages";
+import TeamHighScore from "./queries/TeamHighScore";
+import TotalHighScore from "./queries/TotalHighScore";
 
 var initialized = false;
 const allQueries = {
-  // TotalHighScore,
-  // TeamHighScore,
-  // MinPossessionTime,
-  // LongestDrive,
-  // GamePenalties,
-  // Encroachments,
-  // PuntAverages,
+  TotalHighScore,
+  TeamHighScore,
+  MinPossessionTime,
+  LongestDrive,
+  GamePenalties,
+  Encroachments,
+  PuntAverages,
   Comeback,
   [QueryBuilderName]: QueryBuilder,
 };
@@ -42,7 +49,12 @@ export default function Query() {
     window.location.hash = hash;
     datas &&
       Promise.resolve()
-        .then(() => getPoints(getQuery(hash).queryFunctions(), datas))
+        .then(() =>
+          getPoints(
+            getQuery(hash).queryFunctions() as QueryFunctions<any, any>,
+            datas
+          )
+        )
         .then((points) => points.map((p, index) => ({ ...p, index })))
         .then((o) => JSON.stringify(o, null, 2))
         .then(updateOutput)
