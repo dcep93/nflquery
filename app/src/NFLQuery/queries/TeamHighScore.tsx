@@ -1,16 +1,14 @@
-import BuildBestTeamGameQuery from "./custom/BuildBestTeamGameQuery";
+import { BuildQueryConfig } from "../QueryBuilder";
 
-export default function TeamHighScore() {
-  return {
-    tooltip: "highest score by a team",
-    query: BuildBestTeamGameQuery({
-      extract: (o) => [{ scores: o.g.scores, tI: o.tI }],
-      mapToPoint: (o) => ({
-        x: o.extraction.scores.join(" "),
-        y: o.extraction.scores[o.extraction.tI],
-        label: o.label,
-      }),
-      transform: (points) => points,
+export default BuildQueryConfig({
+  tooltip: "highest score by a team",
+  queryFunctions: () => ({
+    extract: (o) => [{ scores: o.g.scores, teamIndex: o.teamIndex }],
+    mapToPoint: (o) => ({
+      x: o.extraction.scores.join(" "),
+      y: o.extraction.scores[o.extraction.teamIndex],
+      label: o.label,
     }),
-  };
-}
+    transform: (points) => points,
+  }),
+});

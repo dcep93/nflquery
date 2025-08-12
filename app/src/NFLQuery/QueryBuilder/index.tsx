@@ -1,7 +1,7 @@
 import { DataType, GameType } from "../Data";
 import { PointType } from "../Query";
 
-export default {
+const QueryBuilder = {
   name: "QueryBuilder",
   ...BuildQueryConfig({
     tooltip: "execute a custom query",
@@ -13,6 +13,8 @@ export default {
       }),
   }),
 };
+
+export default QueryBuilder;
 
 type QueryConfig<T, U> = {
   tooltip: string;
