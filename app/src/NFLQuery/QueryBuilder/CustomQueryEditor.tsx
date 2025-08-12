@@ -1,5 +1,5 @@
 import { createRef } from "react";
-import QueryBuilder, { QueryFunctions } from ".";
+import { QueryBuilderName, QueryFunctions } from ".";
 import { DataType } from "../Data";
 
 export default function CustomQueryEditor(props: {
@@ -34,7 +34,7 @@ export default function CustomQueryEditor(props: {
           onClick={() =>
             Promise.resolve().then(() =>
               props.updateHash(
-                `${QueryBuilder.name}.${JSON.stringify(
+                `${QueryBuilderName}.${JSON.stringify(
                   Object.fromEntries(
                     Object.entries(refs).map(([k, v]) => [k, v.current!.value])
                   )

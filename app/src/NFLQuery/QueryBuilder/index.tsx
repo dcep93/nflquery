@@ -1,20 +1,19 @@
 import { DataType, GameType } from "../Data";
 import { PointType } from "../Query";
 
-const QueryBuilder = {
-  name: "QueryBuilder",
-  ...BuildQueryConfig({
-    tooltip: "execute a custom query",
-    queryFunctions: () =>
-      getCustomFunctions({
-        extract: (o: any) => [Object.keys(o)],
-        mapToPoint: (o: any) => o,
-        transform: (points: any) => points,
-      }),
-  }),
-};
+const QueryBuilder = BuildQueryConfig({
+  tooltip: "execute a custom query",
+  queryFunctions: () =>
+    getCustomFunctions({
+      extract: (o: any) => [Object.keys(o)],
+      mapToPoint: (o: any) => o,
+      transform: (points: any) => points,
+    }),
+});
 
 export default QueryBuilder;
+
+export const QueryBuilderName = "QueryBuilder";
 
 type QueryConfig<T, U> = {
   tooltip: string;

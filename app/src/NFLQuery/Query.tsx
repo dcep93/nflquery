@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import Data, { DataType } from "./Data";
 import { allYears } from "./Fetch";
-import QueryBuilder from "./QueryBuilder";
+import QueryBuilder, { QueryBuilderName } from "./QueryBuilder";
 import CustomQueryEditor from "./QueryBuilder/CustomQueryEditor";
 import QueryHelpers from "./QueryBuilder/QueryHelpers";
 import getPoints from "./QueryBuilder/getPoints";
+import Comeback from "./queries/Comeback";
 
 var initialized = false;
 const allQueries = {
@@ -15,8 +16,8 @@ const allQueries = {
   // GamePenalties,
   // Encroachments,
   // PuntAverages,
-  // Comeback,
-  [QueryBuilder.name]: QueryBuilder,
+  Comeback,
+  [QueryBuilderName]: QueryBuilder,
 };
 
 const getQueryName = (hash: string) => hash.split(".")[0];
