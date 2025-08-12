@@ -13,9 +13,11 @@ import MinPossessionTime from "./queries/MinPossessionTime";
 import PuntAverages from "./queries/PuntAverages";
 import TeamHighScore from "./queries/TeamHighScore";
 import TotalHighScore from "./queries/TotalHighScore";
+import Year4thDown from "./queries/Year4thDown";
 
 var initialized = false;
 const allQueries = {
+  Year4thDown,
   TotalHighScore,
   TeamHighScore,
   MinPossessionTime,
