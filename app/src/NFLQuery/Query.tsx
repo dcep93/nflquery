@@ -9,15 +9,23 @@ import Comeback from "./queries/Comeback";
 import Encroachments from "./queries/Encroachments";
 import GamePenalties from "./queries/GamePenalties";
 import LongestDrive from "./queries/LongestDrive";
+import March from "./queries/March";
 import MinPossessionTime from "./queries/MinPossessionTime";
 import Penalty from "./queries/Penalty";
 import PuntAverages from "./queries/PuntAverages";
+import Q1Q3_4thDown from "./queries/Q1Q3_4thDown";
+import Team4thDown from "./queries/Team4thDown";
 import TeamHighScore from "./queries/TeamHighScore";
+import ThirtyFourToZero from "./queries/ThirtyFourToZero";
 import TotalHighScore from "./queries/TotalHighScore";
 import Year4thDown from "./queries/Year4thDown";
 
 var initialized = false;
 const allQueries = {
+  March,
+  Q1Q3_4thDown,
+  Team4thDown,
+  ThirtyFourToZero,
   Penalty,
   Year4thDown,
   TotalHighScore,
