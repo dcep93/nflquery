@@ -6,7 +6,7 @@ export default function Data(years: number[]): Promise<DataType[]> {
         .map((year) => year.toString())
         .map((year) => ({
           year,
-          url: `https://dcep93.github.io/nflquery/app/src/NFLQuery/data_v5/${year}.json`,
+          url: `https://dcep93.github.io/nflquery/app/src/NFLQuery/data_v6/${year}.json`,
         }))
         .map(({ year, url }) =>
           Promise.resolve()
