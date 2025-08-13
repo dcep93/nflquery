@@ -1,84 +1,35 @@
-import { PointType } from "../Query";
 import { BuildQueryConfig } from "../QueryBuilder";
 
 export default BuildQueryConfig({
-  tooltip: "biggest point deficit overcome in smallest time",
+  tooltip: "how many times does each team run a play on 4th down",
   queryFunctions: () => ({
     extract: (o) =>
-      o.g.drives
-        .map((dr, drI) => ({ dr, drI }))
-        .filter(({ dr }) => dr.team === o.g.teams[o.teamIndex].name)
-        .map(({ dr, drI }) =>
-          (({ driveScores }) => ({
-            o,
-            clock: dr.plays[dr.plays.length - 1].clock,
-            driveScores,
-            pointsDeficit: (!driveScores
-              ? null
-              : window.QueryHelpers.getHomeAdvantage(driveScores) *
-                (o.teamIndex === 0 ? 1 : -1))!,
-          }))({
-            driveScores: o.g.drives[drI - 1]?.scores,
-          })
-        )
-        .filter(
-          (o) =>
-            o.driveScores &&
-            window.QueryHelpers.getHomeAdvantage(o.driveScores) *
-              window.QueryHelpers.getHomeAdvantage(o.o.g.scores) <
-              0
-        ),
-    mapToPoint: (o) => ({
-      x: `${o.extraction.clock} (${o.extraction.driveScores}) -> (${o.extraction.o.g.scores})`,
-      y: o.extraction.pointsDeficit,
-      label: o.label,
-      elapsedSeconds: window.QueryHelpers.clockToSeconds(o.extraction.clock),
-    }),
+      o.teamIndex !== 0
+        ? []
+        : o.g.drives.flatMap((dr) =>
+            dr.plays
+              .filter((p) => p.down?.startsWith("4th"))
+              .filter((p) => window.QueryHelpers.isPlay(p))
+              .map((p) => ({ o, dr, p }))
+          ),
+    mapToPoint: (o) => o,
     transform: (points) =>
-      points
-        .sort((a, b) => a.elapsedSeconds - b.elapsedSeconds)
-        .map(({ elapsedSeconds, ...point }) => point)
-        .reduce(
-          (prev, curr) =>
-            prev.record >= curr.y
-              ? prev
-              : {
-                  record: curr.y,
-                  rval: prev.rval.concat(curr),
-                },
-          {
-            record: 0,
-            rval: [] as PointType[],
-          }
+      Object.entries(
+        window.QueryHelpers.groupByF(
+          points,
+          (point) => point.extraction.dr.team
         )
-        .rval.map((point) => point)
-        .sort((a, b) => b.y - a.y),
+      ).map(([teamName, points]) => ({
+        x: points.length,
+        y: points
+          .filter(
+            ({ extraction }) =>
+              !extraction.p.text?.toLowerCase().includes("punt")
+          )
+          .filter(
+            ({ extraction }) => !extraction.p.text?.includes("field goal")
+          ).length,
+        label: teamName,
+      })),
   }),
 });
-
-// export default function Team4thDown(datas: DataType[]): PointType[] {
-//   return Object.entries(
-//     groupByF(
-//       datas.flatMap((d) =>
-//         d.games.flatMap((g) =>
-//           g.drives.flatMap((dr) =>
-//             dr.plays
-//               .filter((p) => p.down?.startsWith("4th"))
-//               .filter((p) => isPlay(p))
-//               .map((p) => ({ d, g, dr, p }))
-//           )
-//         )
-//       ),
-//       (t) => t.dr.team
-//     )
-//   )
-//     .map(([team, objs]) => ({ team, objs }))
-//     .map((o) => ({
-//       x: o.objs.length,
-//       y: o.objs
-//         .filter(({ p }) => !p.text?.toLowerCase().includes("punt"))
-//         .filter(({ p }) => !p.text?.includes("field goal")).length,
-//       label: o.team,
-//     }))
-//     .sort((a, b) => b.y - a.y);
-// }
