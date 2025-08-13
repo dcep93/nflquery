@@ -1,129 +1,77 @@
-import { PointType } from "../Query";
 import { BuildQueryConfig } from "../QueryBuilder";
 
 export default BuildQueryConfig({
-  tooltip: "biggest point deficit overcome in smallest time",
+  tooltip: "longest distance to march down the field to steal the game",
   queryFunctions: () => ({
     extract: (o) =>
-      o.g.drives
-        .map((dr, drI) => ({ dr, drI }))
-        .filter(({ dr }) => dr.team === o.g.teams[o.teamIndex].name)
-        .map(({ dr, drI }) =>
-          (({ driveScores }) => ({
-            o,
-            clock: dr.plays[dr.plays.length - 1].clock,
-            driveScores,
-            pointsDeficit: (!driveScores
-              ? null
-              : window.QueryHelpers.getHomeAdvantage(driveScores) *
-                (o.teamIndex === 0 ? 1 : -1))!,
-          }))({
-            driveScores: o.g.drives[drI - 1]?.scores,
-          })
+      [o.g]
+        .map((g) => g.scores.reduce((a, b) => a + b, 0))
+        .map((endScore) => ({
+          endScore,
+          homeIsWinning: window.QueryHelpers.getHomeAdvantage(o.g.scores) > 0,
+          finalScoringDrive: o.g.drives
+            .map((dr, dri) => ({
+              dr,
+              dri,
+              drScore: dr.scores.reduce((a, b) => a + b, 0),
+            }))
+            .find(({ drScore }) => drScore === endScore)!,
+        }))
+        .filter(
+          (oo) =>
+            oo.finalScoringDrive?.dri > 0 &&
+            oo.homeIsWinning ===
+              window.QueryHelpers.getHomeAdvantage(
+                o.g.drives[oo.finalScoringDrive.dri - 1].scores
+              ) <
+                0
         )
         .filter(
-          (o) =>
-            o.driveScores &&
-            window.QueryHelpers.getHomeAdvantage(o.driveScores) *
-              window.QueryHelpers.getHomeAdvantage(o.o.g.scores) <
-              0
-        ),
-    mapToPoint: (o) => ({
-      x: `${o.extraction.clock} (${o.extraction.driveScores}) -> (${o.extraction.o.g.scores})`,
-      y: o.extraction.pointsDeficit,
-      label: o.label,
-      elapsedSeconds: window.QueryHelpers.clockToSeconds(o.extraction.clock),
-    }),
+          (oo) => !oo.finalScoringDrive.dr.plays[0].clock.startsWith("Q5")
+        )
+        .map((oo) => ({
+          ...oo,
+          yards: oo.finalScoringDrive.dr.plays[0].startYardsToEndzone,
+          remainingSeconds:
+            window.QueryHelpers.totalGameSeconds -
+            window.QueryHelpers.clockToSeconds(
+              oo.finalScoringDrive.dr.plays[0].clock
+            ),
+          x: oo.finalScoringDrive.dr.plays[0].clock,
+        })),
+    mapToPoint: (o) => o,
     transform: (points) =>
       points
-        .sort((a, b) => a.elapsedSeconds - b.elapsedSeconds)
-        .map(({ elapsedSeconds, ...point }) => point)
+        .sort((a, b) =>
+          a.extraction.remainingSeconds === b.extraction.remainingSeconds
+            ? b.extraction.yards - a.extraction.yards
+            : b.extraction.remainingSeconds - a.extraction.remainingSeconds
+        )
         .reduce(
           (prev, curr) =>
-            prev.record >= curr.y
-              ? prev
+            prev.record >= curr.extraction.yards
+              ? { ...prev, count: prev.count + 1 }
               : {
-                  record: curr.y,
-                  rval: prev.rval.concat(curr),
+                  count: 0,
+                  record: curr.extraction.yards,
+                  rval: prev.rval.concat({
+                    ...curr,
+                    extraction: {
+                      ...curr.extraction,
+                      x: `${curr.extraction.x} (${prev.count} closer)`,
+                    },
+                  }),
                 },
           {
-            record: 0,
-            rval: [] as PointType[],
+            count: 0,
+            record: -1,
+            rval: [] as typeof points,
           }
         )
-        .rval.map((point) => point)
-        .sort((a, b) => b.y - a.y),
+        .rval.map((point) => ({
+          x: point.extraction.x,
+          y: point.extraction.yards,
+          label: `${JSON.stringify(point.extraction)}\n${point.label}`,
+        })),
   }),
 });
-
-// export default function March(datas: DataType[]): PointType[] {
-//   return datas
-//     .flatMap((d) =>
-//       d.games
-//         .map((g) => ({
-//           g,
-//           endScore: g.scores.reduce((a, b) => a + b, 0),
-//           endHomeAdvantage: getHomeAdvantage(g.scores),
-//         }))
-//         .map(({ g, endScore, endHomeAdvantage }) => ({
-//           d,
-//           g,
-//           endScore,
-//           endHomeAdvantage,
-//           finalScoringDrive: g.drives
-//             .map((dr, dri) => ({
-//               dr,
-//               dri,
-//               drScore: dr.scores.reduce((a, b) => a + b, 0),
-//             }))
-//             .find(({ drScore }) => drScore === endScore)!,
-//         }))
-//     )
-//     .filter(
-//       (o) =>
-//         o.finalScoringDrive?.dri > 0 &&
-//         o.endHomeAdvantage *
-//           getHomeAdvantage(o.g.drives[o.finalScoringDrive.dri - 1].scores) <
-//           0
-//     )
-//     .map((o) => ({
-//       ...o,
-//       yards: o.finalScoringDrive.dr.plays[0].startYardsToEndzone,
-//       elapsedSeconds: clockToSeconds(o.finalScoringDrive.dr.plays[0].clock),
-//     }))
-//     .sort((a, b) =>
-//       a.elapsedSeconds === b.elapsedSeconds
-//         ? b.yards - a.yards
-//         : a.elapsedSeconds - b.elapsedSeconds
-//     )
-//     .reduce(
-//       (prev, curr) =>
-//         prev.record >= curr.yards
-//           ? { ...prev, count: prev.count + 1 }
-//           : {
-//               count: 0,
-//               record: curr.yards,
-//               rval: prev.rval.concat({
-//                 x: secondsToClock(totalGameSeconds - curr.elapsedSeconds),
-//                 y: curr.yards,
-//                 label: `${
-//                   curr.endHomeAdvantage > 0
-//                     ? curr.g.teams
-//                         .slice()
-//                         .reverse()
-//                         .map((t) => t.name)
-//                         .join(" vs ")
-//                     : curr.g.teams.map((t) => t.name).join(" @ ")
-//                 } ${curr.d.year}w${curr.g.week}:${curr.g.gameId}/c:${
-//                   prev.count
-//                 }`,
-//               }),
-//             },
-//       {
-//         count: 0,
-//         record: -1,
-//         rval: [] as PointType[],
-//       }
-//     )
-//     .rval.sort((a, b) => b.y - a.y);
-// }

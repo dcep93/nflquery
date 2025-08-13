@@ -4,13 +4,15 @@ export default BuildQueryConfig({
   tooltip: "what was the result of every game that saw a score of 34-0",
   queryFunctions: () => ({
     extract: (o) =>
-      (({ found }) => (found ? [{ found, o }] : []))({
-        found: o.g.drives.find(
-          (dr) =>
-            (dr.scores[0] === 0 && dr.scores[1] === 34) ||
-            (dr.scores[0] === 34 && dr.scores[1] === 0)
-        ),
-      }),
+      o.teamIndex !== 0
+        ? []
+        : (({ found }) => (found ? [{ found, o }] : []))({
+            found: o.g.drives.find(
+              (dr) =>
+                (dr.scores[0] === 0 && dr.scores[1] === 34) ||
+                (dr.scores[0] === 34 && dr.scores[1] === 0)
+            ),
+          }),
     mapToPoint: (o) => o,
     transform: (points) =>
       window.QueryHelpers.groupByF(points, (point) =>
@@ -18,6 +20,10 @@ export default BuildQueryConfig({
         window.QueryHelpers.homeIsWinning(point.extraction.o.g.scores)
           ? "stomp"
           : "upset"
-      ).map(({ key, group }) => ({ x: "point", y: group.length, label: key })),
+      ).map(({ key, group }) => ({
+        x: "point",
+        y: group.length,
+        label: key,
+      })),
   }),
 });

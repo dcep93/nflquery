@@ -1,13 +1,15 @@
 import { PlayType } from "../Data";
 
 function groupByF<T, U>(ts: T[], f: (t: T) => U): { key: U; group: T[] }[] {
-  return Object.entries(
-    ts.reduce((prev, curr) => {
-      const key = f(curr);
-      if (!prev.has(key)) prev.set(key, []);
-      prev.get(key)!.push(curr);
-      return prev;
-    }, {} as Map<U, T[]>)
+  return Array.from(
+    ts
+      .reduce((prev, curr) => {
+        const key = f(curr);
+        if (!prev.has(key)) prev.set(key, []);
+        prev.get(key)!.push(curr);
+        return prev;
+      }, new Map() as Map<U, T[]>)
+      .entries()
   ).map(([key, group]) => ({ key: key as U, group }));
 }
 
