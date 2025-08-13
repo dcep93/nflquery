@@ -17,6 +17,7 @@ export default BuildQueryConfig({
             }))
             .find(({ drScore }) => drScore === endScore)!,
         }))
+        .filter(({ homeIsWinning }) => (o.teamIndex !== 0) === homeIsWinning)
         .filter(
           (oo) =>
             oo.finalScoringDrive?.dri > 0 &&
@@ -45,25 +46,31 @@ export default BuildQueryConfig({
         .sort((a, b) =>
           a.extraction.remainingSeconds === b.extraction.remainingSeconds
             ? b.extraction.yards - a.extraction.yards
-            : b.extraction.remainingSeconds - a.extraction.remainingSeconds
+            : a.extraction.remainingSeconds - b.extraction.remainingSeconds
         )
         .reduce(
           (prev, curr) =>
             prev.record >= curr.extraction.yards
-              ? { ...prev, count: prev.count + 1 }
+              ? {
+                  ...prev,
+                  fasters: prev.fasters.concat(
+                    `${curr.extraction.x}=${curr.extraction.yards}=${curr.label}`
+                  ),
+                }
               : {
-                  count: 0,
+                  fasters: [],
                   record: curr.extraction.yards,
                   rval: prev.rval.concat({
                     ...curr,
+                    label: `${curr.label}//${prev.fasters}`,
                     extraction: {
                       ...curr.extraction,
-                      x: `${curr.extraction.x} (${prev.count} closer)`,
+                      x: `${curr.extraction.x} (${prev.fasters.length} closer)`,
                     },
                   }),
                 },
           {
-            count: 0,
+            fasters: [] as string[],
             record: -1,
             rval: [] as typeof points,
           }
@@ -71,7 +78,7 @@ export default BuildQueryConfig({
         .rval.map((point) => ({
           x: point.extraction.x,
           y: point.extraction.yards,
-          label: `${JSON.stringify(point.extraction)}\n${point.label}`,
+          label: point.label,
         })),
   }),
 });
