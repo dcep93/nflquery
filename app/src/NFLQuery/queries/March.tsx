@@ -43,34 +43,34 @@ export default BuildQueryConfig({
     mapToPoint: (o) => o,
     transform: (points) =>
       points
-        .sort((a, b) =>
-          a.extraction.remainingSeconds === b.extraction.remainingSeconds
-            ? b.extraction.yards - a.extraction.yards
-            : a.extraction.remainingSeconds - b.extraction.remainingSeconds
+        .sort(
+          (a, b) =>
+            b.extraction.remainingSeconds - a.extraction.remainingSeconds
         )
+        .sort((a, b) => b.extraction.yards - a.extraction.yards)
         .reduce(
           (prev, curr) =>
-            prev.record >= curr.extraction.yards
+            prev.record >= curr.extraction.remainingSeconds
               ? {
                   ...prev,
-                  fasters: prev.fasters.concat(
+                  slowers: prev.slowers.concat(
                     `${curr.extraction.x}=${curr.extraction.yards}=${curr.label}`
                   ),
                 }
               : {
-                  fasters: [],
-                  record: curr.extraction.yards,
+                  slowers: [],
+                  record: curr.extraction.remainingSeconds,
                   rval: prev.rval.concat({
                     ...curr,
-                    label: `${curr.label}//${prev.fasters}`,
+                    label: `${curr.label}//${prev.slowers}`,
                     extraction: {
                       ...curr.extraction,
-                      x: `${curr.extraction.x} (${prev.fasters.length} closer)`,
+                      x: `${curr.extraction.x} (${prev.slowers.length} more but slower)`,
                     },
                   }),
                 },
           {
-            fasters: [] as string[],
+            slowers: [] as string[],
             record: -1,
             rval: [] as typeof points,
           }

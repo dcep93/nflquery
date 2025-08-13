@@ -22,20 +22,20 @@ import Year4thDown from "./queries/Year4thDown";
 
 var initialized = false;
 const allQueries = {
-  March,
-  Q1Q3_4thDown,
-  Team4thDown,
-  ThirtyFourToZero,
-  Penalty,
-  Year4thDown,
-  TotalHighScore,
-  TeamHighScore,
-  MinPossessionTime,
-  LongestDrive,
-  GamePenalties,
-  Encroachments,
   PuntAverages,
+  Encroachments,
+  Penalty,
+  GamePenalties,
+  Team4thDown,
+  Year4thDown,
+  Q1Q3_4thDown,
+  MinPossessionTime,
+  TeamHighScore,
+  TotalHighScore,
+  ThirtyFourToZero,
   Comeback,
+  March,
+  LongestDrive,
   [QueryBuilderName]: QueryBuilder,
 };
 

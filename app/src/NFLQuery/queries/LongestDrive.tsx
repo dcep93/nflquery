@@ -14,7 +14,6 @@ export default BuildQueryConfig({
                 dr.description.split(" ").reverse()[0]
               ),
             })),
-
     mapToPoint: (o) => ({
       x: o.extraction.description,
       y: o.extraction.seconds,
