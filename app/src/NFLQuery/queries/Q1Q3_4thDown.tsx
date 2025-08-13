@@ -37,29 +37,30 @@ export default BuildQueryConfig({
       (({ groupedByYear }) =>
         (({ groupedByClassificationByYear }) =>
           groupedByClassificationByYear.map(
-            ({ year, groupedByClassification, all4thDown }) => ({
+            ({ key, groupedByClassification, group }) => ({
               x:
-                (groupedByClassification.kick || []).length / all4thDown.length,
-              y: parseInt(year),
-              label: Object.entries({ ...groupedByClassification, all4thDown })
-                .map(([k, v]) => `${k}:${v.length}`)
+                (
+                  groupedByClassification.find(({ key }) => key === "kick")
+                    ?.group || []
+                ).length / group.length,
+              y: key,
+              label: Object.entries({ ...groupedByClassification, group })
+                .map(([k, v]) => `${k}:${group.length}`)
                 .join(","),
             })
           ))({
-          groupedByClassificationByYear: Object.entries(groupedByYear).map(
-            ([year, yearGroup]) => ({
-              year,
-              all4thDown: yearGroup,
+          groupedByClassificationByYear: groupedByYear.map(
+            ({ key, group }) => ({
+              key,
+              group,
               groupedByClassification: window.QueryHelpers.groupByF(
-                yearGroup,
+                group,
                 (o) => o.classification
               ),
             })
           ),
         }))({
-        groupedByYear: window.QueryHelpers.groupByF(extractions, (o) =>
-          o.year.toString()
-        ),
+        groupedByYear: window.QueryHelpers.groupByF(extractions, (o) => o.year),
       }),
   }),
 });

@@ -37,23 +37,21 @@ export default BuildQueryConfig({
       ),
     mapToPoint: (o) => o,
     transform: (points) =>
-      Object.entries(
-        window.QueryHelpers.groupByF(
-          points.map((o) => ({
-            ...o,
-            group: `${o.extraction.type} ${
-              { STL: "LAR", SD: "LAC", OAK: "LV" }[o.extraction.teamName] ||
-              o.extraction.teamName
-            }`,
-          })),
-          (t) => t.group
-        )
-      ).map(([k, v]) => ({
-        x: v.length,
-        y: v
+      window.QueryHelpers.groupByF(
+        points.map((o) => ({
+          ...o,
+          group: `${o.extraction.type} ${
+            { STL: "LAR", SD: "LAC", OAK: "LV" }[o.extraction.teamName] ||
+            o.extraction.teamName
+          }`,
+        })),
+        (t) => t.group
+      ).map(({ key, group }) => ({
+        x: group.length,
+        y: group
           .map((oo) => Math.abs(oo.extraction.p.distance))
           .reduce((a, b) => a + b, 0),
-        label: k,
+        label: key,
       })),
   }),
 });

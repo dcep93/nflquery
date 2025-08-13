@@ -14,14 +14,12 @@ export default BuildQueryConfig({
           ),
     mapToPoint: (o) => o,
     transform: (points) =>
-      Object.entries(
-        window.QueryHelpers.groupByF(
-          points,
-          (point) => point.extraction.dr.team
-        )
-      ).map(([teamName, points]) => ({
-        x: points.length,
-        y: points
+      window.QueryHelpers.groupByF(
+        points,
+        (point) => point.extraction.dr.team
+      ).map(({ key, group }) => ({
+        x: group.length,
+        y: group
           .filter(
             ({ extraction }) =>
               !extraction.p.text?.toLowerCase().includes("punt")
@@ -29,7 +27,7 @@ export default BuildQueryConfig({
           .filter(
             ({ extraction }) => !extraction.p.text?.includes("field goal")
           ).length,
-        label: teamName,
+        label: key,
       })),
   }),
 });

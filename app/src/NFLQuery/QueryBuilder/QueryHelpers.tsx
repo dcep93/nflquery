@@ -1,12 +1,14 @@
 import { PlayType } from "../Data";
 
-function groupByF<T>(ts: T[], f: (t: T) => string): { [key: string]: T[] } {
-  return ts.reduce((prev, curr) => {
-    const key = f(curr);
-    if (!prev[key]) prev[key] = [];
-    prev[key]!.push(curr);
-    return prev;
-  }, {} as { [key: string]: T[] });
+function groupByF<T, U>(ts: T[], f: (t: T) => U): { key: U; group: T[] }[] {
+  return Object.entries(
+    ts.reduce((prev, curr) => {
+      const key = f(curr);
+      if (!prev.has(key)) prev.set(key, []);
+      prev.get(key)!.push(curr);
+      return prev;
+    }, {} as Map<U, T[]>)
+  ).map(([key, group]) => ({ key: key as U, group }));
 }
 
 function clockToSeconds(clock: string): number {
@@ -62,6 +64,10 @@ function mapDict<T, U>(
   );
 }
 
+function homeIsWinning(scores: [number, number]): boolean {
+  return scores[0] > scores[1];
+}
+
 declare global {
   interface Window {
     QueryHelpers: typeof QueryHelpers;
@@ -76,6 +82,7 @@ const QueryHelpers = {
   secondsToClock,
   isPlay,
   mapDict,
+  homeIsWinning,
 };
 
 export default QueryHelpers;
