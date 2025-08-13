@@ -67,7 +67,11 @@ export default function Query() {
             datas
           )
         )
-        .then((points) => points.map((p, index) => ({ ...p, index })))
+        .then((points) =>
+          ([`${points.length} points`] as any[]).concat(
+            points.slice(0, 100).map((p, index) => ({ ...p, index: index + 1 }))
+          )
+        )
         .then((o) => JSON.stringify(o, null, 2))
         .then(updateOutput)
         .catch((err) => {

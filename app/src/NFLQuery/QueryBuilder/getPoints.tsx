@@ -35,6 +35,5 @@ export default function getPoints<T, U>(
         .filter((o) => o)
         .map((o) => o!)
     )
-    .sort((a, b) => b.y - a.y)
-    .slice(0, 50);
+    .sort((a, b) => b.y - a.y);
 }
