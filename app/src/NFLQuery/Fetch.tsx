@@ -5,8 +5,8 @@ import { GameType, TeamStatistic } from "./Data";
 
 // pbpaste | python3 pasteToFiles.py
 
-const startYear = 2005;
-const endYear = 2024;
+const startYear = 2025;
+const endYear = 2025;
 export const allYears = Array.from(new Array(endYear - startYear + 1)).map(
   (_, i) => startYear + i
 );
