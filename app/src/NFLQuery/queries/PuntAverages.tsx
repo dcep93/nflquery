@@ -11,14 +11,14 @@ export default BuildQueryConfig({
         .filter((match) => match)
         .map((match) => parseInt(match![1])),
     ],
-    mapToPoint: (o) => ({
-      x: o.timestamp,
-      y:
-        o.extraction.length === 0
-          ? 0
-          : o.extraction.reduce((a, b) => a + b, 0) / o.extraction.length,
-      label: `${o.extraction.join(",")} ${o.label}`,
-    }),
-    transform: (points) => points,
+    mapPoints: (points) =>
+      points.map((o) => ({
+        x: o.timestamp,
+        y:
+          o.extraction.length === 0
+            ? 0
+            : o.extraction.reduce((a, b) => a + b, 0) / o.extraction.length,
+        label: `${o.extraction.join(",")} ${o.label}`,
+      })),
   }),
 });

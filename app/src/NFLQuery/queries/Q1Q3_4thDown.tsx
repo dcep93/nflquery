@@ -32,8 +32,7 @@ export default BuildQueryConfig({
             ? "success"
             : "failure",
         })),
-    mapToPoint: (o) => o.extraction,
-    transform: (extractions) =>
+    mapPoints: (o) =>
       (({ groupedByYear }) =>
         (({ groupedByClassificationByYear }) =>
           groupedByClassificationByYear.map(
@@ -55,12 +54,15 @@ export default BuildQueryConfig({
               group,
               groupedByClassification: window.QueryHelpers.groupByF(
                 group,
-                (o) => o.classification
+                (oo) => oo.classification
               ),
             })
           ),
         }))({
-        groupedByYear: window.QueryHelpers.groupByF(extractions, (o) => o.year),
+        groupedByYear: window.QueryHelpers.groupByF(
+          o.map((oo) => oo.extraction),
+          (oo) => oo.year
+        ),
       }),
   }),
 });

@@ -14,11 +14,11 @@ export default BuildQueryConfig({
                 dr.description.split(" ").reverse()[0]
               ),
             })),
-    mapToPoint: (o) => ({
-      x: o.extraction.description,
-      y: o.extraction.seconds,
-      label: o.label,
-    }),
-    transform: (points) => points,
+    mapPoints: (points) =>
+      points.map((o) => ({
+        x: o.extraction.description,
+        y: o.extraction.seconds,
+        label: o.label,
+      })),
   }),
 });

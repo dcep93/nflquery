@@ -13,11 +13,11 @@ export default BuildQueryConfig({
               )
             ),
           ],
-    mapToPoint: (o) => ({
-      x: o.timestamp,
-      y: o.extraction.length,
-      label: o.label,
-    }),
-    transform: (points) => points,
+    mapPoints: (points) =>
+      points.map((o) => ({
+        x: o.timestamp,
+        y: o.extraction.length,
+        label: o.label,
+      })),
   }),
 });

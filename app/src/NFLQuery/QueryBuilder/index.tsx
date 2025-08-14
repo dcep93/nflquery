@@ -6,8 +6,7 @@ const QueryBuilder = BuildQueryConfig({
   queryFunctions: () =>
     getCustomFunctions({
       extract: (o: any) => [Object.keys(o)],
-      mapToPoint: (o: any) => o,
-      transform: (points: any) => points,
+      mapPoints: (o: any) => o,
     }),
 });
 
@@ -15,25 +14,24 @@ export default QueryBuilder;
 
 export const QueryBuilderName = "QueryBuilder";
 
-type QueryConfig<T, U> = {
+type QueryConfig<T> = {
   tooltip: string;
-  queryFunctions: () => QueryFunctions<T, U>;
+  queryFunctions: () => QueryFunctions<T>;
 };
 
-export function BuildQueryConfig<T, U>(
-  args: QueryConfig<T, U>
-): QueryConfig<T, U> {
+export function BuildQueryConfig<T>(args: QueryConfig<T>): QueryConfig<T> {
   return args;
 }
 
-export type QueryFunctions<T, U> = {
+export type QueryFunctions<T> = {
   extract: (o: { d: DataType; g: GameType; teamIndex: number }) => T[];
-  mapToPoint: (o: {
-    timestamp: number;
-    extraction: T;
-    label: string;
-  }) => U | null;
-  transform: (points: U[]) => PointType[];
+  mapPoints: (
+    pointsIn: {
+      timestamp: number;
+      extraction: T;
+      label: string;
+    }[]
+  ) => PointType[];
 };
 
 function safeEval(v: string) {
@@ -41,9 +39,9 @@ function safeEval(v: string) {
   return eval(v);
 }
 
-function getCustomFunctions<T, U>(
-  defaultFunctions: QueryFunctions<T, U>
-): QueryFunctions<T, U> {
+function getCustomFunctions<T>(
+  defaultFunctions: QueryFunctions<T>
+): QueryFunctions<T> {
   try {
     const matched = window.location.hash.match(/.*?\.(.*)/);
     if (!matched) return defaultFunctions;

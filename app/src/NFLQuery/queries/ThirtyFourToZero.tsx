@@ -13,8 +13,7 @@ export default BuildQueryConfig({
                 (dr.scores[0] === 34 && dr.scores[1] === 0)
             ),
           }),
-    mapToPoint: (o) => o,
-    transform: (points) =>
+    mapPoints: (points) =>
       window.QueryHelpers.groupByF(points, (point) =>
         window.QueryHelpers.homeIsWinning(point.extraction.found.scores) ===
         window.QueryHelpers.homeIsWinning(point.extraction.o.g.scores)

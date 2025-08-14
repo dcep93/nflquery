@@ -39,8 +39,7 @@ export default BuildQueryConfig({
                 },
               ])
           ),
-    mapToPoint: (o) => o,
-    transform: (points) =>
+    mapPoints: (points) =>
       window.QueryHelpers.groupByF(
         points.map((o) => ({
           ...o,

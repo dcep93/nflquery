@@ -41,8 +41,7 @@ export default BuildQueryConfig({
             ),
           x: oo.finalScoringDrive.dr.plays[0].clock,
         })),
-    mapToPoint: (o) => o,
-    transform: (points) =>
+    mapPoints: (points) =>
       points
         .sort(
           (a, b) =>

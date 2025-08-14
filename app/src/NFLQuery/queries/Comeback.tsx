@@ -28,14 +28,16 @@ export default BuildQueryConfig({
               window.QueryHelpers.getHomeAdvantage(o.o.g.scores) <
               0
         ),
-    mapToPoint: (o) => ({
-      x: `${o.extraction.clock} (${o.extraction.driveScores}) -> (${o.extraction.o.g.scores})`,
-      y: o.extraction.pointsDeficit,
-      label: o.label,
-      elapsedSeconds: window.QueryHelpers.clockToSeconds(o.extraction.clock),
-    }),
-    transform: (points) =>
+    mapPoints: (points) =>
       points
+        .map((o) => ({
+          x: `${o.extraction.clock} (${o.extraction.driveScores}) -> (${o.extraction.o.g.scores})`,
+          y: o.extraction.pointsDeficit,
+          label: o.label,
+          elapsedSeconds: window.QueryHelpers.clockToSeconds(
+            o.extraction.clock
+          ),
+        }))
         .sort((a, b) => a.elapsedSeconds - b.elapsedSeconds)
         .map(({ elapsedSeconds, ...point }) => point)
         .reduce(

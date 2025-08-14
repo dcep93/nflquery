@@ -12,8 +12,7 @@ export default BuildQueryConfig({
               .filter((p) => window.QueryHelpers.isPlay(p))
               .map((p) => ({ o, dr, p }))
           ),
-    mapToPoint: (o) => o,
-    transform: (points) =>
+    mapPoints: (points) =>
       window.QueryHelpers.groupByF(
         points,
         (point) => point.extraction.dr.team

@@ -3,11 +3,11 @@ import { DataType } from "../Data";
 import { PointType } from "../Query";
 
 export default function getPoints<T, U>(
-  customFunctions: QueryFunctions<T, U>,
+  customFunctions: QueryFunctions<T>,
   datas: DataType[]
 ): PointType[] {
   return customFunctions
-    .transform(
+    .mapPoints(
       datas
         .flatMap((d) =>
           d.games.flatMap((g) =>
@@ -31,9 +31,6 @@ export default function getPoints<T, U>(
             ),
           }))
         )
-        .map(customFunctions.mapToPoint)
-        .filter((o) => o)
-        .map((o) => o!)
     )
     .sort((a, b) => b.y - a.y);
 }

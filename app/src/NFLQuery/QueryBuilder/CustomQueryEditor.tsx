@@ -4,7 +4,7 @@ import { DataType } from "../Data";
 
 export default function CustomQueryEditor(props: {
   updateHash: (hash: string) => void;
-  customFunctions: QueryFunctions<any, any>;
+  customFunctions: QueryFunctions<any>;
   datas: DataType[];
 }) {
   const refs = Object.fromEntries(

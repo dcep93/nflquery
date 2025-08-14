@@ -63,7 +63,7 @@ export default function Query() {
       Promise.resolve()
         .then(() =>
           getPoints(
-            getQuery(hash).queryFunctions() as QueryFunctions<any, any>,
+            getQuery(hash).queryFunctions() as QueryFunctions<any>,
             datas
           )
         )
