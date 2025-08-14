@@ -18,15 +18,15 @@ export default BuildQueryConfig({
             .find(({ drScore }) => drScore === endScore)!,
         }))
         .filter(({ homeIsWinning }) => (o.teamIndex !== 0) === homeIsWinning)
-        .filter((oo) =>
-          (({ homeWasWinning }) =>
+        .filter(
+          (oo) =>
             oo.finalScoringDrive?.dri > 0 &&
-            homeWasWinning === oo.homeIsWinning)({
-            homeWasWinning:
-              window.QueryHelpers.getHomeAdvantage(
-                o.g.drives[oo.finalScoringDrive.dri - 1].scores
-              ) < 0,
-          })
+            (({ homeWasWinning }) => homeWasWinning === oo.homeIsWinning)({
+              homeWasWinning:
+                window.QueryHelpers.getHomeAdvantage(
+                  o.g.drives[oo.finalScoringDrive.dri - 1].scores
+                ) < 0,
+            })
         )
         .filter(
           (oo) => !oo.finalScoringDrive.dr.plays[0].clock.startsWith("Q5")

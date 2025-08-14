@@ -2,7 +2,7 @@ import { QueryFunctions } from ".";
 import { DataType } from "../Data";
 import { PointType } from "../Query";
 
-export default function getPoints<T, U>(
+export default function getPoints<T>(
   customFunctions: QueryFunctions<T>,
   datas: DataType[]
 ): PointType[] {

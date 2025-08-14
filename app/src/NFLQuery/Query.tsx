@@ -102,6 +102,7 @@ export default function Query() {
           <CustomQueryEditor
             key={output}
             updateHash={updateHash}
+            isCustom={getQueryName(hash) === QueryBuilderName}
             customFunctions={getQuery(hash).queryFunctions()}
             datas={datas}
           />
