@@ -6,7 +6,7 @@ set -xeuo pipefail
 
 cd app
 npm config set legacy-peer-deps true
-npm install
+yarn install
 npm install --save-dev ajv@^7
 yarn build
 rm -rf node_modules
