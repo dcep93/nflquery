@@ -17,11 +17,9 @@ export default BuildQueryConfig({
       points.map((point) => ({
         x: `${point.extraction.found.plays[0].clock} ${point.extraction.o.g.scores.join(" ")}`,
         label: point.label,
-        y: point.extraction.o.g.scores[
-          window.QueryHelpers.homeIsWinning(point.extraction.found.scores)
-            ? 1
-            : 0
-        ],
+        y: Math.abs(
+          point.extraction.o.g.scores[0] - point.extraction.o.g.scores[1]
+        ),
       })),
   }),
 });
