@@ -14,15 +14,14 @@ export default BuildQueryConfig({
             ),
           }),
     mapPoints: (points) =>
-      window.QueryHelpers.groupByF(points, (point) =>
-        window.QueryHelpers.homeIsWinning(point.extraction.found.scores) ===
-        window.QueryHelpers.homeIsWinning(point.extraction.o.g.scores)
-          ? "stomp"
-          : "upset"
-      ).map(({ key, group }) => ({
-        x: "point",
-        y: group.length,
-        label: key,
+      points.map((point) => ({
+        x: `${point.extraction.found.plays[0].clock} ${point.extraction.o.g.scores.join(" ")}`,
+        label: point.label,
+        y: point.extraction.o.g.scores[
+          window.QueryHelpers.homeIsWinning(point.extraction.found.scores)
+            ? 1
+            : 0
+        ],
       })),
   }),
 });
