@@ -2,7 +2,7 @@ import json
 import os
 import sys
 
-dir = "src/NFLQuery/data_v6"
+dir = "./data_v6"
 
 if not os.path.exists(dir):
     os.mkdir(dir)
