@@ -18,6 +18,7 @@ import Team4thDown from "./queries/Team4thDown";
 import TeamHighScore from "./queries/TeamHighScore";
 import ThirtyFourToZero from "./queries/ThirtyFourToZero";
 import TotalHighScore from "./queries/TotalHighScore";
+import TotalLowScore from "./queries/TotalLowScore";
 import Year4thDown from "./queries/Year4thDown";
 
 var initialized = false;
@@ -32,6 +33,7 @@ const allQueries = {
   MinPossessionTime,
   TeamHighScore,
   TotalHighScore,
+  TotalLowScore,
   ThirtyFourToZero,
   Comeback,
   March,
