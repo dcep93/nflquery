@@ -105,7 +105,9 @@ export default function Query() {
               ))}
             </select>
           </div>
-          <pre style={bubbleStyle}>{getQuery(hash).tooltip}</pre>
+          <div style={{ ...bubbleStyle, width: "12em" }}>
+            {getQuery(hash).tooltip}
+          </div>
         </div>
         <div>
           <CustomQueryEditor
