@@ -12,6 +12,7 @@ import Longest4thDown from "./queries/Longest4thDown";
 import LongestDrive from "./queries/LongestDrive";
 import March from "./queries/March";
 import MinPossessionTime from "./queries/MinPossessionTime";
+import OTWalkoffs from "./queries/OTWalkoffs";
 import Penalty from "./queries/Penalty";
 import PuntAverages from "./queries/PuntAverages";
 import Q1Q3_4thDown from "./queries/Q1Q3_4thDown";
@@ -20,6 +21,7 @@ import TeamHighScore from "./queries/TeamHighScore";
 import ThirtyFourToZero from "./queries/ThirtyFourToZero";
 import TotalHighScore from "./queries/TotalHighScore";
 import TotalLowScore from "./queries/TotalLowScore";
+import TurnoverOnDowns from "./queries/TurnoverOnDowns";
 import Year4thDown from "./queries/Year4thDown";
 
 var initialized = false;
@@ -40,6 +42,8 @@ const allQueries = {
   March,
   LongestDrive,
   Longest4thDown,
+  TurnoverOnDowns,
+  OTWalkoffs,
   [QueryBuilderName]: QueryBuilder,
 };
 
