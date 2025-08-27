@@ -25,7 +25,7 @@ export default BuildQueryConfig({
             "_PuntReturn",
             "BP",
           ].includes(p.type)
-            ? "kick"
+            ? "_kick"
             : p.type === "TD" ||
                 p.startYardsToEndzone === p.distance ||
                 p.distance >= parseInt(p.down.split(" ").reverse()[0])
@@ -39,7 +39,7 @@ export default BuildQueryConfig({
             ({ key, groupedByClassification, group }) => ({
               x: `kick ratio: ${
                 (
-                  groupedByClassification.find(({ key }) => key === "kick")
+                  groupedByClassification.find(({ key }) => key === "_kick")
                     ?.group || []
                 ).length / group.length
               }`,
@@ -57,7 +57,7 @@ export default BuildQueryConfig({
               groupedByClassification: window.QueryHelpers.groupByF(
                 group,
                 (oo) => oo.classification
-              ),
+              ).sort((a, b) => (a.key > b.key ? 1 : -1)),
             })
           ),
         }))({
