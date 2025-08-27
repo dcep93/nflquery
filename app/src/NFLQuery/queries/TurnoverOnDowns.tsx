@@ -35,7 +35,7 @@ export default BuildQueryConfig({
         .filter(({ endingYardLine }) => endingYardLine < 100),
     mapPoints: (points) =>
       points.map((o) => ({
-        x: o.extraction.p.text,
+        x: `[${o.extraction.p.clock}] ${o.extraction.p.text}`,
         y: o.extraction.endingYardLine,
         label: o.label,
       })),

@@ -18,7 +18,7 @@ export default BuildQueryConfig({
     mapPoints: (points) =>
       points.map((o) => ({
         x: o.extraction.rawPossessionTime,
-        y: window.QueryHelpers.clockToSeconds(o.extraction.rawPossessionTime),
+        y: -window.QueryHelpers.clockToSeconds(o.extraction.rawPossessionTime),
         label: `${o.extraction.o.g.scores.join(" ")} / ${o.label}`,
       })),
   }),

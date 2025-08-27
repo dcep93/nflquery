@@ -23,26 +23,28 @@ export default BuildQueryConfig({
             "_PuntReturn",
             "BP",
           ].includes(p.type)
-            ? "kick"
+            ? "_kick"
             : p.type === "TD" ||
-              p.startYardsToEndzone === p.distance ||
-              p.distance >= parseInt(p.down.split(" ").reverse()[0])
-            ? "success"
-            : "failure",
+                p.startYardsToEndzone === p.distance ||
+                p.distance >= parseInt(p.down.split(" ").reverse()[0])
+              ? "success"
+              : "failure",
         })),
     mapPoints: (o) =>
       (({ groupedByYear }) =>
         (({ groupedByClassificationByYear }) =>
           groupedByClassificationByYear.map(
             ({ key, groupedByClassification, group }) => ({
-              x:
+              x: `kick ratio: ${
                 (
-                  groupedByClassification.find(({ key }) => key === "kick")
+                  groupedByClassification.find(({ key }) => key === "_kick")
                     ?.group || []
-                ).length / group.length,
+                ).length / group.length
+              }`,
               y: key,
-              label: Object.entries({ ...groupedByClassification, group })
-                .map(([k, v]) => `${k}:${group.length}`)
+              label: groupedByClassification
+                .concat({ key: "total", group })
+                .map((g) => `${g.key}:${g.group.length}`)
                 .join(","),
             })
           ))({
@@ -53,7 +55,7 @@ export default BuildQueryConfig({
               groupedByClassification: window.QueryHelpers.groupByF(
                 group,
                 (oo) => oo.classification
-              ),
+              ).sort((a, b) => (a.key > b.key ? 1 : -1)),
             })
           ),
         }))({

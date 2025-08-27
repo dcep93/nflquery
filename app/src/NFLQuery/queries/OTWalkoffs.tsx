@@ -14,7 +14,7 @@ export default BuildQueryConfig({
       points.map((o) => ({
         x: o.extraction
           .flatMap((d) => d.plays)
-          .map((p) => p.text)
+          .map((p) => (window.QueryHelpers.isPlay(p) ? p.text : `[${p.text}]`))
           .join("///"),
         y: -o.extraction
           .flatMap((d) => d.plays)

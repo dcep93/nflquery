@@ -3,12 +3,15 @@ import { PlayType } from "../Data";
 function groupByF<T, U>(ts: T[], f: (t: T) => U): { key: U; group: T[] }[] {
   return Array.from(
     ts
-      .reduce((prev, curr) => {
-        const key = f(curr);
-        if (!prev.has(key)) prev.set(key, []);
-        prev.get(key)!.push(curr);
-        return prev;
-      }, new Map() as Map<U, T[]>)
+      .reduce(
+        (prev, curr) => {
+          const key = f(curr);
+          if (!prev.has(key)) prev.set(key, []);
+          prev.get(key)!.push(curr);
+          return prev;
+        },
+        new Map() as Map<U, T[]>
+      )
       .entries()
   ).map(([key, group]) => ({ key: key as U, group }));
 }
@@ -38,6 +41,8 @@ function secondsToClock(seconds: number): string {
 
 function isPlay(p: PlayType): boolean {
   return (
+    p.type !== "K" &&
+    p.type !== "EP" &&
     p.type !== "TO" &&
     p.type !== "Off TO" &&
     p.type !== "EH" &&
