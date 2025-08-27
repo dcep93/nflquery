@@ -29,8 +29,8 @@ export default BuildQueryConfig({
             : p.type === "TD" ||
                 p.startYardsToEndzone === p.distance ||
                 p.distance >= parseInt(p.down.split(" ").reverse()[0])
-              ? "td"
-              : "defensive_td",
+              ? "success"
+              : "failure",
         })),
     mapPoints: (o) =>
       (({ groupedByYear }) =>
