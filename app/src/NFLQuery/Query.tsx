@@ -26,8 +26,8 @@ import Year4thDown from "./queries/Year4thDown";
 
 var initialized = false;
 const allQueries = {
-  PuntAverages,
   Encroachments,
+  PuntAverages,
   Penalty,
   GamePenalties,
   Team4thDown,
