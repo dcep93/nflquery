@@ -15,7 +15,7 @@ export default BuildQueryConfig({
           ],
     mapPoints: (points) =>
       points.map((o) => ({
-        x: o.timestamp,
+        x: o.extraction.map((e) => e.clock).join(" / "),
         y: o.extraction.length,
         label: o.label,
       })),
