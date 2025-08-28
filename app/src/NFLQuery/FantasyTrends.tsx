@@ -1,12 +1,11 @@
 import { useMemo, useState } from "react";
 import Data, { DataType } from "./Data";
-import { datasToPlayerYearScores } from "./Fantasy";
+import { datasToPlayerYearScores, groupByF } from "./Fantasy";
 import { allYears } from "./Fetch";
+import { bubbleStyle } from "./Query";
 
 const MIN_YEARS_EXP = 6;
 const MIN_BEST_SCORE = 200;
-
-const start = Date.now();
 
 export default function Trends() {
   const [datas, updateData] = useState<DataType[] | null>(null);
@@ -24,22 +23,39 @@ export default function Trends() {
     .sort((a, b) => b.max - a.max)
     .map((o) => ({
       ...o,
-      years: o.years.map(
+      years: o.years.slice(1).map(
         (year) =>
           year.scores
             .slice(0, -2)
             .sort((a, b) => a - b)
+            .concat(1)
             .map((v, i) => ({ v, i }))
-            .find(({ v }) => v > 0)?.i || -1
+            .find(({ v }) => v > 0)!.i
       ),
     }));
+  const split = groupByF(output, classify);
   return (
-    <pre>
-      {JSON.stringify(
-        { count: output.length, duration: Date.now() - start, output },
-        null,
-        2
-      )}
-    </pre>
+    <div>
+      <div style={bubbleStyle}>total count: {output.length}</div>
+      <div style={{ display: "flex" }}>
+        {split.map(({ key, group }) => (
+          <div key={key}>
+            <div style={bubbleStyle}>
+              {key}: {group.length}
+            </div>
+            <pre>{JSON.stringify(group, null, 2)}</pre>
+          </div>
+        ))}
+      </div>
+    </div>
   );
+}
+
+function classify(player: {
+  years: number[];
+  max: number;
+  name: string;
+  position: string;
+}) {
+  return player.name > "M" ? "X" : "Y";
 }

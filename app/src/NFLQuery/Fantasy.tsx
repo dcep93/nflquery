@@ -28,7 +28,7 @@ export default function PlayerYearScores() {
 
 export type FantasyYear = { year: number; scores: number[]; total: number };
 
-type PlayerYearScoresType = {
+export type PlayerYearScoresType = {
   name: string;
   position: string;
   years: FantasyYear[];
@@ -135,7 +135,10 @@ function classifyPosition(scores: ScoreType[]): string {
   return "X";
 }
 
-function groupByF<T, U>(ts: T[], f: (t: T) => U): { key: U; group: T[] }[] {
+export function groupByF<T, U>(
+  ts: T[],
+  f: (t: T) => U
+): { key: U; group: T[] }[] {
   return Array.from(
     ts
       .reduce(
