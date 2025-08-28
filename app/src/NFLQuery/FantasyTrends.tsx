@@ -51,6 +51,9 @@ export default function Trends() {
   );
 }
 
+const LOW = 2;
+const HIGH = 5;
+
 function classify(player: {
   years: { missed: number }[];
   max: number;
@@ -59,8 +62,7 @@ function classify(player: {
 }) {
   const x = player.years.map(({ missed }) => missed).sort((a, b) => b - a);
   const y = x[Math.floor(x.length * 0.66)];
-  if (y <= 3) return "[-,3]";
-  if (y < 8) return "(3,8)";
-  return "[8,+]";
-  return y.toString();
+  if (y <= LOW) return `[-,${LOW}]`;
+  if (y < HIGH) return `(${LOW},${HIGH})`;
+  return `[${HIGH},+]`;
 }
