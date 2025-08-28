@@ -28,12 +28,12 @@ export default function Trends() {
       {JSON.stringify(
         groupByF(
           datas
-            .map((d) => ({
-              d,
-              numWeeks: d.games.map((g) => g.week).sort((a, b) => b - a)[0],
+            .map((o) => ({
+              ...o,
+              numWeeks: o.games.map((g) => g.week).sort((a, b) => b - a)[0],
             }))
             .flatMap((o) =>
-              o.d.games
+              o.games
                 .filter((g) => g.week > 0)
                 .sort((a, b) => a.week - b.week)
                 .map((g) => ({ g, ...o }))
@@ -43,7 +43,7 @@ export default function Trends() {
               getPlayerScores(o.t.boxScore).map((oo) => ({ ...o, ...oo }))
             )
             .map((o) => ({
-              year: o.d.year,
+              year: o.year,
               name: o.name,
               score: o.score,
               week: o.g.week,
