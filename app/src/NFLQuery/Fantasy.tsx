@@ -57,9 +57,7 @@ export function datasToPlayerYearScores(
                 ({ p }) => p.name
               )
                 .map((o) => {
-                  allScores.splice(
-                    0,
-                    0,
+                  allScores.push(
                     ...o.group.map((oo) => ({
                       name: oo.p.name,
                       category: oo.b.category,
