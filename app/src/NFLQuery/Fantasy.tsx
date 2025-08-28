@@ -21,9 +21,11 @@ export default function PlayerYearScores() {
   );
 }
 
+export type FantasyYear = { year: number; scores: number[]; total: number };
+
 type PlayerYearScoresType = {
   name: string;
-  years: any | { year: string; scores: number[]; total: number }[];
+  years: FantasyYear[];
 }[];
 
 export function datasToPlayerYearScores(
