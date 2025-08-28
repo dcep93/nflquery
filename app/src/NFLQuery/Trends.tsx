@@ -40,6 +40,7 @@ function SubTrends(props: { datas: DataType[] }) {
         groupByF(
           props.datas
             .flatMap((d) => d.games.map((g) => ({ g, d })))
+            .filter((o) => o.g.week > 0)
             .flatMap((o) => o.g.teams.map((t) => ({ t, ...o })))
             .flatMap((o) =>
               getPlayerScores(o.t.boxScore).map((oo) => ({ ...o, ...oo }))
@@ -48,18 +49,23 @@ function SubTrends(props: { datas: DataType[] }) {
               year: o.d.year,
               name: o.name,
               score: o.score,
-            }))
-            .filter((o) => o.name.includes("McCaffrey")),
+            })),
           (o) => o.name
-        ).map((o) => ({
-          name: o.key,
-          count: o.group.length,
-          scores: groupByF(o.group, (g) => g.year).map((oo) => ({
-            year: oo.key,
-            count: oo.group.length,
-            scores: oo.group.map(({ score }) => score),
-          })),
-        })),
+        )
+          .map((o) => ({
+            name: o.key,
+            years: groupByF(o.group, (g) => g.year)
+              .map((oo) => ({
+                year: oo.key,
+                scores: oo.group.map(({ score }) => score),
+              }))
+              .map((o) => ({
+                ...o,
+                total: o.scores.reduce((a, b) => a + b, 0),
+              }))
+              .filter(({ total }) => total >= 450),
+          }))
+          .filter(({ years }) => years.length > 0),
         null,
         2
       )}
