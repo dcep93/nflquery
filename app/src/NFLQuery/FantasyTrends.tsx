@@ -23,15 +23,15 @@ export default function Trends() {
     .sort((a, b) => b.max - a.max)
     .map((o) => ({
       ...o,
-      years: o.years.slice(1).map(
-        (year) =>
-          year.scores
-            .slice(0, -2)
-            .sort((a, b) => a - b)
-            .concat(1)
-            .map((v, i) => ({ v, i }))
-            .find(({ v }) => v > 0)!.i
-      ),
+      years: o.years.slice(1).map((year) => ({
+        total: year.total,
+        missed: year.scores
+          .slice(0, -2)
+          .sort((a, b) => a - b)
+          .concat(1)
+          .map((v, i) => ({ v, i }))
+          .find(({ v }) => v > 0)!.i,
+      })),
     }));
   const split = groupByF(output, classify);
   return (
@@ -52,10 +52,15 @@ export default function Trends() {
 }
 
 function classify(player: {
-  years: number[];
+  years: { missed: number }[];
   max: number;
   name: string;
   position: string;
 }) {
-  return player.name > "M" ? "X" : "Y";
+  const x = player.years.map(({ missed }) => missed).sort((a, b) => b - a);
+  const y = x[Math.floor(x.length * 0.66)];
+  if (y <= 3) return "[-,3]";
+  if (y < 8) return "(3,8)";
+  return "[8,+]";
+  return y.toString();
 }
