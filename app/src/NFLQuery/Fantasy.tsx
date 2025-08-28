@@ -11,14 +11,19 @@ const scoring = {
   [k1: string]: { [k2: string]: number };
 };
 
+var initialized = false;
 export default function PlayerYearScores() {
-  const [datas, updateData] = useState<DataType[] | null>(null);
-  Data(allYears).then(updateData);
-  return datas === null ? null : (
-    <pre style={{ whiteSpace: "unset" }}>
-      {JSON.stringify(datasToPlayerYearScores(datas))}
-    </pre>
-  );
+  const [state, updateState] = useState("fetching");
+  if (!initialized) {
+    initialized = true;
+    Data(allYears)
+      .then(datasToPlayerYearScores)
+      .then((output) => {
+        console.log(output);
+        updateState(`console.log(${JSON.stringify(output).length})`);
+      });
+  }
+  return <pre>{state}</pre>;
 }
 
 export type FantasyYear = { year: number; scores: number[]; total: number };
