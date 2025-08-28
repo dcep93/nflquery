@@ -41,32 +41,44 @@ function SubTrends(props: { datas: DataType[] }) {
           props.datas
             .flatMap((d) => d.games.map((g) => ({ g, d })))
             .flatMap((o) => o.g.teams.map((t) => ({ t, ...o })))
-            .flatMap((o) => o.t.boxScore.map((b) => ({ b, ...o })))
-            .flatMap((o) => o.b.players.map((p) => ({ p, ...o })))
+            .flatMap((o) =>
+              getPlayerScores(o.t.boxScore).map((oo) => ({ ...o, ...oo }))
+            )
             .map((o) => ({
-              keys: {
-                year: o.d.year,
-                name: o.p.name,
-              },
-              score: getScore(o.p.stats, o.b),
+              year: o.d.year,
+              name: o.name,
+              score: o.score,
             }))
-            .filter((o) => o.keys.name === "Robbie Chosen"),
-          (o) => `${o.keys.year}: ${o.keys.name}`
-        )
-          .map(({ group }) => ({
-            keys: group[0].keys,
-            scores: group.map(({ score }) => score),
-          }))
-          .map((o) => ({ ...o, total: o.scores.reduce((a, b) => a + b, 0) }))
-          .map(
-            (o) =>
-              `${o.keys.year}: ${o.keys.name}: ${o.total} / ${o.scores.map((s) => s.toFixed(2))}`
-          ),
+            .filter((o) => o.name.includes("McCaffrey")),
+          (o) => o.name
+        ).map((o) => ({
+          name: o.key,
+          count: o.group.length,
+          scores: groupByF(o.group, (g) => g.year).map((oo) => ({
+            year: oo.key,
+            count: oo.group.length,
+            scores: oo.group.map(({ score }) => score),
+          })),
+        })),
         null,
         2
       )}
     </pre>
   );
+}
+
+function getPlayerScores(
+  boxScores: BoxScoreType[]
+): { name: string; score: number }[] {
+  return groupByF(
+    boxScores.flatMap((b) => b.players.map((p) => ({ p, b }))),
+    ({ p }) => p.name
+  ).map(({ key, group }) => ({
+    name: key,
+    score: group
+      .map((g) => getScore(g.p.stats, g.b))
+      .reduce((a, b) => a + b, 0),
+  }));
 }
 
 const scoring = {
