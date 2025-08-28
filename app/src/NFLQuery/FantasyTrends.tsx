@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import Data, { DataType } from "./Data";
+import { datasToPlayerYearScores } from "./Fantasy";
 import { allYears } from "./Fetch";
-import { datasToPlayerYearScores } from "./PlayerYearScores";
 
 var initialized = false;
 
@@ -16,6 +16,12 @@ export default function Trends() {
     }
   }, []);
   return datas === null ? null : (
-    <pre>{JSON.stringify(datasToPlayerYearScores(datas), null, 2)}</pre>
+    <pre>
+      {JSON.stringify(
+        datasToPlayerYearScores(datas.filter((d) => d.year === 2020)),
+        null,
+        2
+      )}
+    </pre>
   );
 }
