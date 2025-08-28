@@ -3,6 +3,7 @@ import DataJson from "./DataJson";
 import Fetch from "./Fetch";
 import Query from "./Query";
 import recorded_sha from "./recorded_sha";
+import Trends from "./Trends";
 
 console.log(recorded_sha);
 
@@ -10,6 +11,7 @@ export default function NFLQuery() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path={"/trends"} element={<Trends />} />
         <Route path={"/json"} element={<DataJson />} />
         <Route path={"/fetch"} element={<Fetch />} />
         <Route path={"/query"} element={<Query />} />
