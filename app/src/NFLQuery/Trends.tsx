@@ -5,7 +5,6 @@ import { allYears } from "./Fetch";
 var initialized = false;
 
 // player: (year)(traded)(consistent/died/injured)[]
-//
 
 export default function Trends() {
   const [datas, updateData] = useState<DataType[] | null>(null);
@@ -18,25 +17,51 @@ export default function Trends() {
   return datas === null ? null : <SubTrends datas={datas} />;
 }
 
+function groupByF<T, U>(ts: T[], f: (t: T) => U): { key: U; group: T[] }[] {
+  return Array.from(
+    ts
+      .reduce(
+        (prev, curr) => {
+          const key = f(curr);
+          if (!prev.has(key)) prev.set(key, []);
+          prev.get(key)!.push(curr);
+          return prev;
+        },
+        new Map() as Map<U, T[]>
+      )
+      .entries()
+  ).map(([key, group]) => ({ key: key as U, group }));
+}
+
 function SubTrends(props: { datas: DataType[] }) {
   return (
     <pre>
       {JSON.stringify(
-        props.datas
-          .flatMap((d) => d.games.map((g) => ({ g, d })))
-          .flatMap((o) => o.g.teams.map((t) => ({ t, o })))
-          .flatMap((oo) => oo.t.boxScore.map((b) => ({ b, oo })))
-          .flatMap((ooo) => ooo.b.players.map((p) => ({ p, ooo })))
-          .map((oooo) => ({
-            year: oooo.ooo.oo.o.d.year,
-            p: oooo.p,
-            b: { ...oooo.ooo.b, players: [] },
+        groupByF(
+          props.datas
+            .flatMap((d) => d.games.map((g) => ({ g, d })))
+            .flatMap((o) => o.g.teams.map((t) => ({ t, ...o })))
+            .flatMap((o) => o.t.boxScore.map((b) => ({ b, ...o })))
+            .flatMap((o) => o.b.players.map((p) => ({ p, ...o })))
+            .map((o) => ({
+              keys: {
+                year: o.d.year,
+                name: o.p.name,
+              },
+              score: getScore(o.p.stats, o.b),
+            }))
+            .filter((o) => o.keys.name === "Robbie Chosen"),
+          (o) => `${o.keys.year}: ${o.keys.name}`
+        )
+          .map(({ group }) => ({
+            keys: group[0].keys,
+            scores: group.map(({ score }) => score),
           }))
-          .map((ooooo) => ({
-            score: getScore(ooooo.p.stats, ooooo.b),
-            ooooo,
-          }))
-          .filter((oooooo) => oooooo.ooooo.p.name === "Robbie Chosen"),
+          .map((o) => ({ ...o, total: o.scores.reduce((a, b) => a + b, 0) }))
+          .map(
+            (o) =>
+              `${o.keys.year}: ${o.keys.name}: ${o.total} / ${o.scores.map((s) => s.toFixed(2))}`
+          ),
         null,
         2
       )}
