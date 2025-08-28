@@ -18,7 +18,9 @@ export default function Trends() {
   return datas === null ? null : (
     <pre>
       {JSON.stringify(
-        datasToPlayerYearScores(datas.filter((d) => d.year === 2020)),
+        datasToPlayerYearScores(datas.filter((d) => d.year >= 2020)).filter(
+          (p) => p.name.includes("Amon")
+        ),
         null,
         2
       )}
