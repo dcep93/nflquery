@@ -25,13 +25,17 @@ export type FantasyYear = { year: number; scores: number[]; total: number };
 
 type PlayerYearScoresType = {
   name: string;
+  position: string;
   years: FantasyYear[];
 }[];
+
+type ScoreType = { name: string; category: string };
 
 export function datasToPlayerYearScores(
   datas: DataType[]
 ): PlayerYearScoresType {
-  return groupByF(
+  const allScores: ScoreType[] = [];
+  const rawScores = groupByF(
     datas
       .map((d) => ({
         d,
@@ -47,6 +51,17 @@ export function datasToPlayerYearScores(
                 o.t.boxScore.flatMap((b) => b.players.map((p) => ({ p, b }))),
                 ({ p }) => p.name
               )
+                .map((o) => {
+                  allScores.splice(
+                    0,
+                    0,
+                    ...o.group.map((oo) => ({
+                      name: oo.p.name,
+                      category: oo.b.category,
+                    }))
+                  );
+                  return o;
+                })
                 .map(({ key, group }) => ({
                   name: key,
                   score: float2(
@@ -94,6 +109,27 @@ export function datasToPlayerYearScores(
     name: key,
     years: group.map(({ name, ...o }) => o),
   }));
+  const nameToScores = Object.fromEntries(
+    groupByF(allScores, (s) => s.name).map(({ key, group }) => [
+      key,
+      classifyPosition(group),
+    ])
+  );
+  return rawScores.map((o) => ({
+    position: nameToScores[o.name] || "X",
+    ...o,
+  }));
+}
+
+function classifyPosition(scores: ScoreType[]): string {
+  const grouped = Object.fromEntries(
+    groupByF(scores, (s) => s.category).map(({ key, group }) => [key, group])
+  );
+  if ((grouped.passing || []).length / scores.length >= 0.3) return "QB";
+  if ((grouped.rushing || []).length / scores.length >= 0.3) return "RB";
+  if ((grouped.receiving || []).length / scores.length >= 0.3) return "WR";
+  if ((grouped.fumbles || []).length / scores.length >= 0.3) return "FUMBLE";
+  return "X";
 }
 
 function groupByF<T, U>(ts: T[], f: (t: T) => U): { key: U; group: T[] }[] {

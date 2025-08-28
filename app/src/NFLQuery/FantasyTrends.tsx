@@ -13,8 +13,9 @@ export default function Trends() {
       {JSON.stringify(
         datasToPlayerYearScores(datas.filter((d) => d.year >= 2020))
           .filter((p) => p.name.includes("Amon"))
-          .map(({ name, years }) => ({
+          .map(({ name, position, years }) => ({
             name,
+            position,
             years: years.map((year) => classify(year)),
           })),
         null,
