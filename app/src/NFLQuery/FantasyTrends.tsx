@@ -6,7 +6,7 @@ import { bubbleStyle } from "./Query";
 
 const MIN_YEARS_EXP = 6;
 const MIN_BEST_SCORE = 200;
-const INJURED_GAMES_THRESHOLD = 5;
+const INJURED_GAMES_THRESHOLD = 4;
 
 export default function Trends() {
   const [datas, updateData] = useState<DataType[] | null>(null);
@@ -24,9 +24,10 @@ export default function Trends() {
     .sort((a, b) => b.max - a.max)
     .map((o) => ({
       ...o,
-      years: o.years.slice(1).map((year) => ({
-        total: year.total,
-        missed: year.scores
+      years: o.years.slice(1).map((oo) => ({
+        year: oo.year,
+        total: oo.total,
+        missed: oo.scores
           .slice(0, -2)
           .sort((a, b) => a - b)
           .concat(1)
