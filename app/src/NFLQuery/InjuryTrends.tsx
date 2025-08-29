@@ -61,6 +61,92 @@ export default function InjuryTrends() {
               </div>
               <div>minYearsExp: {config.minYearsExp}</div>
             </div>
+            <div style={bubbleStyle}>
+              <div>
+                only include players that have scored at least this many fantasy
+                points in a season
+              </div>
+              <div>
+                <input
+                  type={"range"}
+                  min={100}
+                  max={300}
+                  step={10}
+                  value={config.minBestScore}
+                  onChange={(e) =>
+                    updateConfig("minBestScore", Number(e.target.value))
+                  }
+                />
+              </div>
+              <div>minBestScore: {config.minBestScore}</div>
+            </div>
+            <div style={bubbleStyle}>
+              <div>
+                a season counts as injured if the player scored zero at least
+                this many times
+              </div>
+              <div>
+                <input
+                  type={"range"}
+                  min={2}
+                  max={8}
+                  step={1}
+                  value={config.injuredGamesThreshold}
+                  onChange={(e) =>
+                    updateConfig(
+                      "injuredGamesThreshold",
+                      Number(e.target.value)
+                    )
+                  }
+                />
+              </div>
+              <div>injuredGamesThreshold: {config.injuredGamesThreshold}</div>
+            </div>
+            <div style={bubbleStyle}>
+              <div>
+                a player needs to have played this many seasons to be counted
+                towards historical rate
+              </div>
+              <div>
+                <input
+                  type={"range"}
+                  min={2}
+                  max={8}
+                  step={1}
+                  value={config.historicalGamesThreshold}
+                  onChange={(e) =>
+                    updateConfig(
+                      "historicalGamesThreshold",
+                      Number(e.target.value)
+                    )
+                  }
+                />
+              </div>
+              <div>
+                historicalGamesThreshold: {config.historicalGamesThreshold}
+              </div>
+            </div>
+            <div style={bubbleStyle}>
+              <div>rate to be considered historically injured</div>
+              <div>
+                <input
+                  type={"range"}
+                  min={0}
+                  max={1}
+                  step={0.01}
+                  value={config.historicalRateThreshold}
+                  onChange={(e) =>
+                    updateConfig(
+                      "historicalRateThreshold",
+                      Number(e.target.value)
+                    )
+                  }
+                />
+              </div>
+              <div>
+                historicalRateThreshold: {config.historicalRateThreshold}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -76,7 +162,7 @@ export default function InjuryTrends() {
                   lastYearInjured.length)(
                   output.filter((o) => o.injureds[o.i - 1])
                 ),
-                injuryRateGivenHistoricalRate: ((historicallyInjured) =>
+                injuryRateGivenHistoricallyInjured: ((historicallyInjured) =>
                   historicallyInjured.filter((o) => o.injureds[o.i]).length /
                   historicallyInjured.length)(
                   output
