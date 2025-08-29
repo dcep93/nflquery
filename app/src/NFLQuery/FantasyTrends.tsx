@@ -6,10 +6,7 @@ import { bubbleStyle } from "./Query";
 
 const MIN_YEARS_EXP = 6;
 const MIN_BEST_SCORE = 200;
-
 const INJURED_GAMES_THRESHOLD = 5;
-const LOW = 0.2;
-const HIGH = 0.4;
 
 export default function Trends() {
   const [datas, updateData] = useState<DataType[] | null>(null);
@@ -69,11 +66,4 @@ function getInjuryRate(player: {
     .findIndex((missed) => missed < INJURED_GAMES_THRESHOLD);
   const z = y / x.length;
   return z;
-}
-
-function classify(m: number) {
-  if (m < 0) return "healthy";
-  if (m <= LOW) return `[-,${LOW}]`;
-  if (m < HIGH) return `(${LOW},${HIGH})`;
-  return `[${HIGH},+]`;
 }
