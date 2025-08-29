@@ -40,8 +40,27 @@ export default function InjuryTrends() {
           </ul>
         </div>
         <div>
-          <div style={bubbleStyle}>
-            <div>config</div>
+          <div style={{ ...bubbleStyle, maxWidth: "20em" }}>
+            <div style={bubbleStyle}>config</div>
+            <div style={bubbleStyle}>
+              <div>
+                only include players that have played this many seasons up to
+                today
+              </div>
+              <div>
+                <input
+                  type={"range"}
+                  min={0}
+                  max={7}
+                  step={1}
+                  value={config.minYearsExp}
+                  onChange={(e) =>
+                    updateConfig("minYearsExp", Number(e.target.value))
+                  }
+                />
+              </div>
+              <div>minYearsExp: {config.minYearsExp}</div>
+            </div>
           </div>
         </div>
       </div>
