@@ -8,7 +8,7 @@ export default function InjuryTrends() {
   const [datas, updateData] = useState<DataType[] | null>(null);
   const [config, _updateConfig] = useState({
     minYearsExp: 5,
-    minBestScore: 300,
+    minBestScore: 200,
     injuredGamesThreshold: 4,
     historicalGamesThreshold: 4,
     historicalRateThreshold: 0.3,
@@ -226,8 +226,8 @@ function getOutput(
         })),
     }))
     .flatMap((o) =>
-      o.years.map((y, i) => ({
-        name: o.name,
+      o.years.map((_, i) => ({
+        name: `${o.name}: ${o.max}`,
         i,
         injureds: o.years.slice(0, i + 1).map(({ injured }) => injured),
         historical_injury_rate:

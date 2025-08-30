@@ -11,6 +11,12 @@ const scoring = {
   [k1: string]: { [k2: string]: number };
 };
 
+declare global {
+  interface Window {
+    fantasyData: PlayerYearScoresType;
+  }
+}
+
 var initialized = false;
 export default function PlayerYearScores() {
   const [state, updateState] = useState("fetching");
@@ -19,8 +25,13 @@ export default function PlayerYearScores() {
     Data(allYears)
       .then(datasToPlayerYearScores)
       .then((output) => {
-        console.log(output);
-        updateState(`console.log(${JSON.stringify(output).length})`);
+        window.fantasyData = output;
+        updateState(
+          [
+            `JSON.stringify(window.fantasyData).length = ${JSON.stringify(window.fantasyData).length}`,
+            `window.fantasyData[0] = ${JSON.stringify(window.fantasyData[0], null, 2)}`,
+          ].join("\n\n")
+        );
       });
   }
   return <pre>{state}</pre>;
@@ -31,6 +42,7 @@ export type FantasyYear = { year: number; scores: number[]; total: number };
 export type PlayerYearScoresType = {
   name: string;
   position: string;
+  total: number;
   years: FantasyYear[];
 }[];
 
@@ -118,10 +130,13 @@ export function datasToPlayerYearScores(
       classifyPosition(group),
     ])
   );
-  return rawScores.map((o) => ({
-    position: nameToScores[o.name] || "X",
-    ...o,
-  }));
+  return rawScores
+    .map((o) => ({
+      position: nameToScores[o.name] || "X",
+      total: float2(o.years.flatMap((y) => y.total).reduce((a, b) => a + b, 0)),
+      ...o,
+    }))
+    .sort((a, b) => b.total - a.total);
 }
 
 function classifyPosition(scores: ScoreType[]): string {
