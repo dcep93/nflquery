@@ -28,14 +28,7 @@ export default function PlayerYearScores() {
       .then((output) => {
         window.fantasyData = output;
         updateState(
-          [
-            `JSON.stringify(window.fantasyData).length = ${JSON.stringify(window.fantasyData).length}`,
-            `${JSON.stringify(
-              window.fantasyData.find((p) => p.name.includes(filterStr)),
-              null,
-              2
-            )}`,
-          ].join("\n\n")
+          `JSON.stringify(window.fantasyData).length = ${JSON.stringify(window.fantasyData).length}`
         );
       });
   }
@@ -49,6 +42,13 @@ export default function PlayerYearScores() {
           onChange={(e) => updateFilterStr(e.target!.value)}
         />
       </div>
+      <pre>
+        {JSON.stringify(
+          window.fantasyData?.find((p) => p.name.includes(filterStr)),
+          null,
+          2
+        )}
+      </pre>
     </div>
   );
 }
