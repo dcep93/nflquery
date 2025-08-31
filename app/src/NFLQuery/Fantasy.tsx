@@ -20,6 +20,7 @@ declare global {
 var initialized = false;
 export default function PlayerYearScores() {
   const [state, updateState] = useState("fetching");
+  const [filterStr, updateFilterStr] = useState("Tom Brady");
   if (!initialized) {
     initialized = true;
     Data(allYears)
@@ -29,12 +30,27 @@ export default function PlayerYearScores() {
         updateState(
           [
             `JSON.stringify(window.fantasyData).length = ${JSON.stringify(window.fantasyData).length}`,
-            `window.fantasyData[0] = ${JSON.stringify(window.fantasyData[0], null, 2)}`,
+            `${JSON.stringify(
+              window.fantasyData.find((p) => p.name.includes(filterStr)),
+              null,
+              2
+            )}`,
           ].join("\n\n")
         );
       });
   }
-  return <pre>{state}</pre>;
+  return (
+    <div>
+      <pre>{state}</pre>
+      <div>
+        filterStr:{" "}
+        <input
+          value={filterStr}
+          onChange={(e) => updateFilterStr(e.target!.value)}
+        />
+      </div>
+    </div>
+  );
 }
 
 export type FantasyYear = { year: number; scores: number[]; total: number };
