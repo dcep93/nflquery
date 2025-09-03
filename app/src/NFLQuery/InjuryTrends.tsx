@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
 import Data, { DataType } from "./Data";
 import { datasToPlayerYearScores } from "./Fantasy";
-import { allYears } from "./Fetch";
 import { bubbleStyle } from "./Query";
 
 export default function InjuryTrends() {
@@ -16,7 +15,7 @@ export default function InjuryTrends() {
   const updateConfig = (key: string, value: number) =>
     _updateConfig(Object.assign({}, config, { [key]: value }));
   useMemo(() => {
-    Data(allYears).then(updateData);
+    Data().then(updateData);
   }, []);
   if (datas === null) return null;
   const output = getOutput(datas, config);

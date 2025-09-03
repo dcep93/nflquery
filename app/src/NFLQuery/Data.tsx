@@ -1,8 +1,14 @@
-export default function Data(years: number[]): Promise<DataType[]> {
+const startYear = 2005;
+const endYear = 2025;
+export const allYears = Array.from(new Array(endYear - startYear + 1)).map(
+  (_, i) => startYear + i
+);
+
+export default function Data(): Promise<DataType[]> {
   return Promise.resolve()
     .then(() => caches.open("data"))
     .then((cache) =>
-      years
+      allYears
         .map((year) => year.toString())
         .map((year) => ({
           year,

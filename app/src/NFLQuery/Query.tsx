@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Data, { DataType } from "./Data";
-import { allYears } from "./Fetch";
 import QueryBuilder, { QueryBuilderName, QueryFunctions } from "./QueryBuilder";
 import CustomQueryEditor from "./QueryBuilder/CustomQueryEditor";
 import QueryHelpers from "./QueryBuilder/QueryHelpers";
@@ -55,7 +54,7 @@ export default function Query() {
   const [datas, updateDatas] = useState<DataType[] | null>(null);
   if (!initialized) {
     initialized = true;
-    Data(allYears).then(updateDatas);
+    Data().then(updateDatas);
     window.QueryHelpers = QueryHelpers;
   }
   const rawHash = window.location.hash.slice(1);

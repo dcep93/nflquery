@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Data, { DataType } from "./Data";
-import { allYears } from "./Fetch";
 
 const scoring = {
   passing: { YDS: 0.04, TD: 4, INT: -2 },
@@ -23,7 +22,7 @@ export default function PlayerYearScores() {
   const [filterStr, updateFilterStr] = useState("Tom Brady");
   if (!initialized) {
     initialized = true;
-    Data(allYears)
+    Data()
       .then(datasToPlayerYearScores)
       .then((output) => {
         window.fantasyData = output;

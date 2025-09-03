@@ -1,15 +1,9 @@
 import { useState } from "react";
-import { GameType, TeamStatistic } from "./Data";
+import { allYears, GameType, TeamStatistic } from "./Data";
 
 // https://gist.github.com/nntrn/ee26cb2a0716de0947a0a4e9a157bc1c
 
 // pbpaste | python3 pasteToFiles.py
-
-const startYear = 2005;
-const endYear = 2024;
-export const allYears = Array.from(new Array(endYear - startYear + 1)).map(
-  (_, i) => startYear + i
-);
 
 const BAD_PLAY_IDS = [
   "2509180100001",
@@ -114,7 +108,7 @@ function getGames(year: number): Promise<GameType[]> {
           season: { slug: string };
           status: { type: { state: string } };
           competitions: [
-            { type: { abbreviation: string }; notes: [{ headline: string }] }
+            { type: { abbreviation: string }; notes: [{ headline: string }] },
           ];
         }[];
       }) =>
@@ -278,14 +272,14 @@ function getGames(year: number): Promise<GameType[]> {
                               (BAD_PLAY_IDS.includes(p.id)
                                 ? `bad.${p.id}`
                                 : obj.header.season.year === 2004
-                                ? `2004.${p.id}`
-                                : ctag("play.type", {
-                                    id: p.id,
-                                    text: p.text,
-                                    obj,
-                                    p,
-                                  }) === null ||
-                                  `ctag.play.type:${p.id}`))!.toString(),
+                                  ? `2004.${p.id}`
+                                  : ctag("play.type", {
+                                      id: p.id,
+                                      text: p.text,
+                                      obj,
+                                      p,
+                                    }) === null ||
+                                    `ctag.play.type:${p.id}`))!.toString(),
                             down: p.start.shortDownDistanceText,
                             text: (
                               p.text ||
@@ -307,7 +301,7 @@ function getGames(year: number): Promise<GameType[]> {
                           ...pbp,
                           scores: [lastPlay.awayScore, lastPlay.homeScore] as [
                             number,
-                            number
+                            number,
                           ],
                         })),
                     };
