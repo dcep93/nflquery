@@ -3,16 +3,19 @@ import { BuildQueryConfig } from "../QueryBuilder";
 export default BuildQueryConfig({
   tooltip: "most passing yards for a player in a game",
   queryFunctions: () => ({
-    extract: (o) =>
-      (({ bs }) =>
+    extract: (o) => {
+      return (({ bs }) =>
         (({ index }) =>
-          bs.players.map((p) => ({ p, value: parseFloat(p.stats[index]) })))({
-          index: bs.labels.findIndex((l) => l === "netPassingYards"),
+          bs.players
+            .map((p) => ({ p, value: parseFloat(p.stats[index]) }))
+            .filter(({ value }) => value))({
+          index: bs.labels.findIndex((l) => l === "YDS"),
         }))({
         bs: o.g.teams[o.teamIndex].boxScore.find(
           ({ category }) => category === "passing"
         )!,
-      }),
+      });
+    },
     mapPoints: (points) =>
       points.map((o) => ({
         x: o.extraction.p.name,
