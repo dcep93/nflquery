@@ -6,6 +6,7 @@ import QueryHelpers from "./QueryBuilder/QueryHelpers";
 import getPoints from "./QueryBuilder/getPoints";
 import Comeback from "./queries/Comeback";
 import Encroachments from "./queries/Encroachments";
+import GamePassingYards from "./queries/GamePassingYards";
 import GamePenalties from "./queries/GamePenalties";
 import Longest4thDown from "./queries/Longest4thDown";
 import LongestDrive from "./queries/LongestDrive";
@@ -25,6 +26,7 @@ import Year4thDown from "./queries/Year4thDown";
 
 var initialized = false;
 const allQueries = {
+  GamePassingYards,
   Encroachments,
   PuntAverages,
   Penalty,
