@@ -210,7 +210,7 @@ function getOutput(
       ...o,
       years: o.years
         .slice(1)
-        .filter((oo) => oo.scores[0] > 0)
+        .filter((oo) => oo.scores[0]! > 0)
         .map((oo) => ({
           scores: oo.scores,
           year: oo.year,
@@ -218,6 +218,8 @@ function getOutput(
           injured:
             oo.scores
               .slice(0, -2)
+              // TODO double check
+              .map((s) => s || 0)
               .sort((a, b) => a - b)
               .concat(1)
               .map((v, i) => ({ v, i }))

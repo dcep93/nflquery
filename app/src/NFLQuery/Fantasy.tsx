@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Data, { DataType } from "./Data";
+import { clog } from "./Fetch";
 
 const scoring = {
   passing: { YDS: 0.04, TD: 4, INT: -2 },
@@ -52,7 +53,11 @@ export default function PlayerYearScores() {
   );
 }
 
-export type FantasyYear = { year: number; scores: number[]; total: number };
+export type FantasyYear = {
+  year: number;
+  scores: (number | null)[];
+  total: number;
+};
 
 export type PlayerYearScoresType = {
   name: string;
@@ -71,7 +76,9 @@ export function datasToPlayerYearScores(
     datas
       .map((d) => ({
         d,
-        numWeeks: d.games.map((g) => g.week).sort((a, b) => b - a)[0],
+        numWeeks: clog(d)
+          .games.map((g) => g.week)
+          .sort((a, b) => b - a)[0],
       }))
       .flatMap(({ d, numWeeks }) =>
         groupByF(
@@ -124,14 +131,18 @@ export function datasToPlayerYearScores(
           .map(({ name, scoresByWeek }) => ({
             name,
             year: d.year,
-            scores: Array.from(new Array(numWeeks)).map(
-              (_, weekNumMinusOne) => scoresByWeek[weekNumMinusOne + 1] || 0
+            scores: Array.from(new Array(numWeeks)).map((_, weekNumMinusOne) =>
+              (({ score }) => (score === undefined ? null : score))({
+                score: scoresByWeek[weekNumMinusOne + 1],
+              })
             ),
           }))
           .filter(({ scores }) => scores.find((s) => s !== 0))
           .map((o) => ({
             ...o,
-            total: float2(o.scores.reduce((a, b) => a + b, 0)),
+            total: float2(
+              o.scores.map((s) => s || 0).reduce((a, b) => a + b, 0)
+            ),
           }))
       ),
     (o) => o.name
