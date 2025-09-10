@@ -1,5 +1,5 @@
 const startYear = 2005;
-const endYear = 2024;
+const endYear = 2025;
 export const allYears = Array.from(new Array(endYear - startYear + 1)).map(
   (_, i) => startYear + i
 );

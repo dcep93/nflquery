@@ -59,28 +59,32 @@ export default function Fetch() {
     Promise.resolve()
       .then(() => update({ ...state, startedJobs: ++state.startedJobs }))
       .then(() =>
-        allYears.map((year, yearIndex) =>
-          Promise.resolve()
-            .then(
-              () =>
-                new Promise((resolve) => setTimeout(resolve, 1000 * yearIndex))
-            )
-            .then(() =>
-              update({ ...state, startedYears: ++state.startedYears })
-            )
-            .then(() => getGames(year))
-            .then((games: GameType[]) => ({
-              year,
-              games,
-            }))
-            .then((data) =>
-              Promise.resolve()
-                .then(() =>
-                  update({ ...state, endedYears: ++state.endedYears })
-                )
-                .then(() => data)
-            )
-        )
+        allYears
+          .filter((year) => year === 2025)
+          .map((year, yearIndex) =>
+            Promise.resolve()
+              .then(
+                () =>
+                  new Promise((resolve) =>
+                    setTimeout(resolve, 1000 * yearIndex)
+                  )
+              )
+              .then(() =>
+                update({ ...state, startedYears: ++state.startedYears })
+              )
+              .then(() => getGames(year))
+              .then((games: GameType[]) => ({
+                year,
+                games,
+              }))
+              .then((data) =>
+                Promise.resolve()
+                  .then(() =>
+                    update({ ...state, endedYears: ++state.endedYears })
+                  )
+                  .then(() => data)
+              )
+          )
       )
       .then((ps) => Promise.all(ps))
       .then((ds) => JSON.stringify(ds))
