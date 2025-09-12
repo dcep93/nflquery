@@ -137,7 +137,7 @@ export function datasToPlayerYearScores(
               })
             ),
           }))
-          .filter(({ scores }) => scores.find((s) => s !== 0))
+          .filter(({ scores }) => scores.find((s) => s !== 0) !== undefined)
           .map((o) => ({
             ...o,
             total: float2(
