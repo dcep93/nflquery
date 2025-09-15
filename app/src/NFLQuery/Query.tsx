@@ -12,6 +12,7 @@ import Longest4thDown from "./queries/Longest4thDown";
 import LongestDrive from "./queries/LongestDrive";
 import March from "./queries/March";
 import MinPossessionTime from "./queries/MinPossessionTime";
+import MostFieldGoalsNoTD from "./queries/MostFieldGoalsNoTD";
 import OTWalkoffs from "./queries/OTWalkoffs";
 import Penalty from "./queries/Penalty";
 import PuntAverages from "./queries/PuntAverages";
@@ -26,6 +27,7 @@ import Year4thDown from "./queries/Year4thDown";
 
 var initialized = false;
 const allQueries = {
+  MostFieldGoalsNoTD,
   GamePassingYards,
   Encroachments,
   PuntAverages,
