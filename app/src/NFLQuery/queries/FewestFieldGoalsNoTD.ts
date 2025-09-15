@@ -17,7 +17,7 @@ export default BuildQueryConfig({
     mapPoints: (points) =>
       points.map((o) => ({
         x: "x",
-        y: o.extraction.drives.filter(
+        y: -o.extraction.drives.filter(
           (dr) =>
             dr.result?.includes("Field Goal") ||
             dr.plays.find((p) => p.type === "FG") !== undefined
