@@ -14,6 +14,7 @@ import LongestDrive from "./queries/LongestDrive";
 import March from "./queries/March";
 import MinPossessionTime from "./queries/MinPossessionTime";
 import MostFieldGoalsNoTD from "./queries/MostFieldGoalsNoTD";
+import OTSafety from "./queries/OTSafety";
 import OTWalkoffs from "./queries/OTWalkoffs";
 import Penalty from "./queries/Penalty";
 import PuntAverages from "./queries/PuntAverages";
@@ -44,6 +45,7 @@ const allQueries = {
   TotalLowScore,
   ThirtyFourToZero,
   Comeback,
+  OTSafety,
   March,
   LongestDrive,
   Longest4thDown,
