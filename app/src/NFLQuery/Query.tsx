@@ -65,6 +65,9 @@ export default function Query() {
     Data().then(updateDatas);
     window.QueryHelpers = QueryHelpers;
   }
+  useEffect(() => {
+    datas && datas.map((d) => console.log(d.year, d.games.length));
+  }, [datas]);
   const rawHash = window.location.hash.slice(1);
   const [hash, updateHash] = useState<string>(
     allQueries[rawHash.split(".")[0] as keyof typeof allQueries]
