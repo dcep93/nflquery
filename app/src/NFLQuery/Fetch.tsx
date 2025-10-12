@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { allYears, GameType, TeamStatistic } from "./Data";
+import { allYears, endYear, GameType, TeamStatistic } from "./Data";
 
 // https://gist.github.com/nntrn/ee26cb2a0716de0947a0a4e9a157bc1c
 
@@ -60,7 +60,7 @@ export default function Fetch() {
       .then(() => update({ ...state, startedJobs: ++state.startedJobs }))
       .then(() =>
         allYears
-          .filter((year) => year === 2025)
+          .filter((year) => year === endYear)
           .map((year, yearIndex) =>
             Promise.resolve()
               .then(

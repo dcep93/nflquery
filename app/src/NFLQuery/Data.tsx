@@ -1,8 +1,12 @@
 const startYear = 2005;
-const endYear = 2025;
+export const endYear = 2025;
 export const allYears = Array.from(new Array(endYear - startYear + 1)).map(
   (_, i) => startYear + i
 );
+
+const wasHardRefresh =
+  (performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming)
+    ?.type === "reload";
 
 export default function Data(): Promise<DataType[]> {
   return Promise.resolve()
@@ -17,7 +21,11 @@ export default function Data(): Promise<DataType[]> {
         .map(({ year, url }) =>
           Promise.resolve()
             // .then(() => cache.delete(year))
-            .then(() => cache.match(year))
+            .then(() =>
+              wasHardRefresh && year === endYear.toString()
+                ? undefined
+                : cache.match(year)
+            )
             .then((cachedResponse) =>
               cachedResponse?.url === url
                 ? cachedResponse?.json()
