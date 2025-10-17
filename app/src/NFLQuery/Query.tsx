@@ -19,6 +19,7 @@ import OTWalkoffs from "./queries/OTWalkoffs";
 import Penalty from "./queries/Penalty";
 import PuntAverages from "./queries/PuntAverages";
 import Q1Q3_4thDown from "./queries/Q1Q3_4thDown";
+import Receptions from "./queries/Receptions";
 import Team4thDown from "./queries/Team4thDown";
 import TeamHighScore from "./queries/TeamHighScore";
 import ThirtyFourToZero from "./queries/ThirtyFourToZero";
@@ -29,6 +30,7 @@ import Year4thDown from "./queries/Year4thDown";
 
 var initialized = false;
 const allQueries = {
+  Receptions,
   MostFieldGoalsNoTD,
   FewestFieldGoalsNoTD,
   GamePassingYards,
