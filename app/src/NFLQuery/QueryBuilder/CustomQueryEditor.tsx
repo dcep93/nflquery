@@ -3,7 +3,7 @@ import parserEstree from "prettier/plugins/estree";
 import prettier from "prettier/standalone";
 
 import { createRef, useEffect, useState } from "react";
-import { QueryBuilderName, QueryFunctions } from ".";
+import { evalFunctions, QueryBuilderName, QueryFunctions } from ".";
 import { DataType } from "../Data";
 
 export default function CustomQueryEditor(props: {
@@ -59,15 +59,19 @@ export default function CustomQueryEditor(props: {
       <div>
         <button
           onClick={() =>
-            Promise.resolve().then(() =>
-              props.updateHash(
-                `${QueryBuilderName}.${JSON.stringify(
-                  Object.fromEntries(
-                    Object.entries(refs).map(([k, v]) => [k, v.current!.value])
-                  )
-                )}`
+            Promise.resolve()
+              .then(() =>
+                Object.fromEntries(
+                  Object.entries(refs).map(([k, v]) => [k, v.current!.value])
+                )
               )
-            )
+              .then((functions) => evalFunctions(functions) && functions)
+              .then((functions) =>
+                props.updateHash(
+                  `${QueryBuilderName}.${JSON.stringify(functions)}`
+                )
+              )
+              .catch(alert)
           }
         >
           customize

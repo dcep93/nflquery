@@ -46,13 +46,17 @@ function getCustomFunctions<T>(
     const matched = window.location.hash.match(/.*?\.(.*)/);
     if (!matched) return defaultFunctions;
     const functions = JSON.parse(decodeURIComponent(matched![1]));
-    const evaledFunctions = Object.fromEntries(
-      Object.entries(functions).map(([k, v]) => [k, safeEval(v as string)])
-    );
+    const evaledFunctions = evalFunctions(functions);
     // @ts-ignore
     return evaledFunctions;
   } catch (e) {
     alert(e);
   }
   return defaultFunctions;
+}
+
+export function evalFunctions(functions: Record<string, string>) {
+  return Object.fromEntries(
+    Object.entries(functions).map(([k, v]) => [k, safeEval(v as string)])
+  );
 }
