@@ -87,8 +87,7 @@ export default function Fetch() {
           )
       )
       .then((ps) => Promise.all(ps))
-      .then((ds) => JSON.stringify(ds))
-      .then(clog)
+      .then((ds) => ds.map(clog))
       .then(() => update({ ...state, endedJobs: ++state.endedJobs }));
   }
   return <pre>{JSON.stringify(state)}</pre>;
