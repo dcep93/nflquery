@@ -15,7 +15,7 @@ export default BuildQueryConfig({
         }))
         .flatMap(({ boxScore, index }) =>
           boxScore.players.map(({ name, stats }) => ({
-            x: name,
+            x: `${name} - ${boxScore.labels} ${stats}`,
             y: stats[index],
           }))
         ),
