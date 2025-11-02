@@ -22,6 +22,7 @@ import Q1Q3_4thDown from "./queries/Q1Q3_4thDown";
 import Receptions from "./queries/Receptions";
 import Team4thDown from "./queries/Team4thDown";
 import TeamHighScore from "./queries/TeamHighScore";
+import TeamMostTouchdowns from "./queries/TeamMostTouchdowns";
 import ThirtyFourToZero from "./queries/ThirtyFourToZero";
 import TotalHighScore from "./queries/TotalHighScore";
 import TotalLowScore from "./queries/TotalLowScore";
@@ -43,6 +44,7 @@ const allQueries = {
   Q1Q3_4thDown,
   MinPossessionTime,
   TeamHighScore,
+  TeamMostTouchdowns,
   TotalHighScore,
   TotalLowScore,
   ThirtyFourToZero,
