@@ -1,5 +1,5 @@
 import { DataType, GameType } from "../Data";
-import { PointType } from "../Query";
+import { PointInType, PointType } from "../Query";
 
 const QueryBuilder = BuildQueryConfig({
   tooltip: "execute a custom query",
@@ -25,13 +25,7 @@ export function BuildQueryConfig<T>(args: QueryConfig<T>): QueryConfig<T> {
 
 export type QueryFunctions<T> = {
   extract: (o: { d: DataType; g: GameType; teamIndex: number }) => T[];
-  mapPoints: (
-    pointsIn: {
-      timestamp: number;
-      extraction: T;
-      label: string;
-    }[]
-  ) => PointType[];
+  mapPoints: (pointsIn: PointInType<T>[]) => PointType[];
 };
 
 function safeEval(v: string) {

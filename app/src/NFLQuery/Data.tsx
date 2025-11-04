@@ -57,15 +57,17 @@ export type DataType = {
   games: GameType[];
 };
 
+export type TeamType = {
+  name: string;
+  statistics: { [key in TeamStatistic]?: string };
+  boxScore: BoxScoreType[];
+};
+
 export type GameType = {
   gameId: number;
   week: number; // -1 for postseason
   timestamp: number;
-  teams: {
-    name: string;
-    statistics: { [key in TeamStatistic]?: string };
-    boxScore: BoxScoreType[];
-  }[];
+  teams: TeamType[];
   drives: DriveType[];
   scores: [number, number];
 };

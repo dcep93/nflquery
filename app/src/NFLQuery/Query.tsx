@@ -149,6 +149,12 @@ export const bubbleStyle = {
   margin: "0.5em",
 };
 
+export type PointInType<T> = {
+  timestamp: number;
+  extraction: T;
+  label: string;
+};
+
 export type PointType = {
   x: number | string;
   y: number;
