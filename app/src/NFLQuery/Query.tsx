@@ -11,6 +11,7 @@ import GamePassingYards from "./queries/GamePassingYards";
 import GamePenalties from "./queries/GamePenalties";
 import Longest4thDown from "./queries/Longest4thDown";
 import LongestDrive from "./queries/LongestDrive";
+import LongestTenure from "./queries/LongestTenure";
 import March from "./queries/March";
 import MinPossessionTime from "./queries/MinPossessionTime";
 import MostFieldGoalsNoTD from "./queries/MostFieldGoalsNoTD";
@@ -53,6 +54,7 @@ const allQueries = {
   March,
   LongestDrive,
   Longest4thDown,
+  LongestTenure,
   TurnoverOnDowns,
   OTWalkoffs,
   [QueryBuilderName]: QueryBuilder,
