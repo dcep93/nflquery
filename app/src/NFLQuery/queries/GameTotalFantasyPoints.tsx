@@ -27,17 +27,19 @@ export default BuildQueryConfig({
                           player: s.player,
                           points:
                             s.stat *
-                            {
-                              passing: { YDS: 0.04, TD: 4, INT: -2 },
-                              rushing: { YDS: 0.1, TD: 6 },
-                              receiving: { REC: 1, YDS: 0.1, TD: 6 },
-                              fumbles: { LOST: -2, REC: 2 },
-                              defensive: { SACKS: 1, TD: 6 },
-                              interceptions: { INT: 2, TD: 0 },
-                              kickReturns: { TD: 6 },
-                              puntReturns: { TD: 6 },
-                              kicking: { FG: 4, XP: 1 },
-                            }[l.category]?.[l.label],
+                            (
+                              {
+                                passing: { YDS: 0.04, TD: 4, INT: -2 },
+                                rushing: { YDS: 0.1, TD: 6 },
+                                receiving: { REC: 1, YDS: 0.1, TD: 6 },
+                                fumbles: { LOST: -2, REC: 2 },
+                                defensive: { SACKS: 1, TD: 6 },
+                                interceptions: { INT: 2, TD: 0 },
+                                kickReturns: { TD: 6 },
+                                puntReturns: { TD: 6 },
+                                kicking: { FG: 4, XP: 1 },
+                              } as Record<string, Record<string, number>>
+                            )[l.category]?.[l.label],
                         }))
                       )
                     )
