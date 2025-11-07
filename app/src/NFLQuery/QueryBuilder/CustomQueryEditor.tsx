@@ -2,7 +2,7 @@ import parserBabel from "prettier/plugins/babel";
 import parserEstree from "prettier/plugins/estree";
 import prettier from "prettier/standalone";
 
-import { createRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { evalFunctions, QueryBuilderName, QueryFunctions } from ".";
 import { DataType } from "../Data";
 
@@ -12,15 +12,10 @@ export default function CustomQueryEditor(props: {
   customFunctions: QueryFunctions<any>;
   datas: DataType[];
 }) {
-  const refs = Object.fromEntries(
-    Object.keys(props.customFunctions).map((k) => [
-      k,
-      createRef<HTMLTextAreaElement>(),
-    ])
-  );
   const [formattedFunctions, updateFormattedFunctions] = useState<{
     [key: string]: string;
   } | null>(null);
+  const [textareaValues, setTextareaValues] = useState<{ [key: string]: string }>({});
   useEffect(() => {
     let cancelled = false;
     const entries = Object.entries(props.customFunctions);
@@ -48,17 +43,28 @@ export default function CustomQueryEditor(props: {
       cancelled = true;
     };
   }, [props.customFunctions, props.isCustom]);
+  useEffect(() => {
+    if (formattedFunctions) {
+      setTextareaValues(formattedFunctions);
+    }
+  }, [formattedFunctions]);
+  const entries = Object.keys(props.customFunctions);
   if (!formattedFunctions) return <div></div>;
   return (
     <div>
       <div>
-        {Object.keys(props.customFunctions).map((k, i) => (
+        {entries.map((k, i) => (
           <div key={i}>
             <div>{k}</div>
             <div>
               <textarea
-                defaultValue={formattedFunctions[k]}
-                ref={refs[k]}
+                value={textareaValues[k] ?? ""}
+                onChange={(event) =>
+                  setTextareaValues((prev) => ({
+                    ...prev,
+                    [k]: event.target.value,
+                  }))
+                }
                 style={{ width: "42em", height: "12em" }}
               ></textarea>
             </div>
@@ -70,9 +76,7 @@ export default function CustomQueryEditor(props: {
           onClick={() =>
             Promise.resolve()
               .then(() =>
-                Object.fromEntries(
-                  Object.entries(refs).map(([k, v]) => [k, v.current!.value])
-                )
+                Object.fromEntries(entries.map((key) => [key, textareaValues[key]]))
               )
               .then((functions) => evalFunctions(functions) && functions)
               .then((functions) =>
