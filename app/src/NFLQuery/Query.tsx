@@ -9,6 +9,7 @@ import Encroachments from "./queries/Encroachments";
 import FewestFieldGoalsNoTD from "./queries/FewestFieldGoalsNoTD";
 import GamePassingYards from "./queries/GamePassingYards";
 import GamePenalties from "./queries/GamePenalties";
+import GameTotalFantasyPoints from "./queries/GameTotalFantasyPoints";
 import Longest4thDown from "./queries/Longest4thDown";
 import LongestDrive from "./queries/LongestDrive";
 import LongestTenure from "./queries/LongestTenure";
@@ -36,6 +37,7 @@ const allQueries = {
   MostFieldGoalsNoTD,
   FewestFieldGoalsNoTD,
   GamePassingYards,
+  GameTotalFantasyPoints,
   Encroachments,
   PuntAverages,
   Penalty,
