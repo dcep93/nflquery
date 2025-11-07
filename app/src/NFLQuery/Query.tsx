@@ -127,7 +127,6 @@ export default function Query() {
         </div>
         <div>
           <CustomQueryEditor
-            key={output}
             updateHash={updateHash}
             isCustom={getQueryName(hash) === QueryBuilderName}
             customFunctions={getQuery(hash).queryFunctions()}

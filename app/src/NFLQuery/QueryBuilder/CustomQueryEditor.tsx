@@ -22,23 +22,32 @@ export default function CustomQueryEditor(props: {
     [key: string]: string;
   } | null>(null);
   useEffect(() => {
-    !formattedFunctions &&
-      Promise.resolve()
-        .then(() => updateFormattedFunctions(null))
-        .then(() => props.customFunctions)
-        .then(Object.entries)
-        .then((entries) =>
-          entries.map(([k, v]) =>
-            Promise.resolve()
-              .then(() => (props.isCustom ? v.toString() : fToString(v)))
-              .then((str) => ({ k, str }))
-          )
-        )
-        .then((ps) => Promise.all(ps))
-        .then((arr) => arr.map(({ k, str }) => [k, str]))
-        .then(Object.fromEntries)
-        .then(updateFormattedFunctions);
-  }, [formattedFunctions, props]);
+    let cancelled = false;
+    const entries = Object.entries(props.customFunctions);
+    Promise.all(
+      entries.map(([k, v]) =>
+        Promise.resolve()
+          .then(() => (props.isCustom ? v.toString() : fToString(v)))
+          .then((str) => [k, str] as const)
+      )
+    )
+      .then(Object.fromEntries)
+      .then((formatted) => {
+        if (!cancelled) {
+          updateFormattedFunctions((prev) =>
+            areFormattedFunctionsEqual(prev, formatted) ? prev : formatted
+          );
+        }
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          alert(err);
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [props.customFunctions, props.isCustom]);
   if (!formattedFunctions) return <div></div>;
   return (
     <div>
@@ -86,4 +95,15 @@ function fToString(fn: (...args: any[]) => any): Promise<string> {
     parser: "babel",
     plugins: [parserEstree, parserBabel],
   });
+}
+
+function areFormattedFunctionsEqual(
+  a: { [key: string]: string } | null,
+  b: { [key: string]: string }
+): boolean {
+  if (!a) return false;
+  const aKeys = Object.keys(a);
+  const bKeys = Object.keys(b);
+  if (aKeys.length !== bKeys.length) return false;
+  return aKeys.every((key) => a[key] === b[key]);
 }
