@@ -1,6 +1,11 @@
 import { useState } from "react";
 import Data, { DataType } from "./Data";
-import { clog } from "./Fetch";
+
+function clog<T>(t: T): T {
+  console.log(t);
+  console.log(" ");
+  return t;
+}
 
 const scoring = {
   passing: { YDS: 0.04, TD: 4, INT: -2 },

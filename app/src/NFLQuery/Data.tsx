@@ -1,15 +1,15 @@
 import { allYears, endYear } from "./constants";
-import { fetchCompletedGameIds, fetchSummaryGame } from "./Fetch";
+import { fetchCompletedGameIds, fetchSummaryGame } from "./fetchYear";
 import { DataType } from "./types";
 
 export type {
-  DataType,
-  GameType,
-  TeamType,
-  TeamStatistic,
-  DriveType,
-  PlayType,
   BoxScoreType,
+  DataType,
+  DriveType,
+  GameType,
+  PlayType,
+  TeamStatistic,
+  TeamType,
 } from "./types";
 
 const wasHardRefresh =
@@ -97,4 +97,3 @@ async function ensureCurrentYearData(
 
   return updatedData;
 }
-
