@@ -59,7 +59,8 @@ export default BuildQueryConfig({
         x: e.extraction
           .map((obj) => `${obj.player}:${Number(obj.points.toFixed(2))}`)
           .join("/"),
-        y: e.extraction.map((obj) => obj.points).reduce((a, b) => a + b, 0),
+        y:
+          e.extraction.map((obj) => obj.points).reduce((a, b) => a + b, 0) * -1,
         label: e.label,
       })),
   }),
