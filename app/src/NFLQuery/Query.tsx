@@ -76,7 +76,7 @@ export default function Query() {
   useEffect(() => {
     datas && datas.map((d) => console.log(d.year, d.games.length));
   }, [datas]);
-  const rawHash = window.location.hash.slice(1);
+  const rawHash = decodeURIComponent(window.location.hash.slice(1));
   const [hash, updateHash] = useState<string>(
     allQueries[rawHash.split(".")[0] as keyof typeof allQueries]
       ? rawHash

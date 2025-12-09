@@ -15,7 +15,9 @@ export default function CustomQueryEditor(props: {
   const [formattedFunctions, updateFormattedFunctions] = useState<{
     [key: string]: string;
   } | null>(null);
-  const [textareaValues, setTextareaValues] = useState<{ [key: string]: string }>({});
+  const [textareaValues, setTextareaValues] = useState<{
+    [key: string]: string;
+  }>({});
   useEffect(() => {
     let cancelled = false;
     const entries = Object.entries(props.customFunctions);
@@ -76,14 +78,17 @@ export default function CustomQueryEditor(props: {
           onClick={() =>
             Promise.resolve()
               .then(() =>
-                Object.fromEntries(entries.map((key) => [key, textareaValues[key]]))
-              )
-              .then((functions) => evalFunctions(functions) && functions)
-              .then((functions) =>
-                props.updateHash(
-                  `${QueryBuilderName}.${JSON.stringify(functions)}`
+                Object.fromEntries(
+                  entries.map((key) => [key, textareaValues[key]])
                 )
               )
+              .then((functions) => evalFunctions(functions) && functions)
+              .then((functions) => {
+                props.updateHash(
+                  `${QueryBuilderName}.${JSON.stringify(functions)}`
+                );
+                return functions;
+              })
               .catch(alert)
           }
         >

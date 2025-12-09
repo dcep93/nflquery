@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Data, { DataType } from "./Data";
 
-function clog<T>(t: T): T {
+export function clog<T>(t: T): T {
   console.log(t);
   console.log(" ");
   return t;
