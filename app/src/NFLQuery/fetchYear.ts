@@ -1,13 +1,12 @@
-import { endYear } from "./constants";
 import { GameType, TeamStatistic } from "./types";
 
 // https://gist.github.com/nntrn/ee26cb2a0716de0947a0a4e9a157bc1c
 
-function fetchLatestYear() {
-  Promise.resolve(endYear)
-    .then((year) => fetchYear(year).then((games) => ({ year, games })))
-    .then(console.log);
-}
+// function fetchLatestYear() {
+//   Promise.resolve(endYear)
+//     .then((year) => fetchYear(year).then((games) => ({ year, games })))
+//     .then(console.log);
+// }
 
 export function fetchYear(year: number): Promise<GameType[]> {
   return fetchCompletedGameIds(year)
