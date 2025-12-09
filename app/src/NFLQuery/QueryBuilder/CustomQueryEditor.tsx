@@ -48,7 +48,7 @@ export default function CustomQueryEditor(props: {
     return () => {
       cancelled = true;
     };
-  }, [props.hash, props.isCustom]);
+  }, [props.hash, props.isCustom, customFunctions]);
   useEffect(() => {
     if (formattedFunctions) {
       setTextareaValues(formattedFunctions);
