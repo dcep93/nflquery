@@ -9,6 +9,7 @@ import { GameType, TeamStatistic } from "./types";
 // }
 
 export function fetchYear(year: number): Promise<GameType[]> {
+  console.log("fetching", year);
   return fetchCompletedGameIds(year)
     .then((gameIds) =>
       gameIds.filter((gameId) => !EXCLUDED_GAME_IDS.has(gameId))
