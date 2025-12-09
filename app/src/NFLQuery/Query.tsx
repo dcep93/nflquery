@@ -63,7 +63,7 @@ const allQueries = {
 };
 
 const getQueryName = (hash: string) => hash.split(".")[0];
-const getQuery = (hash: string) =>
+export const getQuery = (hash: string) =>
   allQueries[getQueryName(hash) as keyof typeof allQueries];
 
 export default function Query() {
@@ -103,7 +103,7 @@ export default function Query() {
         .then(updateOutput)
         .catch((err) => {
           alert(err);
-          console.trace(err);
+          // console.trace(err);
         });
   }, [hash, datas]);
   if (!datas) return <div>fetching...</div>;
@@ -131,7 +131,7 @@ export default function Query() {
           <CustomQueryEditor
             updateHash={updateHash}
             isCustom={getQueryName(hash) === QueryBuilderName}
-            customFunctions={getQuery(hash).queryFunctions()}
+            hash={hash}
             datas={datas}
           />
         </div>

@@ -3,15 +3,19 @@ import parserEstree from "prettier/plugins/estree";
 import prettier from "prettier/standalone";
 
 import { useEffect, useState } from "react";
-import { evalFunctions, QueryBuilderName, QueryFunctions } from ".";
+import { evalFunctions, getCustomFunctions, QueryBuilderName } from ".";
 import { DataType } from "../Data";
+import { getQuery } from "../Query";
 
 export default function CustomQueryEditor(props: {
   updateHash: (hash: string) => void;
   isCustom: boolean;
-  customFunctions: QueryFunctions<any>;
+  hash: string;
   datas: DataType[];
 }) {
+  const customFunctions = props.isCustom
+    ? getCustomFunctions(props.hash)
+    : getQuery(props.hash).queryFunctions();
   const [formattedFunctions, updateFormattedFunctions] = useState<{
     [key: string]: string;
   } | null>(null);
@@ -19,10 +23,10 @@ export default function CustomQueryEditor(props: {
     [key: string]: string;
   }>({});
   useEffect(() => {
+    if (!customFunctions) return;
     let cancelled = false;
-    const entries = Object.entries(props.customFunctions);
     Promise.all(
-      entries.map(([k, v]) =>
+      Object.entries(customFunctions).map(([k, v]) =>
         Promise.resolve()
           .then(() => (props.isCustom ? v.toString() : fToString(v)))
           .then((str) => [k, str] as const)
@@ -44,18 +48,20 @@ export default function CustomQueryEditor(props: {
     return () => {
       cancelled = true;
     };
-  }, [props.customFunctions, props.isCustom]);
+  }, [props.hash, props.isCustom]);
   useEffect(() => {
     if (formattedFunctions) {
       setTextareaValues(formattedFunctions);
     }
   }, [formattedFunctions]);
-  const entries = Object.keys(props.customFunctions);
   if (!formattedFunctions) return <div></div>;
+  const entryKeys = customFunctions
+    ? Object.keys(customFunctions)
+    : ["extract", "mapPoints"];
   return (
     <div>
       <div>
-        {entries.map((k, i) => (
+        {entryKeys.map((k, i) => (
           <div key={i}>
             <div>{k}</div>
             <div>
@@ -79,17 +85,17 @@ export default function CustomQueryEditor(props: {
             Promise.resolve()
               .then(() =>
                 Object.fromEntries(
-                  entries.map((key) => [key, textareaValues[key]])
+                  entryKeys.map((key) => [key, textareaValues[key]])
                 )
               )
-              .then((functions) => evalFunctions(functions) && functions)
               .then((functions) => {
                 props.updateHash(
                   `${QueryBuilderName}.${JSON.stringify(functions)}`
                 );
                 return functions;
               })
-              .catch(alert)
+              .then((functions) => evalFunctions(functions) && functions)
+              .catch((err) => console.error(err))
           }
         >
           customize

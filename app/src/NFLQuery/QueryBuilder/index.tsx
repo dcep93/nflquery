@@ -4,10 +4,10 @@ import { PointInType, PointType } from "../Query";
 const QueryBuilder = BuildQueryConfig({
   tooltip: "execute a custom query",
   queryFunctions: () =>
-    getCustomFunctions({
+    getCustomFunctions(window.location.hash) ?? {
       extract: (o: any) => [Object.keys(o)],
       mapPoints: (o: any) => o,
-    }),
+    },
 });
 
 export default QueryBuilder;
@@ -33,12 +33,10 @@ function safeEval(v: string) {
   return eval(v);
 }
 
-function getCustomFunctions<T>(
-  defaultFunctions: QueryFunctions<T>
-): QueryFunctions<T> {
+export function getCustomFunctions<T>(hash: string): QueryFunctions<T> | null {
   try {
-    const matched = window.location.hash.match(/.*?\.(.*)/);
-    if (!matched) return defaultFunctions;
+    const matched = hash.match(/.*?\.(.*)/);
+    if (!matched) return null;
     const functions = JSON.parse(decodeURIComponent(matched![1]));
     const evaledFunctions = evalFunctions(functions);
     // @ts-ignore
@@ -46,7 +44,7 @@ function getCustomFunctions<T>(
   } catch (e) {
     alert(e);
   }
-  return defaultFunctions;
+  return null;
 }
 
 export function evalFunctions(functions: Record<string, string>) {
