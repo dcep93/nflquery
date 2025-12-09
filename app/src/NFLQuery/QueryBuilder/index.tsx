@@ -42,7 +42,7 @@ export function getCustomFunctions<T>(hash: string): QueryFunctions<T> | null {
     // @ts-ignore
     return evaledFunctions;
   } catch (e) {
-    alert(e);
+    // alert(e);
   }
   return null;
 }

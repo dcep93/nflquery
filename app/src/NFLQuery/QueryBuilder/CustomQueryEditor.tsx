@@ -42,7 +42,7 @@ export default function CustomQueryEditor(props: {
       })
       .catch((err) => {
         if (!cancelled) {
-          alert(err);
+          // alert(err);
         }
       });
     return () => {
