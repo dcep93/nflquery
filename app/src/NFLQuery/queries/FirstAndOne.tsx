@@ -7,15 +7,34 @@ export default BuildQueryConfig({
       o.teamIndex !== 0
         ? []
         : [
-            o.g.drives.flatMap((d) =>
-              d.plays.filter(
-                (p) => p.down === "1st & 1" && window.QueryHelpers.isPlay(p)
-              )
+            o.g.drives.flatMap((drive) =>
+              drive.plays
+                .filter(
+                  (play) =>
+                    play.down === "1st & 1" &&
+                    window.QueryHelpers.isPlay(play) &&
+                    play.distance > 0
+                )
+                .map((play) => {
+                  const playIndex = drive.plays.findIndex(
+                    (candidate) =>
+                      candidate === play || candidate.clock === play.clock
+                  );
+                  const sliceEnd =
+                    playIndex === -1 ? drive.plays.length : playIndex;
+
+                  return {
+                    clock: play.clock,
+                    plays: drive.plays.slice(0, sliceEnd),
+                  };
+                })
             ),
           ],
     mapPoints: (points) =>
       points.map((o) => ({
-        x: o.extraction.map((e) => e.clock).join(" / "),
+        x: o.extraction
+          .map((extraction) => JSON.stringify(extraction))
+          .join(" / "),
         y: o.extraction.length,
         label: o.label,
       })),
