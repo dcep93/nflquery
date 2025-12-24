@@ -14,6 +14,7 @@ export default function getPoints<T>(
             g.teams.map((_, teamIndex) => ({ d, g, teamIndex }))
           )
         )
+        .sort((a, b) => b.g.gameId - a.g.gameId)
         .flatMap((o) =>
           customFunctions.extract(o).map((extraction) => ({
             extraction,
