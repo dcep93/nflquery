@@ -21,7 +21,7 @@ export default BuildQueryConfig({
                       candidate === play || candidate.clock === play.clock
                   );
                   const sliceEnd =
-                    playIndex === -1 ? drive.plays.length : playIndex;
+                    playIndex === -1 ? drive.plays.length : playIndex + 1;
 
                   return {
                     clock: play.clock,
