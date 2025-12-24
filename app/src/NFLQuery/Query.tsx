@@ -7,6 +7,7 @@ import getPoints from "./QueryBuilder/getPoints";
 import Comeback from "./queries/Comeback";
 import Encroachments from "./queries/Encroachments";
 import FewestFieldGoalsNoTD from "./queries/FewestFieldGoalsNoTD";
+import FirstAndOne from "./queries/FirstAndOne";
 import GamePassingYards from "./queries/GamePassingYards";
 import GamePenalties from "./queries/GamePenalties";
 import GameTotalFantasyPoints from "./queries/GameTotalFantasyPoints";
@@ -39,6 +40,7 @@ const allQueries = {
   GamePassingYards,
   GameTotalFantasyPoints,
   Encroachments,
+  FirstAndOne,
   PuntAverages,
   Penalty,
   GamePenalties,
