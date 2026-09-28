@@ -431,7 +431,7 @@ test("season output has only x/y/label and sorts formatted contributors by contr
       x: 2026,
       y: 7.134,
       label:
-        "More Burden (ADP 6.6, 2 weeks) = 4.724; Less Burden (ADP 10, 1 week) = 2.410",
+        "More Burden (ADP 6.6, 2 weeks) = 4.724\nLess Burden (ADP 10, 1 week) = 2.410",
     },
   ]);
 });

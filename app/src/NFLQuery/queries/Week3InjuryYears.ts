@@ -180,7 +180,7 @@ const source = {
             y: Number(score.toFixed(3)),
             label: contributors
                 .map((p) => \`\${p.player} (ADP \${p.adp}, \${p.missedWeeks.length} \${p.missedWeeks.length === 1 ? "week" : "weeks"}) = \${p.contribution.toFixed(3)}\`)
-                .join("; "),
+                .join("\\n"),
         };
     });
     // A finite maximum keeps this formula header first after sorting and

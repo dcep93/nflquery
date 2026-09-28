@@ -4,6 +4,7 @@ import QueryBuilder, { QueryBuilderName, QueryFunctions } from "./QueryBuilder";
 import CustomQueryEditor from "./QueryBuilder/CustomQueryEditor";
 import QueryHelpers from "./QueryBuilder/QueryHelpers";
 import getPoints from "./QueryBuilder/getPoints";
+import QueryResults, { QueryOutput } from "./QueryResults";
 import Comeback from "./queries/Comeback";
 import Encroachments from "./queries/Encroachments";
 import FewestFieldGoalsNoTD from "./queries/FewestFieldGoalsNoTD";
@@ -86,7 +87,7 @@ export default function Query() {
       ? rawHash
       : Object.keys(allQueries)[0]
   );
-  const [output, updateOutput] = useState("NFLQuery");
+  const [output, updateOutput] = useState<QueryOutput | null>(null);
   useEffect(() => {
     window.location.hash = hash;
     datas &&
@@ -103,7 +104,6 @@ export default function Query() {
             .slice(0, 100)
             .map((p, index) => ({ ...p, index: index + 1 })),
         }))
-        .then((o) => JSON.stringify(o, null, 2))
         .then(updateOutput)
         .catch((err) => {
           alert(err);
@@ -140,9 +140,7 @@ export default function Query() {
           />
         </div>
       </div>
-      <div>
-        <pre style={{ whiteSpace: "pre-wrap" }}>{output}</pre>
-      </div>
+      {output ? <QueryResults output={output} /> : <div>NFLQuery</div>}
     </div>
   );
 }
