@@ -44,6 +44,8 @@ const source = {
     const decayPicks = 35;
     const minDraftWeight = 0.1;
     const referenceWeight = Math.exp(-(10 - 1) / decayPicks);
+    const durationScaleWeeks = 4;
+    const referenceDuration = 1 - Math.exp(-10 / durationScaleWeeks);
     const H = window.QueryHelpers;
     const currentYear = H.CURRENT_INJURY_SOURCES.year;
     const normalizeName = (name) => {
@@ -63,7 +65,7 @@ const source = {
     const years = Array.from(new Set([...Array.from(gamesByYear.keys()), currentYear]))
         .filter((year) => H.ADP_BY_YEAR[year]?.length)
         .sort((a, b) => a - b);
-    return years.map((year) => {
+    const seasons = years.map((year) => {
         const current = year === currentYear;
         const games = gamesByYear.get(year) || [];
         const adpPlayers = H.ADP_BY_YEAR[year].filter((p) => ["QB", "RB", "WR", "TE", "PK", "K"].includes(p.position));
@@ -159,8 +161,11 @@ const source = {
             }
             if (!weeks.length)
                 return;
-            // An ADP-10 player missing 10 weeks contributes exactly 10.
-            const contribution = (draftWeight / referenceWeight) * weeks.length;
+            // Duration has diminishing returns: 4 weeks is less than twice 2,
+            // and 14 weeks is only slightly worse than 12. Normalize so an
+            // ADP-10 player missing 10 weeks still contributes exactly 10.
+            const duration = 10 * (1 - Math.exp(-weeks.length / durationScaleWeeks)) / referenceDuration;
+            const contribution = (draftWeight / referenceWeight) * duration;
             score += contribution;
             contributors.push({
                 player: player.name,
@@ -178,6 +183,14 @@ const source = {
                 .join("; "),
         };
     });
+    // A finite maximum keeps this formula header first after sorting and
+    // preserves its y value when the results are serialized as JSON.
+    return [{
+        x: "",
+        y: Number.MAX_VALUE,
+        label: "",
+        formula: \`Sum of 10 * exp((10 - ADP) / \${decayPicks}) * (1 - exp(-numWeeks / \${durationScaleWeeks})) / (1 - exp(-10 / \${durationScaleWeeks})); include only exp(-(ADP - 1) / \${decayPicks}) >= \${minDraftWeight}. numWeeks includes byes.\`,
+    }, ...seasons];
 }`,
 };
 

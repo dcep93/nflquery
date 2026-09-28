@@ -17,10 +17,12 @@ No fantasy420 data, code, rosters, draft boards, or network requests are used.
 ```javascript
 const draftWeight = Math.exp(-(adp - 1) / 35);
 if (draftWeight < 0.1) return; // approximately ADP > 81.59
-const contribution = draftWeight / Math.exp(-(10 - 1) / 35) * missedWeeks.length;
+const numWeeks = missedWeeks.length;
+const duration = 10 * (1 - Math.exp(-numWeeks / 4)) / (1 - Math.exp(-10 / 4));
+const contribution = draftWeight / Math.exp(-(10 - 1) / 35) * duration;
 ```
 
-ADP 10 injured for 10 full weeks scores exactly 10, including byes within an injury absence. Picks 9/10/11 receive smooth per-week weights of approximately 1.029/1.000/0.972. The draft cutoff applies before duration or normalization, so a late pick cannot qualify through a longer injury absence. Adding another season never rescales existing scores.
+ADP 10 injured for 10 full weeks scores exactly 10, including byes within an injury absence. Picks 9/10/11 receive smooth ADP multipliers of approximately 1.029/1.000/0.972. Duration has diminishing impact: four injured weeks score about 1.61 times two weeks, while fourteen score only about 2% more than twelve. The duration curve is `10 × (1 − exp(−numWeeks / 4)) / (1 − exp(−10 / 4))`. The draft cutoff applies before duration or normalization, so a late pick cannot qualify through a longer injury absence. Adding another season never rescales existing scores.
 
 For example, Puka Nacua's 2024 appearance in Week 1 and return in Week 8 give six absent weeks (2–7), including the Week 6 bye.
 
@@ -30,7 +32,7 @@ Historical results are a **box-score absence proxy**, not a medical injury regis
 
 2026 uses the fixed, reviewed injury-week map instead. Current-season box scores and current reports establish early missed games; news informs one future-return estimate per injury. A confirmed Week 3 inactive can be included before that game is played. Actual participation, even for part of a game, is not a fully missed game. Healthy scratches, unsigned free-agent weeks and known non-injury exclusions are not counted. The raw week map still records missed games. The editable calculation also counts the saved bye week when it is adjacent to an injury-missed week and precedes the saved return week. This includes a bye immediately before the estimated return. The source metadata separates reported facts, known absences, future estimates and modeling assumptions. Unknown diagnoses still require provisional point estimates; no uncertainty ranges are displayed.
 
-Output is exactly `x`, `y`, and `label`. Each label contains descending player contributions such as `Adrian Peterson (ADP 6.6, 10 weeks) = 11.020`. Detailed sources remain available through QueryHelpers and are not included in output labels.
+The first output point is a formula entry: empty `x` and `label`, `y: Number.MAX_VALUE` to sort first, and a human-readable `formula` string. The maximum is a finite sorting sentinel, not a season score, and survives JSON serialization. Each season point contains only `x`, `y`, and `label`. Season labels contain descending player contributions such as `Adrian Peterson (ADP 6.6, 10 weeks) = 11.020`. Detailed sources remain available through QueryHelpers and are not included in output labels.
 
 ## ADP provenance and limits
 
