@@ -105,6 +105,7 @@ const source = {
             const draftTeam = normalizeTeam(player.team || "");
             let team = draftTeam;
             let weeks = [];
+            const byeWeeks = new Set();
             if (current) {
                 // This authoritative map includes observed Weeks 1–3 and estimates.
                 weeks = Array.from(new Set(estimates.get(key) || []))
@@ -115,6 +116,8 @@ const source = {
                 // that injury absence; healthy players gain no bye-only burden.
                 const injury = currentInjuries.get(key);
                 const byeWeek = injury?.byeWeek;
+                if (Number.isInteger(byeWeek))
+                    byeWeeks.add(byeWeek);
                 if (Number.isInteger(byeWeek) && byeWeek >= 1 && byeWeek <= 18
                     && byeWeek < (injury.estimatedReturnWeek ?? 19)
                     && weeks.some((week) => Math.abs(week - byeWeek) === 1))
@@ -159,6 +162,7 @@ const source = {
                         injuryWeeks.add(week);
                 });
                 weeks = Array.from(injuryWeeks).sort((a, b) => a - b);
+                weeks.filter((week) => !schedule.includes(week)).forEach((week) => byeWeeks.add(week));
             }
             if (!weeks.length)
                 return;
@@ -169,10 +173,21 @@ const source = {
             const injuryCost = Math.pow(weeks.length, durationExponent);
             const contribution = 10 * (draftValue / referenceDraftValue) * (injuryCost / referenceInjuryCost);
             score += contribution;
+            const ranges = [];
+            weeks.forEach((week) => {
+                const last = ranges[ranges.length - 1];
+                if (last && week === last[1] + 1)
+                    last[1] = week;
+                else
+                    ranges.push([week, week]);
+            });
+            const weekLabel = (weeks.length === 1 ? "week " : "weeks ") + ranges
+                .map(([start, end]) => (start === end ? String(start) : start + "-" + end) + (byeWeeks.has(end) ? "*" : ""))
+                .join(", ");
             contributors.push({
                 player: player.name,
                 adp: player.adp,
-                missedWeeks: weeks,
+                weekLabel,
                 contribution,
             });
         });
@@ -181,7 +196,7 @@ const source = {
             x: year,
             y: Number(score.toFixed(3)),
             label: contributors
-                .map((p) => \`\${p.player} (ADP \${p.adp}, \${p.missedWeeks.length} \${p.missedWeeks.length === 1 ? "week" : "weeks"}) = \${p.contribution.toFixed(3)}\`)
+                .map((p) => \`\${p.player} (ADP \${p.adp}, \${p.weekLabel}) = \${p.contribution.toFixed(3)}\`)
                 .join("\\n"),
         };
     });
