@@ -55,7 +55,7 @@ afterEach(() => {
   window.QueryHelpers = original;
 });
 
-test("counts Week 3 exit, skips bye, stops at return and ignores later absence", () => {
+test("counts Week 3 exit and bye weeks, stops at return and ignores later absence", () => {
   expect(
     score([
       game(1, ["Test Player"]),
@@ -67,7 +67,7 @@ test("counts Week 3 exit, skips bye, stops at return and ignores later absence",
       game(8, []),
       game(-1, []),
     ]).y,
-  ).toBe(2);
+  ).toBe(3);
 });
 
 test("zero-point box score is an appearance and ends an absence", () => {
@@ -225,7 +225,7 @@ test("full functions survive the Customize serialization with no hidden scorer",
   expect(getPoints(restored, data)).toEqual(getPoints(functions, data));
 });
 
-test("early missed games still count after a return before Week 3", () => {
+test("early missed weeks still count after a return before Week 3", () => {
   expect(
     score([
       game(1, []),
@@ -254,12 +254,12 @@ test("all early gaps combine with the continuous post-Week-3 absence", () => {
     ]),
   ).toEqual({
     x: 2024,
-    y: 4,
-    label: "Test Player (ADP 10, 4 weeks) = 4.000",
+    y: 5,
+    label: "Test Player (ADP 10, 5 weeks) = 5.000",
   });
 });
 
-test("ADP 10 missing 10 games scores exactly 10", () => {
+test("ADP 10 missing 10 weeks scores exactly 10", () => {
   const games = Array.from({ length: 10 }, (_, i) => game(i + 1, []));
   expect(score(games)).toEqual({
     x: 2024,
@@ -359,3 +359,100 @@ test("output has only x/y/label and sorts formatted contributors by contribution
     },
   ]);
 });
+
+test("Puka Nacua's 2024 absence is six weeks including the Week 6 bye", () => {
+  window.QueryHelpers.ADP_BY_YEAR[2024] = [player("Puka Nacua", 10, "LAR")];
+  expect(
+    score(
+      [1, 2, 3, 4, 5, 7, 8, 9].map((week) =>
+        game(week, [1, 8, 9].includes(week) ? ["Puka Nacua"] : [], "LAR"),
+      ),
+    ),
+  ).toEqual({
+    x: 2024,
+    y: 6,
+    label: "Puka Nacua (ADP 10, 6 weeks) = 6.000",
+  });
+});
+
+test("a healthy player has no injury weeks from an ordinary Week 4 bye", () => {
+  expect(
+    score([1, 2, 3, 5, 6].map((week) => game(week, ["Test Player"]))).y,
+  ).toBe(0);
+});
+
+test("a Week 4 bye starts the continuous absence established by a missed Week 5", () => {
+  expect(
+    score([game(3, ["Test Player"]), game(5, []), game(6, ["Test Player"])]).y,
+  ).toBe(2);
+});
+
+test("an injury bye immediately before returning still counts as a missed week", () => {
+  expect(
+    score([game(3, ["Test Player"]), game(4, []), game(6, ["Test Player"])]).y,
+  ).toBe(2);
+});
+
+test("an early injury bye counts until an early return without adding later injury weeks", () => {
+  expect(
+    score([
+      game(1, []),
+      game(3, ["Test Player"]),
+      game(4, ["Test Player"]),
+      game(5, []),
+    ]).y,
+  ).toBe(2);
+});
+
+test("a trade return during the old team's bye ends an absence before that week", () => {
+  expect(
+    score([
+      game(3, ["Test Player"]),
+      game(4, []),
+      game(5, []),
+      game(7, []),
+      game(6, ["Test Player"], "NYJ"),
+    ]).y,
+  ).toBe(2);
+});
+
+test("partial historical data does not invent leading or trailing injury weeks", () => {
+  expect(score([game(6, []), game(8, [])])).toEqual({
+    x: 2024,
+    y: 3,
+    label: "Test Player (ADP 10, 3 weeks) = 3.000",
+  });
+});
+
+test.each([
+  ["interior", [4, 5, 7], 6, 8, 4],
+  ["trailing before return", [4, 5], 6, 7, 3],
+  ["leading", [5, 6], 4, 7, 3],
+  ["season-ending", [4, 5, 7], 6, null, 4],
+  ["healthy", [], 6, 7, 0],
+  ["after return", [4, 5], 6, 6, 2],
+  ["unrelated", [1], 6, 7, 1],
+] as [string, number[], number, number | null, number][])(
+  "current %s bye uses existing injury and return metadata with normalized names",
+  (_description, weeks, byeWeek, estimatedReturnWeek, expected) => {
+    window.QueryHelpers.CURRENT_INJURY_WEEKS = { "Current Player Jr.": weeks };
+    window.QueryHelpers.CURRENT_INJURY_SOURCES = {
+      ...original.CURRENT_INJURY_SOURCES,
+      players: {
+        ...original.CURRENT_INJURY_SOURCES.players,
+        "Current Player": {
+          ...original.CURRENT_INJURY_SOURCES.players["Justin Jefferson"],
+          byeWeek,
+          estimatedReturnWeek,
+        },
+      },
+    } as typeof original.CURRENT_INJURY_SOURCES;
+    const output = getPoints(query.queryFunctions(), []).find(
+      (p) => p.x === 2026,
+    )!;
+    expect(output.y).toBe(expected);
+    expect(
+      window.QueryHelpers.CURRENT_INJURY_WEEKS["Current Player Jr."],
+    ).toEqual(weeks);
+  },
+);

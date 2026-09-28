@@ -85,6 +85,10 @@ const source = {
             normalizeName(name),
             weeks,
         ]));
+        const currentInjuries = new Map(Object.entries(H.CURRENT_INJURY_SOURCES.players).map(([name, injury]) => [
+            normalizeName(name),
+            injury,
+        ]));
         const contributors = [];
         let score = 0;
         adpPlayers.forEach((player) => {
@@ -103,6 +107,15 @@ const source = {
                 weeks = Array.from(new Set(estimates.get(key) || []))
                     .filter((week) => Number.isInteger(week) && week >= 1 && week <= 18)
                     .sort((a, b) => a - b);
+                // The static list records missed games. Include an adjacent bye
+                // only when the existing return estimate still places it inside
+                // that injury absence; healthy players gain no bye-only burden.
+                const injury = currentInjuries.get(key);
+                const byeWeek = injury?.byeWeek;
+                if (Number.isInteger(byeWeek) && byeWeek >= 1 && byeWeek <= 18
+                    && byeWeek < (injury.estimatedReturnWeek ?? 19)
+                    && weeks.some((week) => Math.abs(week - byeWeek) === 1))
+                    weeks = Array.from(new Set([...weeks, byeWeek])).sort((a, b) => a - b);
             }
             else {
                 let seen = appearances.get(key) || [];
@@ -123,15 +136,30 @@ const source = {
                 // followed by an early return. Then add only the uninterrupted
                 // absence after Week 3. A Week 3 exit can miss the next game.
                 // A return anywhere ends that stretch, even during the old team's
-                // bye. Later new injuries do not count; schedules exclude byes.
+                // bye. Later new injuries do not count.
                 const firstReturnAfter3 = Math.min(Infinity, ...seen.filter((a) => a.week > cutoffWeek).map((a) => a.week));
-                weeks = schedule.filter((week) => week <= cutoffWeek
+                const missedGames = schedule.filter((week) => week <= cutoffWeek
                     ? !seen.some((a) => a.week === week)
                     : week < firstReturnAfter3);
+                // Once a missed game establishes an injury absence, count its
+                // calendar weeks through the next appearance, including byes.
+                // Start the post-cutoff stretch at Week 4 (possibly a bye), but
+                // do not invent leading weeks absent from partial season data.
+                const injuryWeeks = new Set();
+                const seasonEnd = Math.max(...schedule) + 1;
+                missedGames.forEach((missedWeek) => {
+                    const start = missedWeek <= cutoffWeek
+                        ? missedWeek
+                        : Math.max(cutoffWeek + 1, schedule[0]);
+                    const end = Math.min(seasonEnd, ...seen.filter((a) => a.week > missedWeek).map((a) => a.week));
+                    for (let week = start; week < end; week++)
+                        injuryWeeks.add(week);
+                });
+                weeks = Array.from(injuryWeeks).sort((a, b) => a - b);
             }
             if (!weeks.length)
                 return;
-            // An ADP-10 player missing 10 games contributes exactly 10.
+            // An ADP-10 player missing 10 weeks contributes exactly 10.
             const contribution = (draftWeight / referenceWeight) * weeks.length;
             score += contribution;
             contributors.push({
@@ -155,6 +183,6 @@ const source = {
 
 export default BuildQueryConfig<TeamAppearance>({
   tooltip:
-    "12-team 2-QB ADP (superflex proxy), 2014–2026. Week 3 injury burden: ADP-weighted missed games in Weeks 1–3 plus continuous absence after Week 3. ADP 10 missing 10 games = 10; raw draft weights below 0.1 are excluded. Historical box-score absences are a proxy and can include non-injury causes; 2026 uses fixed observed/estimated weeks. Higher = worse. Full calculation is editable; static data lives in window.QueryHelpers.",
+    "12-team 2-QB ADP (superflex proxy), 2014–2026. How injury prone did the season appear after week 3? Assume we had perfect knowledge of injuries suffered before week 4.",
   queryFunctions: () => evalFunctions(source) as QueryFunctions<TeamAppearance>,
 });
