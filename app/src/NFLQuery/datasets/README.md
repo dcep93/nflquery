@@ -16,17 +16,17 @@ No fantasy420 data, code, rosters, draft boards, or network requests are used.
 
 ```javascript
 const adpDecay = 16;
-const durationScale = 10;
+const durationExponent = 0.8;
 const draftWeight = Math.exp(-(adp - 1) / 35);
 if (draftWeight < 0.1) return; // unchanged eligibility cutoff, approximately ADP > 81.59
 const draftValue = Math.exp(-adp / adpDecay);
 const referenceDraftValue = Math.exp(-10 / adpDecay);
-const injuryCost = 1 - Math.exp(-missedWeeks.length / durationScale);
-const referenceInjuryCost = 1 - Math.exp(-10 / durationScale);
+const injuryCost = Math.pow(missedWeeks.length, durationExponent);
+const referenceInjuryCost = Math.pow(10, durationExponent);
 const contribution = 10 * (draftValue / referenceDraftValue) * (injuryCost / referenceInjuryCost);
 ```
 
-ADP 10 injured for 10 full weeks scores exactly 10, including byes within an injury absence. The benchmark stays fixed even when the two scoring parameters are edited. ADP scoring uses a steeper decay of 16; the separate eligibility cutoff stays unchanged. Duration has diminishing impact without flattening too early: nine weeks score about 51% more than five, while fourteen score about 8% more than twelve. CMC at ADP 2.7 for nine weeks contributes 14.816; Tua at ADP 16.4 for five contributes 4.172. The draft cutoff applies before duration or normalization, so a late pick cannot qualify through a longer injury absence. Adding another season never rescales existing scores.
+ADP 10 injured for 10 full weeks scores exactly 10, including byes within an injury absence. The benchmark stays fixed even when the two scoring parameters are edited. ADP scoring uses a steeper decay of 16; the separate eligibility cutoff stays unchanged. Duration uses a power curve, `weeks^durationExponent`, with diminishing returns and no fixed ceiling. Sixteen weeks score about 3.03 times four, nine weeks about 60% more than five, and fourteen about 13% more than twelve. Nick Chubb at ADP 14.1 for sixteen weeks contributes 11.272; Austin Ekeler at ADP 9.1 for four contributes 5.082. The draft cutoff applies before duration or normalization, so a late pick cannot qualify through a longer injury absence. Adding another season never rescales existing scores.
 
 For example, Puka Nacua's 2024 appearance in Week 1 and return in Week 8 give six absent weeks (2–7), including the Week 6 bye.
 
@@ -36,7 +36,7 @@ Historical results are a **box-score absence proxy**, not a medical injury regis
 
 2026 uses the fixed, reviewed injury-week map instead. Current-season box scores and current reports establish early missed games; news informs one future-return estimate per injury. A confirmed Week 3 inactive can be included before that game is played. Actual participation, even for part of a game, is not a fully missed game. Healthy scratches, unsigned free-agent weeks and known non-injury exclusions are not counted. The raw week map still records missed games. The editable calculation also counts the saved bye week when it is adjacent to an injury-missed week and precedes the saved return week. This includes a bye immediately before the estimated return. The source metadata separates reported facts, known absences, future estimates and modeling assumptions. Unknown diagnoses still require provisional point estimates; no uncertainty ranges are displayed.
 
-The first output point is a formula entry: empty `x` and `label`, `y: Number.MAX_VALUE` to sort first, and a human-readable `formula` string. Symbolic `draftValue` and `injuryCost` definitions accompany a separate `parameters` object containing `adpDecay` and `durationScale`. The maximum is a finite sorting sentinel, not a season score, and survives JSON serialization. The formula entry is excluded from ranks, result counts, and the 100-result display limit; the highest-scoring season starts at #1. Each season point contains only `x`, `y`, and `label`. Season labels contain one player per line, in descending contribution order. The results renderer displays coordinates and labels as text, preserves label line breaks, and shows extra fields such as `formula` in a JSON `<pre>` block. Season labels contain contributions such as `Adrian Peterson (ADP 6.6, 10 weeks) = 12.368`. Detailed sources remain available through QueryHelpers and are not included in output labels.
+The first output point is a formula entry: empty `x` and `label`, `y: Number.MAX_VALUE` to sort first, and a human-readable `formula` string. Symbolic `draftValue` and `injuryCost` definitions accompany a separate `parameters` object containing `adpDecay` and `durationExponent`. The maximum is a finite sorting sentinel, not a season score, and survives JSON serialization. The formula entry is excluded from ranks, result counts, and the 100-result display limit; the highest-scoring season starts at #1. Each season point contains only `x`, `y`, and `label`. Season labels contain one player per line, in descending contribution order. The results renderer displays coordinates and labels as text, preserves label line breaks, and shows extra fields such as `formula` in a JSON `<pre>` block. Season labels contain contributions such as `Adrian Peterson (ADP 6.6, 10 weeks) = 12.368`. Detailed sources remain available through QueryHelpers and are not included in output labels.
 
 ## ADP provenance and limits
 

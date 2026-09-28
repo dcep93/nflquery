@@ -44,9 +44,9 @@ const source = {
     const cutoffDecay = 35;
     const minDraftWeight = 0.1;
     const adpDecay = 16;
-    const durationScale = 10;
+    const durationExponent = 0.8;
     const referenceDraftValue = Math.exp(-10 / adpDecay);
-    const referenceInjuryCost = 1 - Math.exp(-10 / durationScale);
+    const referenceInjuryCost = Math.pow(10, durationExponent);
     const H = window.QueryHelpers;
     const currentYear = H.CURRENT_INJURY_SOURCES.year;
     const normalizeName = (name) => {
@@ -166,7 +166,7 @@ const source = {
             // and 14 weeks is only slightly worse than 12. Normalize so an
             // ADP-10 player missing 10 weeks still contributes exactly 10.
             const draftValue = Math.exp(-player.adp / adpDecay);
-            const injuryCost = 1 - Math.exp(-weeks.length / durationScale);
+            const injuryCost = Math.pow(weeks.length, durationExponent);
             const contribution = 10 * (draftValue / referenceDraftValue) * (injuryCost / referenceInjuryCost);
             score += contribution;
             contributors.push({
@@ -193,8 +193,8 @@ const source = {
         label: "",
         formula: "sum(10 × draftValue(ADP) / draftValue(10) × injuryCost(weeks) / injuryCost(10))",
         draftValue: "exp(-ADP / adpDecay)",
-        injuryCost: "1 - exp(-weeks / durationScale)",
-        parameters: { adpDecay, durationScale },
+        injuryCost: "weeks^durationExponent",
+        parameters: { adpDecay, durationExponent },
     }, ...seasons];
 }`,
 };

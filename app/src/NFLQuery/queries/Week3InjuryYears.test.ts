@@ -70,7 +70,7 @@ test("counts Week 3 exit and bye weeks, stops at return and ignores later absenc
       game(8, []),
       game(-1, []),
     ]).y,
-  ).toBe(4.1);
+  ).toBe(3.817);
 });
 
 test("zero-point box score is an appearance and ends an absence", () => {
@@ -100,14 +100,14 @@ test("opening absence does not require a Week 1 appearance", () => {
       game(5, []),
       game(6, ["Test Player"]),
     ]).y,
-  ).toBe(6.225);
+  ).toBe(5.743);
 });
 
 test("no season appearance uses the ADP team without adding output metadata", () => {
   expect(score([game(3, []), game(4, []), game(5, [])])).toEqual({
     x: 2024,
-    y: 4.1,
-    label: "Test Player (ADP 10, 3 weeks) = 4.100",
+    y: 3.817,
+    label: "Test Player (ADP 10, 3 weeks) = 3.817",
   });
 });
 
@@ -120,7 +120,7 @@ test("observed team overrides stale ADP team; trade return ends stretch during o
       game(6, []),
       game(5, ["Test Player"], "NYJ"),
     ]).y,
-  ).toBe(1.505);
+  ).toBe(1.585);
 });
 
 test("name suffix/punctuation and franchise aliases match", () => {
@@ -128,7 +128,7 @@ test("name suffix/punctuation and franchise aliases match", () => {
   expect(
     score([game(3, [], "LAR"), game(4, [], "LA"), game(5, ["AJ Brown"], "LAR")])
       .y,
-  ).toBe(2.868);
+  ).toBe(2.759);
 });
 
 test("FFC nicknames match NFLQuery names instead of inventing season-long gaps", () => {
@@ -151,7 +151,7 @@ test("a defensive namesake cannot end the sole ADP player's injury stretch", () 
       game(6, ["Michael Thomas"], "NO"),
       defense,
     ]).y,
-  ).toBe(4.1);
+  ).toBe(3.817);
 });
 
 test("current static weeks preserve Weeks 1–3, deduplicate and exclude invalid/postseason", () => {
@@ -162,8 +162,8 @@ test("current static weeks preserve Weeks 1–3, deduplicate and exclude invalid
     getPoints(query.queryFunctions(), []).find((p) => p.x === 2026),
   ).toEqual({
     x: 2026,
-    y: 7.138,
-    label: "Current Player (ADP 10, 6 weeks) = 7.138",
+    y: 6.645,
+    label: "Current Player (ADP 10, 6 weeks) = 6.645",
   });
 });
 
@@ -180,8 +180,8 @@ test("the current static map is authoritative despite missing games or appearanc
   expect(output).toEqual([
     {
       x: 2026,
-      y: 5.215,
-      label: "Current Player (ADP 10, 4 weeks) = 5.215",
+      y: 4.804,
+      label: "Current Player (ADP 10, 4 weeks) = 4.804",
     },
   ]);
 });
@@ -208,7 +208,7 @@ test("smooth weighting does not have round cliffs", () => {
     window.QueryHelpers.ADP_BY_YEAR[2024] = [player("Test Player", adp)];
     return score([game(3, ["Test Player"]), game(4, [])]).y;
   });
-  expect(values).toEqual([1.603, 1.505, 1.414]);
+  expect(values).toEqual([1.687, 1.585, 1.489]);
 });
 
 test("full functions survive the Customize serialization with no hidden scorer", () => {
@@ -223,8 +223,10 @@ test("full functions survive the Customize serialization with no hidden scorer",
   expect(source.mapPoints).toContain("injuryCost / referenceInjuryCost");
   expect(source.mapPoints).toContain("const cutoffDecay = 35");
   expect(source.mapPoints).toContain("const adpDecay = 16");
-  expect(source.mapPoints).toContain("const durationScale = 10");
-  expect(source.mapPoints).toContain("Math.exp(-weeks.length / durationScale)");
+  expect(source.mapPoints).toContain("const durationExponent = 0.8");
+  expect(source.mapPoints).toContain(
+    "Math.pow(weeks.length, durationExponent)",
+  );
   expect(source.mapPoints).toContain("firstReturnAfter3");
   expect(source.mapPoints).toContain("!seen.some((a) => a.week === week)");
   expect(source.extract).toContain("Offensive/kicking appearances");
@@ -245,8 +247,8 @@ test("the formula header sorts first and survives JSON while seasons retain only
     formula:
       "sum(10 × draftValue(ADP) / draftValue(10) × injuryCost(weeks) / injuryCost(10))",
     draftValue: "exp(-ADP / adpDecay)",
-    injuryCost: "1 - exp(-weeks / durationScale)",
-    parameters: { adpDecay: 16, durationScale: 10 },
+    injuryCost: "weeks^durationExponent",
+    parameters: { adpDecay: 16, durationExponent: 0.8 },
   });
   expect(Number.isFinite(output[0].y)).toBe(true);
   expect(JSON.parse(JSON.stringify(output))).toEqual(output);
@@ -266,7 +268,7 @@ test("the formula header reflects customized scoring constants while the referen
   );
   source.mapPoints = source.mapPoints
     .replace("const adpDecay = 16", "const adpDecay = 24")
-    .replace("const durationScale = 10", "const durationScale = 6");
+    .replace("const durationExponent = 0.8", "const durationExponent = 0.65");
   const customized = evalFunctions(source) as QueryFunctions<any>;
   const output = rawGetPoints(
     customized,
@@ -274,7 +276,7 @@ test("the formula header reflects customized scoring constants while the referen
   );
   expect(output[0]).toEqual({
     ...rawGetPoints(query.queryFunctions(), [])[0],
-    parameters: { adpDecay: 24, durationScale: 6 },
+    parameters: { adpDecay: 24, durationExponent: 0.65 },
   });
   expect(output.find((point) => point.x === 2024)).toEqual({
     x: 2024,
@@ -294,8 +296,8 @@ test("early missed weeks still count after a return before Week 3", () => {
     ]),
   ).toEqual({
     x: 2024,
-    y: 1.505,
-    label: "Test Player (ADP 10, 1 week) = 1.505",
+    y: 1.585,
+    label: "Test Player (ADP 10, 1 week) = 1.585",
   });
 });
 
@@ -312,8 +314,8 @@ test("all early gaps combine with the continuous post-Week-3 absence", () => {
     ]),
   ).toEqual({
     x: 2024,
-    y: 6.225,
-    label: "Test Player (ADP 10, 5 weeks) = 6.225",
+    y: 5.743,
+    label: "Test Player (ADP 10, 5 weeks) = 5.743",
   });
 });
 
@@ -327,8 +329,10 @@ test("ADP 10 missing 10 weeks scores exactly 10", () => {
 });
 
 test.each([
-  ["Christian McCaffrey", 2.7, 9, 14.816],
-  ["Tua Tagovailoa", 16.4, 5, 4.172],
+  ["Christian McCaffrey", 2.7, 9, 14.506],
+  ["Tua Tagovailoa", 16.4, 5, 3.85],
+  ["Nick Chubb", 14.1, 16, 11.272],
+  ["Austin Ekeler", 9.1, 4, 5.082],
 ] as [string, number, number, number][])(
   "%s retains the approved ADP and duration calibration",
   (name, adp, weeks, expected) => {
@@ -339,7 +343,7 @@ test.each([
   },
 );
 
-test("Peterson's early draft value and longer absence outweigh Moncrief by about 67.9 times", () => {
+test("Peterson's early draft value and longer absence outweigh Moncrief by about 77.0 times", () => {
   const players: [string, number, number][] = [
     ["Adrian Peterson", 8.8, 12],
     ["Donte Moncrief", 67.1, 5],
@@ -348,9 +352,9 @@ test("Peterson's early draft value and longer absence outweigh Moncrief by about
     window.QueryHelpers.ADP_BY_YEAR[2024] = [player(name, adp)];
     return score(Array.from({ length: weeks }, (_, i) => game(i + 1, []))).y;
   });
-  expect(contributions).toEqual([11.916, 0.175]);
+  expect(contributions).toEqual([12.471, 0.162]);
   // Output rounds to three decimals, so its ratio has less precision.
-  expect(contributions[0] / contributions[1]).toBeCloseTo(67.9, 0);
+  expect(contributions[0] / contributions[1]).toBeCloseTo(77.0, 0);
 });
 
 test("duration grows with diminishing returns for historical and current absences", () => {
@@ -380,8 +384,10 @@ test("duration grows with diminishing returns for historical and current absence
   expect(values[10]).toBe(10);
   expect(values[4] / values[2]).toBeGreaterThan(1.5);
   expect(values[4] / values[2]).toBeLessThan(2);
-  expect(values[9] / values[5]).toBeCloseTo(1.508, 3);
-  expect(values[14] / values[12]).toBeCloseTo(1.078, 3);
+  // Scores are rounded before division, so allow one unit in the last digit.
+  expect(Math.abs(values[16] / values[4] - 3.031)).toBeLessThan(0.001);
+  expect(Math.abs(values[9] / values[5] - 1.6)).toBeLessThan(0.001);
+  expect(Math.abs(values[14] / values[12] - 1.131)).toBeLessThan(0.001);
   const increments = values.slice(1).map((value, i) => value - values[i]);
   increments.forEach((increment, i) => {
     expect(increment).toBeGreaterThan(0);
@@ -416,8 +422,8 @@ test("the 0.1 threshold applies before normalization or duration", () => {
   ];
   expect(score([game(1, []), game(2, []), game(3, []), game(4, [])])).toEqual({
     x: 2024,
-    y: 0.06,
-    label: "Above Cutoff (ADP 81.5, 4 weeks) = 0.060",
+    y: 0.055,
+    label: "Above Cutoff (ADP 81.5, 4 weeks) = 0.055",
   });
 });
 
@@ -464,8 +470,8 @@ test("same-name offensive players are separated by ADP team", () => {
     ]),
   ).toEqual({
     x: 2024,
-    y: 2.868,
-    label: "Steve Smith (ADP 10, 2 weeks) = 2.868",
+    y: 2.759,
+    label: "Steve Smith (ADP 10, 2 weeks) = 2.759",
   });
 });
 
@@ -484,8 +490,8 @@ test("historical schedules deduplicate games and exclude invalid/postseason week
     ]),
   ).toEqual({
     x: 2024,
-    y: 2.868,
-    label: "Test Player (ADP 10, 2 weeks) = 2.868",
+    y: 2.759,
+    label: "Test Player (ADP 10, 2 weeks) = 2.759",
   });
 });
 
@@ -501,9 +507,9 @@ test("season output has only x/y/label and sorts formatted contributors by contr
   expect(getPoints(query.queryFunctions(), [])).toEqual([
     {
       x: 2026,
-      y: 5.052,
+      y: 4.998,
       label:
-        "More Burden (ADP 6.6, 2 weeks) = 3.547\nLess Burden (ADP 10, 1 week) = 1.505",
+        "More Burden (ADP 6.6, 2 weeks) = 3.413\nLess Burden (ADP 10, 1 week) = 1.585",
     },
   ]);
 });
@@ -518,8 +524,8 @@ test("Puka Nacua's 2024 absence is six weeks including the Week 6 bye", () => {
     ),
   ).toEqual({
     x: 2024,
-    y: 7.138,
-    label: "Puka Nacua (ADP 10, 6 weeks) = 7.138",
+    y: 6.645,
+    label: "Puka Nacua (ADP 10, 6 weeks) = 6.645",
   });
 });
 
@@ -532,13 +538,13 @@ test("a healthy player has no injury weeks from an ordinary Week 4 bye", () => {
 test("a Week 4 bye starts the continuous absence established by a missed Week 5", () => {
   expect(
     score([game(3, ["Test Player"]), game(5, []), game(6, ["Test Player"])]).y,
-  ).toBe(2.868);
+  ).toBe(2.759);
 });
 
 test("an injury bye immediately before returning still counts as a missed week", () => {
   expect(
     score([game(3, ["Test Player"]), game(4, []), game(6, ["Test Player"])]).y,
-  ).toBe(2.868);
+  ).toBe(2.759);
 });
 
 test("an early injury bye counts until an early return without adding later injury weeks", () => {
@@ -549,7 +555,7 @@ test("an early injury bye counts until an early return without adding later inju
       game(4, ["Test Player"]),
       game(5, []),
     ]).y,
-  ).toBe(2.868);
+  ).toBe(2.759);
 });
 
 test("a trade return during the old team's bye ends an absence before that week", () => {
@@ -561,14 +567,14 @@ test("a trade return during the old team's bye ends an absence before that week"
       game(7, []),
       game(6, ["Test Player"], "NYJ"),
     ]).y,
-  ).toBe(2.868);
+  ).toBe(2.759);
 });
 
 test("partial historical data does not invent leading or trailing injury weeks", () => {
   expect(score([game(6, []), game(8, [])])).toEqual({
     x: 2024,
-    y: 4.1,
-    label: "Test Player (ADP 10, 3 weeks) = 4.100",
+    y: 3.817,
+    label: "Test Player (ADP 10, 3 weeks) = 3.817",
   });
 });
 
@@ -598,7 +604,7 @@ test.each([
     const output = getPoints(query.queryFunctions(), []).find(
       (p) => p.x === 2026,
     )!;
-    expect(output.y).toBe([0, 1.505, 2.868, 4.1, 5.215][expected]);
+    expect(output.y).toBe([0, 1.585, 2.759, 3.817, 4.804][expected]);
     if (expected > 0)
       expect(output.label).toContain(
         `${expected} ${expected === 1 ? "week" : "weeks"}`,
