@@ -41,11 +41,12 @@ const source = {
   mapPoints: `(points) => {
     // These constants and ALL scoring/inference below remain in this textbox.
     const cutoffWeek = 3;
-    const decayPicks = 35;
+    const cutoffDecay = 35;
     const minDraftWeight = 0.1;
-    const referenceWeight = Math.exp(-(10 - 1) / decayPicks);
-    const durationScaleWeeks = 4;
-    const referenceDuration = 1 - Math.exp(-10 / durationScaleWeeks);
+    const adpDecay = 16;
+    const durationScale = 10;
+    const referenceDraftValue = Math.exp(-10 / adpDecay);
+    const referenceInjuryCost = 1 - Math.exp(-10 / durationScale);
     const H = window.QueryHelpers;
     const currentYear = H.CURRENT_INJURY_SOURCES.year;
     const normalizeName = (name) => {
@@ -94,10 +95,10 @@ const source = {
         const contributors = [];
         let score = 0;
         adpPlayers.forEach((player) => {
-            // Cut off tiny draft weights BEFORE duration or ADP-10 normalization.
+            // Keep eligibility independent of the customizable scoring curve.
             if (!Number.isFinite(player.adp))
                 return;
-            const draftWeight = Math.exp(-(player.adp - 1) / decayPicks);
+            const draftWeight = Math.exp(-(player.adp - 1) / cutoffDecay);
             if (draftWeight < minDraftWeight)
                 return;
             const key = normalizeName(player.name);
@@ -164,8 +165,9 @@ const source = {
             // Duration has diminishing returns: 4 weeks is less than twice 2,
             // and 14 weeks is only slightly worse than 12. Normalize so an
             // ADP-10 player missing 10 weeks still contributes exactly 10.
-            const duration = 10 * (1 - Math.exp(-weeks.length / durationScaleWeeks)) / referenceDuration;
-            const contribution = (draftWeight / referenceWeight) * duration;
+            const draftValue = Math.exp(-player.adp / adpDecay);
+            const injuryCost = 1 - Math.exp(-weeks.length / durationScale);
+            const contribution = 10 * (draftValue / referenceDraftValue) * (injuryCost / referenceInjuryCost);
             score += contribution;
             contributors.push({
                 player: player.name,
@@ -189,7 +191,10 @@ const source = {
         x: "",
         y: Number.MAX_VALUE,
         label: "",
-        formula: \`Sum of 10 * exp((10 - ADP) / \${decayPicks}) * (1 - exp(-numWeeks / \${durationScaleWeeks})) / (1 - exp(-10 / \${durationScaleWeeks})); include only exp(-(ADP - 1) / \${decayPicks}) >= \${minDraftWeight}. numWeeks includes byes.\`,
+        formula: "sum(10 × draftValue(ADP) / draftValue(10) × injuryCost(weeks) / injuryCost(10))",
+        draftValue: "exp(-ADP / adpDecay)",
+        injuryCost: "1 - exp(-weeks / durationScale)",
+        parameters: { adpDecay, durationScale },
     }, ...seasons];
 }`,
 };
