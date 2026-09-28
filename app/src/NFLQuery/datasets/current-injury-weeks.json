@@ -5,34 +5,26 @@
     5
   ],
   "Mike Evans": [
-    4,
-    5
+    4
   ],
-  "Puka Nacua": [],
+  "Puka Nacua": [
+    2,
+    3
+  ],
   "Travis Etienne Jr": [
     4,
     5
   ],
-  "Jalen Coker": [
-    4
-  ],
+  "Jalen Coker": [],
   "De'Von Achane": [
     4,
     5,
     7,
     8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15,
-    16,
-    17,
-    18
+    9
   ],
   "Jalen McMillan": [
+    1,
     4,
     5
   ],
@@ -40,37 +32,47 @@
     4
   ],
   "Devin Singletary": [],
-  "Adonai Mitchell": [],
+  "Adonai Mitchell": [
+    3
+  ],
   "Jonah Coleman": [
+    3,
     4,
     5,
     6
   ],
   "Dallas Goedert": [
-    4
+    3,
+    4,
+    5
   ],
   "Caleb Williams": [
+    3,
     4,
     5
   ],
   "Alec Pierce": [
+    3,
     4,
     5,
     6,
     7
   ],
   "Rico Dowdle": [
+    3,
     4
   ],
-  "Nico Collins": [],
+  "Nico Collins": [
+    2,
+    3
+  ],
   "Caleb Douglas": [
+    3,
     4
   ],
-  "Tyreek Hill": [
-    4,
-    5
-  ],
+  "Tyreek Hill": [],
   "Jaxson Dart": [
+    3,
     4,
     5,
     6,
@@ -87,6 +89,7 @@
     18
   ],
   "Jayden Reed": [
+    3,
     4,
     5,
     6,
@@ -96,16 +99,21 @@
     10
   ],
   "Jayden Daniels": [
+    3,
     4,
     5
   ],
   "Jonathon Brooks": [
+    3,
     4,
     6,
     7,
-    8
+    8,
+    9
   ],
   "De'Zhaun Stribling": [
+    2,
+    3,
     4,
     5,
     6,
@@ -115,14 +123,20 @@
     11
   ],
   "Ja'Kobi Lane": [
+    2,
+    3,
     4,
     5
   ],
   "Jordan Mason": [
+    2,
+    3,
     4,
     5
   ],
   "Dylan Sampson": [
+    2,
+    3,
     4,
     5,
     6,
@@ -130,23 +144,39 @@
     8
   ],
   "AJ Brown": [
+    2,
+    3,
     4,
     5,
     6
   ],
   "Tank Dell": [
-    4
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
   ],
   "Jordyn Tyson": [
+    1,
+    2,
+    3,
     4,
     5,
     6
   ],
   "Zach Charbonnet": [
+    1,
+    2,
+    3,
     4,
     5
   ],
   "Isiah Pacheco": [
+    1,
+    2,
+    3,
     4,
     5,
     7,
@@ -156,6 +186,14 @@
     11,
     12
   ],
-  "Zay Flowers": [],
-  "Brock Bowers": []
+  "Zay Flowers": [
+    2
+  ],
+  "Brock Bowers": [
+    1,
+    2
+  ],
+  "TreVeyon Henderson": [
+    1
+  ]
 }

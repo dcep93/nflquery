@@ -5,7 +5,7 @@
 ## Variables available to custom queries
 
 - `window.QueryHelpers.ADP_BY_YEAR`: year → Fantasy Football Calculator standard 12-team player list with name, position, team, numeric ADP and bye.
-- `window.QueryHelpers.CURRENT_INJURY_WEEKS`: player → estimated future missed regular-season week numbers. Frozen September 28, 2026 before Week 3 Monday Night Football. Empty arrays mean no additional full-game absence estimated.
+- `window.QueryHelpers.CURRENT_INJURY_WEEKS`: player → complete injury-missed regular-season week numbers: known Weeks 1–3 absences plus estimated future absences. Frozen September 28, 2026 before Week 3 Monday Night Football. Empty arrays mean no full-game injury absences included in the snapshot.
 - `window.QueryHelpers.CURRENT_INJURY_SOURCES`: snapshot date and per-player evidence/rationale, including team, bye and return-week assumptions.
 - `window.QueryHelpers.ADP_SOURCES`: provider, original archive metadata, retrieval date, per-player 2026 chart URLs/dates and known gaps.
 - `window.QueryHelpers.NFL_PLAYER_ALIASES` and `NFL_TEAM_ALIASES`: static identity mappings.
@@ -14,20 +14,26 @@ No fantasy420 data, code, rosters, draft boards, or network requests are used.
 
 ## Score
 
-`sum(Math.exp(-(adp - 1) / 35) * missedWeeks.length)`
+```javascript
+const draftWeight = Math.exp(-(adp - 1) / 35);
+if (draftWeight < 0.1) return; // approximately ADP > 81.59
+const contribution = draftWeight / Math.exp(-(10 - 1) / 35) * missedWeeks.length;
+```
 
-One point equals one future missed scheduled game at ADP 1. This smooth scale values picks 9/10/11 at approximately 0.796/0.773/0.751. Only weeks after Week 3 count. Scores are not normalized against whichever years happen to be loaded, so adding another year does not change an existing score.
+ADP 10 missing 10 games scores exactly 10. Picks 9/10/11 receive smooth per-game weights of approximately 1.029/1.000/0.972. The draft cutoff applies before duration or normalization, so a late pick cannot qualify by missing more games. Adding another season never rescales existing scores.
 
-For completed seasons, NFLQuery's own game box scores establish appearances. Any offensive or kicking/return appearance counts, regardless of fantasy points; defensive categories are excluded to avoid merging defensive namesakes. The first appearance after Week 3 ends the absence stretch, including a return for a different team. Only scheduled team games before that return are counted, so byes and postseason do not count. A player appearing in Week 4 has zero remaining burden even if they miss games later. This captures Week 3 exits and earlier/season-opening absences. Historical team fields in the ADP archive can reflect later trades; observed NFLQuery team membership takes precedence.
+For completed seasons, NFLQuery's own box scores establish appearances. Any offensive or kicking/return appearance counts regardless of fantasy points; defensive categories are excluded to avoid namesake collisions. Count every missed scheduled game in Weeks 1–3, including an early absence for a player who has already returned. Add the uninterrupted absence after Week 3 up to the first later appearance, including a return for a different team. A player who plays Week 4 can still contribute missed Weeks 1–3, but later injuries contribute nothing. Team schedules exclude byes; extraction excludes postseason. Historical ADP team labels can reflect later trades; actual appearances take precedence.
 
-This is a **box-score absence proxy**, not a confirmed medical injury registry. It can include benchings, suspensions, holdouts and an injury first suffered in practice before Week 4. A player with no season appearance is explicitly labeled cause unknown. Players without an identifiable team schedule or ADP remain explicitly unscored. There is no historical news research or historical injury forecast.
+Historical results are a **box-score absence proxy**, not a medical injury registry. Gaps can include benchings, suspensions, holdouts, zero-stat appearances and injuries sustained between Week 3 and the next scheduled game. No historical news or forecasts are used. Players without an identifiable schedule or ADP are skipped.
 
-2026 instead uses the fixed news-informed week arrays, with byes removed. These are single modeling estimates, not promised recovery dates. In particular, Achane's rest-of-season estimate is provisional while imaging is pending. The query shows a single value and player-level contributions, with no uncertainty ranges.
+2026 uses the fixed, reviewed injury-week map instead. Current-season box scores and current reports establish early missed games; news informs one future-return estimate per injury. A confirmed Week 3 inactive can be included before that game is played. Actual participation, even for part of a game, is not a fully missed game. Healthy scratches, unsigned free-agent weeks and known non-injury exclusions are not counted. The source metadata separates reported facts, known absences, future estimates and modeling assumptions. Unknown diagnoses still require provisional point estimates; no uncertainty ranges are displayed.
+
+Output is exactly `x`, `y`, and `label`. Each label contains descending player contributions such as `Adrian Peterson (ADP 6.6, 10 weeks) = 11.020`. Detailed sources remain available through QueryHelpers and are not included in output labels.
 
 ## ADP provenance and limits
 
 [Fantasy Football Calculator](https://fantasyfootballcalculator.com/) provides all ADP values under its [free API attribution terms](https://help.fantasyfootballcalculator.com/article/42-adp-rest-api). The checked-in archive covers 2008–2026. The official 2007 archive currently returns no player records. An FFToday 2007 mirror was found but not used because its provider attribution could not be verified. Historical 2008/2009 lists have anomalous archive end dates in the API; the original metadata is preserved.
 
-2026 live ADP was sparse and already in-season, so the dump instead uses each player's latest standard 12-team chart point between August 25 and September 8, before Week 1. Other FFC format endpoints were used only to discover player IDs; their ADP values are never mixed into this standard-scoring dataset. All player chart dates/URLs are retained. Some injured players have no qualifying ADP in this source and are shown as unscored, not assigned invented values.
+2026 live ADP was sparse and already in-season, so the dump instead uses each player's latest standard 12-team chart point between August 25 and September 8, before Week 1. Other FFC format endpoints were used only to discover player IDs; their ADP values are never mixed into this standard-scoring dataset. All player chart dates/URLs are retained. Some injured players have no qualifying ADP in this source; they remain in the static snapshot but do not score. The source metadata lists them, while the query output stays concise. No invented ADP values are assigned.
 
 `scripts/import-week3-adp.py` deliberately refreshes the 2026 preseason chart extraction using the checked-in historical archive as its starting point. It is an authoring tool, never run by the app. Do not refresh the frozen current injury map automatically.

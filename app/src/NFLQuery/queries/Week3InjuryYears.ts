@@ -16,7 +16,7 @@ type TeamAppearance = {
 // variables or inject closure helpers into the editable query. The dropdown and
 // Customize use this same complete source; only datasets live in QueryHelpers.
 const source = {
-  extract: `({ d, g, teamIndex }) => g.week > 0
+  extract: `({ d, g, teamIndex }) => Number.isInteger(g.week) && g.week >= 1 && g.week <= 18
     ? [
         {
             year: d.year,
@@ -42,6 +42,8 @@ const source = {
     // These constants and ALL scoring/inference below remain in this textbox.
     const cutoffWeek = 3;
     const decayPicks = 35;
+    const minDraftWeight = 0.1;
+    const referenceWeight = Math.exp(-(10 - 1) / decayPicks);
     const H = window.QueryHelpers;
     const currentYear = H.CURRENT_INJURY_SOURCES.year;
     const normalizeName = (name) => {
@@ -83,18 +85,23 @@ const source = {
             normalizeName(name),
             weeks,
         ]));
-        const unresolved = [];
         const contributors = [];
         let score = 0;
         adpPlayers.forEach((player) => {
+            // Cut off tiny draft weights BEFORE duration or ADP-10 normalization.
+            if (!Number.isFinite(player.adp))
+                return;
+            const draftWeight = Math.exp(-(player.adp - 1) / decayPicks);
+            if (draftWeight < minDraftWeight)
+                return;
             const key = normalizeName(player.name);
             const draftTeam = normalizeTeam(player.team || "");
             let team = draftTeam;
             let weeks = [];
-            let basis = "estimated";
             if (current) {
+                // This authoritative map includes observed Weeks 1–3 and estimates.
                 weeks = Array.from(new Set(estimates.get(key) || []))
-                    .filter((week) => Number.isInteger(week) && week > cutoffWeek && week <= 18)
+                    .filter((week) => Number.isInteger(week) && week >= 1 && week <= 18)
                     .sort((a, b) => a - b);
             }
             else {
@@ -110,60 +117,37 @@ const source = {
                 // Historical FFC team fields sometimes reflect a later trade.
                 team = early[0]?.team || later[0]?.team || draftTeam;
                 const schedule = schedules.get(team);
-                if (!schedule) {
-                    unresolved.push(\`\${player.name}: no matching team schedule\`);
+                if (!schedule)
                     return;
-                }
-                // Only the uninterrupted absence at the Week 3 boundary counts.
-                // A Week 3 participant missing the next game captures in-game exits.
-                // It may also capture injuries sustained in practice before Week 4.
-                const nextGames = schedule.filter((week) => week > cutoffWeek);
-                // A return for a different team also ends the stretch, even if the
-                // original team has its bye that week.
-                const returnWeek = Math.min(Infinity, ...seen.filter((a) => a.week > cutoffWeek).map((a) => a.week));
-                weeks = nextGames.filter((week) => week < returnWeek);
-                basis = seen.length
-                    ? "box-score absence stretch"
-                    : "no season appearance; cause unknown";
+                // Count all missed scheduled games in Weeks 1–3, including gaps
+                // followed by an early return. Then add only the uninterrupted
+                // absence after Week 3. A Week 3 exit can miss the next game.
+                // A return anywhere ends that stretch, even during the old team's
+                // bye. Later new injuries do not count; schedules exclude byes.
+                const firstReturnAfter3 = Math.min(Infinity, ...seen.filter((a) => a.week > cutoffWeek).map((a) => a.week));
+                weeks = schedule.filter((week) => week <= cutoffWeek
+                    ? !seen.some((a) => a.week === week)
+                    : week < firstReturnAfter3);
             }
             if (!weeks.length)
                 return;
-            const weight = Math.exp(-(player.adp - 1) / decayPicks);
-            const contribution = weight * weeks.length;
+            // An ADP-10 player missing 10 games contributes exactly 10.
+            const contribution = (draftWeight / referenceWeight) * weeks.length;
             score += contribution;
             contributors.push({
                 player: player.name,
                 adp: player.adp,
-                team,
                 missedWeeks: weeks,
-                draftWeight: Number(weight.toFixed(4)),
-                contribution: Number(contribution.toFixed(3)),
-                basis,
+                contribution,
             });
         });
-        if (current) {
-            Object.keys(H.CURRENT_INJURY_WEEKS).forEach((name) => {
-                if (!adpPlayers.some((p) => normalizeName(p.name) === normalizeName(name))) {
-                    unresolved.push(\`\${name}: absent from ADP source; unscored\`);
-                }
-            });
-        }
         contributors.sort((a, b) => b.contribution - a.contribution);
         return {
             x: year,
             y: Number(score.toFixed(3)),
-            label: \`\${year}: \${current ? \`estimate as of \${H.CURRENT_INJURY_SOURCES.asOf}\` : "historical box-score absence proxy"}; \` +
-                contributors
-                    .map((p) => \`\${p.player} (ADP \${p.adp}, weeks \${p.missedWeeks.join(",")}) = \${p.contribution}\`)
-                    .join("; "),
-            formula: \`sum(exp(-(ADP - 1) / \${decayPicks}) * missed games after Week \${cutoffWeek})\`,
-            mode: current ? "estimate" : "observed absence proxy",
-            players: contributors,
-            unscored: unresolved,
-            adpSource: "Fantasy Football Calculator, standard 12-team; QueryHelpers.ADP_SOURCES",
-            caveat: current
-                ? "Fixed point estimates, not guaranteed return dates. Sources: QueryHelpers.CURRENT_INJURY_SOURCES."
-                : "Box-score gaps are inferred absences, not confirmed injuries. Includes non-injury absences; no historical forecasts. Byes/postseason excluded. Stops at first return; later injuries excluded.",
+            label: contributors
+                .map((p) => \`\${p.player} (ADP \${p.adp}, \${p.missedWeeks.length} \${p.missedWeeks.length === 1 ? "week" : "weeks"}) = \${p.contribution.toFixed(3)}\`)
+                .join("; "),
         };
     });
 }`,
@@ -171,6 +155,6 @@ const source = {
 
 export default BuildQueryConfig<TeamAppearance>({
   tooltip:
-    "Week 3 injury burden: preseason ADP × remaining missed games. Historical absences inferred from NFLQuery box scores; 2026 is a fixed news-informed estimate. Higher = worse. Full calculation is editable; static data lives in window.QueryHelpers. Absences can include benchings/suspensions and Week 4 practice injuries.",
+    "Week 3 injury burden: ADP-weighted missed games in Weeks 1–3 plus continuous absence after Week 3. ADP 10 missing 10 games = 10; raw draft weights below 0.1 are excluded. Historical box-score absences are a proxy and can include non-injury causes; 2026 uses fixed observed/estimated weeks. Higher = worse. Full calculation is editable; static data lives in window.QueryHelpers.",
   queryFunctions: () => evalFunctions(source) as QueryFunctions<TeamAppearance>,
 });
