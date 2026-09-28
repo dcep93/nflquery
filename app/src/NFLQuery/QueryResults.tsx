@@ -1,4 +1,5 @@
 import type { PointType } from "./Query";
+import QueryLineChart from "./QueryLineChart";
 
 export type QueryOutput = {
   num_points: number;
@@ -50,6 +51,9 @@ export default function QueryResults({ output }: { output: QueryOutput }) {
           </span>
         )}
       </p>
+      <QueryLineChart
+        points={output.points.filter((point) => !isFormulaHeader(point))}
+      />
       <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
         {output.points.map((point, position) => {
           const { x, y, label, index, ...extras } = point;
