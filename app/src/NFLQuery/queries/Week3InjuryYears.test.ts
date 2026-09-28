@@ -34,11 +34,7 @@ const player = (
   team: string | null = "SF",
 ) => ({
   name,
-  // Existing inference fixtures specify the effective ADP used by the rubric.
-  adp: Math.pow(
-    adp / original.ADP_CONVERSION.positions.WR.multiplier,
-    1 / original.ADP_CONVERSION.positions.WR.exponent,
-  ),
+  adp,
   team,
   position: "WR",
   bye: null,
@@ -253,8 +249,6 @@ test("the formula header sorts first and survives JSON while seasons retain only
     draftValue: "exp(-ADP / adpDecay)",
     injuryCost: "weeks^durationExponent",
     parameters: { adpDecay: 16, durationExponent: 0.8 },
-    ADP: "max(1, multiplier[position] × standardADP^exponent[position])",
-    adpConversion: original.ADP_CONVERSION.positions,
   });
   expect(Number.isFinite(output[0].y)).toBe(true);
   expect(JSON.parse(JSON.stringify(output))).toEqual(output);
@@ -626,47 +620,3 @@ test.each([
     ).toEqual(weeks);
   },
 );
-
-test.each([
-  ["QB", 12.71, 8.442],
-  ["RB", 63.389, 0.355],
-  ["WR", 60.603, 0.423],
-  ["TE", 58.802, 0.474],
-] as [string, number, number][])(
-  "converts standard ADP 50 for %s identically in old, overlapping and current years",
-  (position, effectiveAdp, expectedScore) => {
-    const raw = { ...player("Converted Player"), position, adp: 50 };
-    window.QueryHelpers.ADP_BY_YEAR = { 2008: [raw], 2024: [raw], 2026: [raw] };
-    window.QueryHelpers.CURRENT_INJURY_WEEKS = {
-      "Converted Player": Array.from({ length: 10 }, (_, i) => i + 1),
-    };
-    const data = [2008, 2024].flatMap((year) =>
-      historical(
-        Array.from({ length: 10 }, (_, i) => game(i + 1, [])),
-        year,
-      ),
-    );
-    const before = JSON.stringify(window.QueryHelpers.ADP_BY_YEAR);
-    const output = getPoints(query.queryFunctions(), data);
-    expect(output.map((p) => p.x).sort()).toEqual([2008, 2024, 2026]);
-    output.forEach((p) => {
-      expect(p.y).toBe(expectedScore);
-      expect(p.label).toBe(
-        `Converted Player (ADP ${effectiveAdp}, weeks 1-10) = ${expectedScore.toFixed(3)}`,
-      );
-    });
-    expect(JSON.stringify(window.QueryHelpers.ADP_BY_YEAR)).toBe(before);
-  },
-);
-
-test("conversion clamps elite QBs at ADP 1 and skips unsupported positions and invalid standard ADP", () => {
-  window.QueryHelpers.ADP_BY_YEAR = {
-    2024: [
-      { ...player("Elite QB"), position: "QB", adp: 1 },
-      { ...player("Unsupported"), position: "DEF", adp: 1 },
-      ...[0, -1, NaN, Infinity].map((adp) => ({ ...player("Invalid"), adp })),
-    ],
-  };
-  const result = score(Array.from({ length: 10 }, (_, i) => game(i + 1, [])));
-  expect(result.label).toBe("Elite QB (ADP 1, weeks 1-10) = 17.551");
-});

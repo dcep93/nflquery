@@ -1,6 +1,6 @@
 # Week 3 injury years — revised September 28, 2026
 
-The permanent WEEK_3_INJURY_YEARS dropdown uses only NFLQuery data_v6 for historical appearances/schedules and one provider, Fantasy Football Calculator 12-team standard (Non-PPR), for raw static ADP2008–2026. The same frozen positional power conversion estimates 2-QB/superflex ADP in every year, including overlap years and 2026. No fantasy420 dependency. No historical injury news or forecasts.
+The permanent WEEK_3_INJURY_YEARS dropdown uses only NFLQuery data_v6 for historical appearances/schedules and one provider, Fantasy Football Calculator 12-team 2-QB (the user-approved superflex proxy), for static ADP2014–2026. No fantasy420 dependency. No historical injury news or forecasts.
 
 The full extraction, inference and scoring code remains readable and editable in the textboxes after production minification. QueryHelpers exposes static ADP, injury week map and source metadata only.
 
@@ -12,7 +12,7 @@ Raw draftWeight=exp(-(ADP-1)/35). Exclude weight<0.1 before considering absence 
 
 Validate historical early returns, ongoing absences, Week3 exits, Week4 byes, later injuries excluded, trades, namesakes, current full week map, cutoff independent ofduration, normalizedscale, minimaloutput and Customize serialization. Refresh completed2026 games using existing NFLQuery ingestion. Run focusedtests, TypeScript, productionbuild, independent spec/code review and browser checks. Commit task-owned changes and deploy main as requested.
 
-ADP format revision: The user explicitly approved one consistent basis: raw FFC standard ADP for every year, with the same fixed conversion even where actual 2-QB ADP exists. Store raw standard ADP in ADP_BY_YEAR and frozen calibration data in ADP_CONVERSION; apply max(1,multiplier[position]*standardADP^exponent[position]) visibly in mapPoints before cutoff/scoring. Fit QB/RB/WR/TE coefficients once from paired2014–2025 data and never refit on import. Unsupported positions are retained in raw data but not scored. Display converted ADP rounded3decimals; use unrounded values in calculation. Include the conversion formula and coefficients in the unranked header. Extend to populated2008–2026; preserve the unresolved2008/2009 archive end-date inconsistency in provenance. For2026 use standard preseason charts throughSeptember8, never live in-season values. Preserve frozen injury weeks and return estimates; refresh missing-ADP metadata only. Score normalization refers to converted ADP10/10weeks=10.
+ADP format revision: The user explicitly chose FFC 2-QB as a proxy rather than requiring actual superflex observations. Only populated 2-QB years2014–2026 are included;2007–2013 are unavailable. For2026 use preseason2-QB chart values throughSeptember8, never the live in-season ADP. Preserve frozen injury weeks and all scoring/output behavior. Record the format distinction in metadata, README and tooltip.
 
 Description revision: Replace the long explanation with “How injury prone did the season appear after week 3? Assume we had perfect knowledge of injuries suffered before week 4.” Retain the separate format/coverage prefix. No new lookups or data downloads; week numbers and existing current metadata suffice.
 

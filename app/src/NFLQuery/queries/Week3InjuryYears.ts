@@ -49,7 +49,6 @@ const source = {
     const referenceInjuryCost = Math.pow(10, durationExponent);
     const H = window.QueryHelpers;
     const currentYear = H.CURRENT_INJURY_SOURCES.year;
-    const adpConversion = H.ADP_CONVERSION.positions;
     const normalizeName = (name) => {
         const key = name
             .toLowerCase()
@@ -70,13 +69,7 @@ const source = {
     const seasons = years.map((year) => {
         const current = year === currentYear;
         const games = gamesByYear.get(year) || [];
-        // One standard-ADP basis and one frozen conversion for EVERY season.
-        const adpPlayers = H.ADP_BY_YEAR[year]
-            .filter((p) => adpConversion[p.position] && Number.isFinite(p.adp) && p.adp >= 1)
-            .map((p) => {
-                const { multiplier, exponent } = adpConversion[p.position];
-                return { ...p, adp: Math.max(1, multiplier * Math.pow(p.adp, exponent)) };
-            });
+        const adpPlayers = H.ADP_BY_YEAR[year].filter((p) => ["QB", "RB", "WR", "TE", "PK", "K"].includes(p.position));
         const schedules = new Map();
         const appearances = new Map();
         games.forEach((game) => {
@@ -193,7 +186,7 @@ const source = {
                 .join(", ");
             contributors.push({
                 player: player.name,
-                adp: Number(player.adp.toFixed(3)),
+                adp: player.adp,
                 weekLabel,
                 contribution,
             });
@@ -217,14 +210,12 @@ const source = {
         draftValue: "exp(-ADP / adpDecay)",
         injuryCost: "weeks^durationExponent",
         parameters: { adpDecay, durationExponent },
-        ADP: "max(1, multiplier[position] × standardADP^exponent[position])",
-        adpConversion,
     }, ...seasons];
 }`,
 };
 
 export default BuildQueryConfig<TeamAppearance>({
   tooltip:
-    "FFC standard ADP, uniformly converted to a 2-QB/superflex proxy, 2008–2026. How injury prone did the season appear after week 3? Assume we had perfect knowledge of injuries suffered before week 4.",
+    "12-team 2-QB ADP (superflex proxy), 2014–2026. How injury prone did the season appear after week 3? Assume we had perfect knowledge of injuries suffered before week 4.",
   queryFunctions: () => evalFunctions(source) as QueryFunctions<TeamAppearance>,
 });

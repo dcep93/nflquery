@@ -2,7 +2,6 @@ import { PlayType } from "../Data";
 import {
   ADP_BY_YEAR,
   ADP_SOURCES,
-  ADP_CONVERSION,
   CURRENT_INJURY_WEEKS,
   CURRENT_INJURY_SOURCES,
   NFL_TEAM_ALIASES,
@@ -93,7 +92,6 @@ declare global {
 const QueryHelpers = {
   ADP_BY_YEAR,
   ADP_SOURCES,
-  ADP_CONVERSION,
   CURRENT_INJURY_WEEKS,
   CURRENT_INJURY_SOURCES,
   NFL_TEAM_ALIASES,
