@@ -120,15 +120,23 @@ const DRIVE_TEAM_OVERRIDES: { [key: string]: string } = {
 };
 
 export async function fetchCompletedGameIds(year: number): Promise<number[]> {
-  const resp = await fetch(
-    `https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=1000&dates=${year}0801-${
-      year + 1
-    }0401`
+  // ESPN's calendar-year endpoint includes January games from the prior season.
+  // Read both calendar years, then select the requested NFL season explicitly.
+  const scoreboards = await Promise.all(
+    [year, year + 1].map(async (calendarYear) => {
+      const resp = await fetch(
+        `https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=1000&dates=${calendarYear}`
+      );
+      if (!resp.ok) {
+        throw new Error(`Scoreboard ${calendarYear}: ${resp.status}`);
+      }
+      return (await resp.json()) as ScoreboardResponse;
+    })
   );
-  const data = (await resp.json()) as ScoreboardResponse;
-  const events = data.events ?? [];
+  const events = scoreboards.flatMap((data) => data.events ?? []);
 
   const ids = events
+    .filter((event) => event.season.year === year)
     .filter((event) => event.season.slug !== "preseason")
     .filter((event) => event.status.type.state === "post")
     .filter((event) => {
@@ -182,7 +190,7 @@ export async function fetchSummaryGame(gameId: number): Promise<GameType> {
 type ScoreboardResponse = {
   events?: {
     id: string;
-    season: { slug: string };
+    season: { year: number; slug: string };
     status: { type: { state: string } };
     competitions?: [
       {
