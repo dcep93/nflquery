@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Freeze FFC 12-team 2-QB ADP, used as an explicitly labeled superflex proxy.
+"""Freeze FFC 12-team standard ADP for the uniform superflex conversion.
 
 This authoring tool never runs in the app. Historical archives are checked from
 2007 onward. Current-year values come only from preseason player charts.
@@ -11,13 +11,14 @@ import datetime
 import hashlib
 import json
 import math
+import re
 from pathlib import Path
 import urllib.request
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'app/src/NFLQuery/datasets'
 HEADERS = {'User-Agent': 'Mozilla/5.0 (NFLQuery personal ADP archive)'}
-FORMAT = '2qb'
+FORMAT = 'standard'
 TEAMS = 12
 CURRENT_YEAR = 2026
 OLDEST = datetime.date(2026, 8, 25)
@@ -60,7 +61,7 @@ def main():
         players = data.get('players', [])
         meta = data.get('meta')
         # Never accept another scoring format as a silent fallback.
-        if players and (not meta or meta.get('type') != '2 QB' or meta.get('teams') != TEAMS):
+        if players and (not meta or meta.get('type') != 'Non-PPR' or meta.get('teams') != TEAMS):
             raise ValueError(f'Wrong format returned for {year}: {meta}')
         years[str(year)] = {'url': url, 'meta': meta, 'count': len(players),
                             'error': data.get('errors')}
@@ -71,13 +72,8 @@ def main():
         if year >= CURRENT_YEAR - 1:
             identities.update({p['player_id']: p for p in players})
 
-    # Other formats discover identities only. They NEVER supply saved ADP values.
+    # Every saved ADP is standard format, including the current preseason charts.
     identity_urls = [endpoint(FORMAT, CURRENT_YEAR - 1), endpoint(FORMAT, CURRENT_YEAR)]
-    for fmt in ['standard', 'ppr', 'half-ppr', 'dynasty', 'rookie']:
-        url = endpoint(fmt, CURRENT_YEAR)
-        identity_urls.append(url)
-        for player in fetch(url).get('players', []):
-            identities.setdefault(player['player_id'], player)
 
     def graph(item):
         player_id, player = item
@@ -94,7 +90,7 @@ def main():
         return (player_record(player, value),
                 {'name': player['name'], 'date': str(day), 'url': url, 'adp': value})
 
-    print('Fetching preseason 2-QB charts for', len(identities), 'player identities', flush=True)
+    print('Fetching preseason standard charts for', len(identities), 'player identities', flush=True)
     # Any fetch/parse error aborts before overwriting the checked-in dump.
     with concurrent.futures.ThreadPoolExecutor(4) as pool:
         results = [result for result in pool.map(graph, identities.items()) if result]
@@ -105,28 +101,41 @@ def main():
     years[str(CURRENT_YEAR)]['liveMeta'] = years[str(CURRENT_YEAR)].pop('meta')
     years[str(CURRENT_YEAR)].update({
         'count': len(results),
-        'basis': f'Most recent 12-team 2-QB daily chart value from {OLDEST} through {CUTOFF}, before NFL Week 1.',
+        'basis': f'Most recent 12-team standard daily chart value from {OLDEST} through {CUTOFF}, before NFL Week 1.',
         'identitySourceUrls': identity_urls,
         'playerSources': [result[1] for result in results],
     })
     sources = {
         'provider': 'Fantasy Football Calculator', 'format': FORMAT,
-        'formatLabel': '2-QB', 'proxyFor': 'superflex', 'teams': TEAMS,
+        'formatLabel': 'Standard (Non-PPR)', 'proxyFor': 'superflex via one frozen 2-QB conversion', 'teams': TEAMS,
         'retrievedAt': str(datetime.datetime.now(datetime.timezone.utc).date()),
         'documentation': 'https://help.fantasyfootballcalculator.com/article/42-adp-rest-api',
         'years': years,
+        'conversionFile': 'adp-conversion.json',
         'notes': [
-            'FFC publishes 2-QB ADP, not a separate superflex dataset. This is the user-approved superflex proxy, not actual superflex draft observations.',
-            'The 2007–2013 2-QB archive endpoints return no ADP data. Populated 12-team 2-QB history begins in 2014; no standard-scoring fallback is used.',
-            '2026 live ADP includes in-season drafts and is retained only as metadata. All saved 2026 values are preseason 2-QB player-chart points.',
-            'Other format endpoints discover player identities only; every saved ADP value is 12-team 2-QB.',
+            'Every year uses FFC standard ADP. The editable query applies one frozen position-specific conversion to all years; no actual 2-QB ADP is mixed into the time series.',
+            '2007 has archive metadata but zero players. Populated 12-team standard history starts in 2008. Earlier than 2007 is rejected by the API.',
+            'FFC explicitly labels the 2008 and 2009 lists as those archived seasons, but both report an inconsistent 2010-06-20 end date. Retain this unresolved provenance caveat; do not assert these dates establish a verified preseason window.',
+            '2026 live standard ADP includes in-season drafts and is retained only as metadata. All saved 2026 values are preseason standard player-chart points.',
+            'Only standard-format archive lists discover current player identities; every chart request also uses standard format.',
             'Historical FFC team labels may reflect later trades or franchise relocations; NFLQuery appearances determine historical teams when available.',
             'Daily 2026 chart sample sizes are unavailable. Missing qualifying ADP is not replaced with invented values.',
+            'The conversion supports QB/RB/WR/TE. The raw dump retains all positions, but unsupported positions do not enter the injury score.',
+
         ],
     }
+    # Only coverage metadata changes; the frozen injury estimates are untouched.
+    injury_sources = json.loads((OUT / 'current-injury-sources.json').read_text())
+    def normalize(name):
+        name = re.sub(r'\s+(jr\.?|sr\.?|ii|iii|iv|v)$', '', name.lower())
+        return re.sub('[^a-z0-9]', '', name)
+    current_names = {normalize(p['name']) for p in adp[str(CURRENT_YEAR)]}
+    injury_sources['missingAdpPlayers'] = [name for name in injury_sources['players']
+                                          if normalize(name) not in current_names]
     OUT.mkdir(exist_ok=True)
     (OUT / 'adp-by-year.json').write_text(json.dumps(adp, indent=2) + '\n')
     (OUT / 'adp-sources.json').write_text(json.dumps(sources, indent=2, ensure_ascii=False) + '\n')
+    (OUT / 'current-injury-sources.json').write_text(json.dumps(injury_sources, indent=2, ensure_ascii=False) + '\n')
     print('Saved years:', min(adp), 'through', max(adp), '; 2026 players:', len(results), flush=True)
 
 
