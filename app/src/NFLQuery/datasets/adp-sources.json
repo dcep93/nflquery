@@ -1,272 +1,226 @@
 {
   "provider": "Fantasy Football Calculator",
-  "format": "standard",
+  "format": "2qb",
+  "formatLabel": "2-QB",
+  "proxyFor": "superflex",
   "teams": 12,
   "retrievedAt": "2026-09-28",
   "documentation": "https://help.fantasyfootballcalculator.com/article/42-adp-rest-api",
   "years": {
     "2007": {
-      "url": "https://fantasyfootballcalculator.com/api/v1/adp/standard?teams=12&year=2007&position=all",
-      "meta": {
-        "type": "Non-PPR",
-        "teams": 12,
-        "rounds": 15,
-        "total_drafts": 998,
-        "start_date": "2007-08-29",
-        "end_date": "2010-06-20"
-      },
+      "url": "https://fantasyfootballcalculator.com/api/v1/adp/2qb?teams=12&year=2007&position=all",
+      "meta": null,
       "count": 0,
-      "error": null
+      "error": "No ADP data found."
     },
     "2008": {
-      "url": "https://fantasyfootballcalculator.com/api/v1/adp/standard?teams=12&year=2008&position=all",
-      "meta": {
-        "type": "Non-PPR",
-        "teams": 12,
-        "rounds": 15,
-        "total_drafts": 2612,
-        "start_date": "2008-08-30",
-        "end_date": "2010-06-20"
-      },
-      "count": 180,
-      "error": null
+      "url": "https://fantasyfootballcalculator.com/api/v1/adp/2qb?teams=12&year=2008&position=all",
+      "meta": null,
+      "count": 0,
+      "error": "No ADP data found."
     },
     "2009": {
-      "url": "https://fantasyfootballcalculator.com/api/v1/adp/standard?teams=12&year=2009&position=all",
-      "meta": {
-        "type": "Non-PPR",
-        "teams": 12,
-        "rounds": 15,
-        "total_drafts": 1325,
-        "start_date": "2009-09-07",
-        "end_date": "2010-06-20"
-      },
-      "count": 202,
-      "error": null
+      "url": "https://fantasyfootballcalculator.com/api/v1/adp/2qb?teams=12&year=2009&position=all",
+      "meta": null,
+      "count": 0,
+      "error": "No ADP data found."
     },
     "2010": {
-      "url": "https://fantasyfootballcalculator.com/api/v1/adp/standard?teams=12&year=2010&position=all",
-      "meta": {
-        "type": "Non-PPR",
-        "teams": 12,
-        "rounds": 15,
-        "total_drafts": 1535,
-        "start_date": "2010-09-06",
-        "end_date": "2010-09-08"
-      },
-      "count": 210,
-      "error": null
+      "url": "https://fantasyfootballcalculator.com/api/v1/adp/2qb?teams=12&year=2010&position=all",
+      "meta": null,
+      "count": 0,
+      "error": "No ADP data found."
     },
     "2011": {
-      "url": "https://fantasyfootballcalculator.com/api/v1/adp/standard?teams=12&year=2011&position=all",
-      "meta": {
-        "type": "Non-PPR",
-        "teams": 12,
-        "rounds": 15,
-        "total_drafts": 1144,
-        "start_date": "2011-09-07",
-        "end_date": "2011-09-09"
-      },
-      "count": 183,
-      "error": null
+      "url": "https://fantasyfootballcalculator.com/api/v1/adp/2qb?teams=12&year=2011&position=all",
+      "meta": null,
+      "count": 0,
+      "error": "No ADP data found."
     },
     "2012": {
-      "url": "https://fantasyfootballcalculator.com/api/v1/adp/standard?teams=12&year=2012&position=all",
-      "meta": {
-        "type": "Non-PPR",
-        "teams": 12,
-        "rounds": 15,
-        "total_drafts": 507,
-        "start_date": "2012-09-04",
-        "end_date": "2012-09-05"
-      },
-      "count": 145,
-      "error": null
+      "url": "https://fantasyfootballcalculator.com/api/v1/adp/2qb?teams=12&year=2012&position=all",
+      "meta": null,
+      "count": 0,
+      "error": "No ADP data found."
     },
     "2013": {
-      "url": "https://fantasyfootballcalculator.com/api/v1/adp/standard?teams=12&year=2013&position=all",
-      "meta": {
-        "type": "Non-PPR",
-        "teams": 12,
-        "rounds": 15,
-        "total_drafts": 992,
-        "start_date": "2013-09-02",
-        "end_date": "2013-09-04"
-      },
-      "count": 194,
-      "error": null
+      "url": "https://fantasyfootballcalculator.com/api/v1/adp/2qb?teams=12&year=2013&position=all",
+      "meta": null,
+      "count": 0,
+      "error": "No ADP data found."
     },
     "2014": {
-      "url": "https://fantasyfootballcalculator.com/api/v1/adp/standard?teams=12&year=2014&position=all",
+      "url": "https://fantasyfootballcalculator.com/api/v1/adp/2qb?teams=12&year=2014&position=all",
       "meta": {
-        "type": "Non-PPR",
+        "type": "2 QB",
         "teams": 12,
         "rounds": 15,
-        "total_drafts": 752,
-        "start_date": "2014-08-31",
+        "total_drafts": 766,
+        "start_date": "2014-08-22",
         "end_date": "2014-09-01"
       },
-      "count": 163,
+      "count": 215,
       "error": null
     },
     "2015": {
-      "url": "https://fantasyfootballcalculator.com/api/v1/adp/standard?teams=12&year=2015&position=all",
+      "url": "https://fantasyfootballcalculator.com/api/v1/adp/2qb?teams=12&year=2015&position=all",
       "meta": {
-        "type": "Non-PPR",
+        "type": "2 QB",
         "teams": 12,
         "rounds": 15,
-        "total_drafts": 822,
-        "start_date": "2015-09-06",
+        "total_drafts": 312,
+        "start_date": "2015-09-02",
         "end_date": "2015-09-09"
       },
-      "count": 194,
+      "count": 196,
       "error": null
     },
     "2016": {
-      "url": "https://fantasyfootballcalculator.com/api/v1/adp/standard?teams=12&year=2016&position=all",
+      "url": "https://fantasyfootballcalculator.com/api/v1/adp/2qb?teams=12&year=2016&position=all",
       "meta": {
-        "type": "Non-PPR",
+        "type": "2 QB",
         "teams": 12,
         "rounds": 15,
-        "total_drafts": 701,
-        "start_date": "2016-09-01",
+        "total_drafts": 627,
+        "start_date": "2016-08-23",
         "end_date": "2016-09-02"
       },
-      "count": 168,
+      "count": 209,
       "error": null
     },
     "2017": {
-      "url": "https://fantasyfootballcalculator.com/api/v1/adp/standard?teams=12&year=2017&position=all",
+      "url": "https://fantasyfootballcalculator.com/api/v1/adp/2qb?teams=12&year=2017&position=all",
       "meta": {
-        "type": "Non-PPR",
+        "type": "2 QB",
         "teams": 12,
         "rounds": 15,
-        "total_drafts": 1384,
-        "start_date": "2017-09-01",
+        "total_drafts": 2450,
+        "start_date": "2017-08-25",
         "end_date": "2017-09-04"
       },
-      "count": 211,
+      "count": 219,
       "error": null
     },
     "2018": {
-      "url": "https://fantasyfootballcalculator.com/api/v1/adp/standard?teams=12&year=2018&position=all",
+      "url": "https://fantasyfootballcalculator.com/api/v1/adp/2qb?teams=12&year=2018&position=all",
       "meta": {
-        "type": "Non-PPR",
+        "type": "2 QB",
         "teams": 12,
         "rounds": 15,
-        "total_drafts": 1698,
-        "start_date": "2018-08-28",
+        "total_drafts": 772,
+        "start_date": "2018-08-25",
         "end_date": "2018-09-04"
       },
-      "count": 217,
+      "count": 215,
       "error": null
     },
     "2019": {
-      "url": "https://fantasyfootballcalculator.com/api/v1/adp/standard?teams=12&year=2019&position=all",
+      "url": "https://fantasyfootballcalculator.com/api/v1/adp/2qb?teams=12&year=2019&position=all",
       "meta": {
-        "type": "Non-PPR",
+        "type": "2 QB",
         "teams": 12,
         "rounds": 15,
-        "total_drafts": 696,
-        "start_date": "2019-09-02",
+        "total_drafts": 1179,
+        "start_date": "2019-08-30",
         "end_date": "2019-09-04"
+      },
+      "count": 171,
+      "error": null
+    },
+    "2020": {
+      "url": "https://fantasyfootballcalculator.com/api/v1/adp/2qb?teams=12&year=2020&position=all",
+      "meta": {
+        "type": "2 QB",
+        "teams": 12,
+        "rounds": 15,
+        "total_drafts": 916,
+        "start_date": "2020-08-21",
+        "end_date": "2020-09-01"
+      },
+      "count": 209,
+      "error": null
+    },
+    "2021": {
+      "url": "https://fantasyfootballcalculator.com/api/v1/adp/2qb?teams=12&year=2021&position=all",
+      "meta": {
+        "type": "2 QB",
+        "teams": 12,
+        "rounds": 15,
+        "total_drafts": 1705,
+        "start_date": "2021-08-28",
+        "end_date": "2021-09-01"
+      },
+      "count": 207,
+      "error": null
+    },
+    "2022": {
+      "url": "https://fantasyfootballcalculator.com/api/v1/adp/2qb?teams=12&year=2022&position=all",
+      "meta": {
+        "type": "2 QB",
+        "teams": 12,
+        "rounds": 15,
+        "total_drafts": 1699,
+        "start_date": "2022-08-31",
+        "end_date": "2022-09-04"
+      },
+      "count": 197,
+      "error": null
+    },
+    "2023": {
+      "url": "https://fantasyfootballcalculator.com/api/v1/adp/2qb?teams=12&year=2023&position=all",
+      "meta": {
+        "type": "2 QB",
+        "teams": 12,
+        "rounds": 15,
+        "total_drafts": 905,
+        "start_date": "2023-08-30",
+        "end_date": "2023-09-01"
       },
       "count": 193,
       "error": null
     },
-    "2020": {
-      "url": "https://fantasyfootballcalculator.com/api/v1/adp/standard?teams=12&year=2020&position=all",
-      "meta": {
-        "type": "Non-PPR",
-        "teams": 12,
-        "rounds": 15,
-        "total_drafts": 2667,
-        "start_date": "2020-08-25",
-        "end_date": "2020-09-01"
-      },
-      "count": 226,
-      "error": null
-    },
-    "2021": {
-      "url": "https://fantasyfootballcalculator.com/api/v1/adp/standard?teams=12&year=2021&position=all",
-      "meta": {
-        "type": "Non-PPR",
-        "teams": 12,
-        "rounds": 15,
-        "total_drafts": 2656,
-        "start_date": "2021-08-28",
-        "end_date": "2021-09-01"
-      },
-      "count": 224,
-      "error": null
-    },
-    "2022": {
-      "url": "https://fantasyfootballcalculator.com/api/v1/adp/standard?teams=12&year=2022&position=all",
-      "meta": {
-        "type": "Non-PPR",
-        "teams": 12,
-        "rounds": 15,
-        "total_drafts": 2112,
-        "start_date": "2022-08-31",
-        "end_date": "2022-09-04"
-      },
-      "count": 195,
-      "error": null
-    },
-    "2023": {
-      "url": "https://fantasyfootballcalculator.com/api/v1/adp/standard?teams=12&year=2023&position=all",
-      "meta": {
-        "type": "Non-PPR",
-        "teams": 12,
-        "rounds": 15,
-        "total_drafts": 1104,
-        "start_date": "2023-08-30",
-        "end_date": "2023-09-01"
-      },
-      "count": 192,
-      "error": null
-    },
     "2024": {
-      "url": "https://fantasyfootballcalculator.com/api/v1/adp/standard?teams=12&year=2024&position=all",
+      "url": "https://fantasyfootballcalculator.com/api/v1/adp/2qb?teams=12&year=2024&position=all",
       "meta": {
-        "type": "Non-PPR",
+        "type": "2 QB",
         "teams": 12,
         "rounds": 15,
-        "total_drafts": 742,
-        "start_date": "2024-08-30",
+        "total_drafts": 3580,
+        "start_date": "2024-08-22",
         "end_date": "2024-09-01"
       },
-      "count": 180,
+      "count": 212,
       "error": null
     },
     "2025": {
-      "url": "https://fantasyfootballcalculator.com/api/v1/adp/standard?teams=12&year=2025&position=all",
+      "url": "https://fantasyfootballcalculator.com/api/v1/adp/2qb?teams=12&year=2025&position=all",
       "meta": {
-        "type": "Non-PPR",
+        "type": "2 QB",
         "teams": 12,
         "rounds": 15,
-        "total_drafts": 2017,
-        "start_date": "2025-08-25",
+        "total_drafts": 3317,
+        "start_date": "2025-08-22",
         "end_date": "2025-09-01"
       },
-      "count": 221,
+      "count": 215,
       "error": null
     },
     "2026": {
-      "url": "https://fantasyfootballcalculator.com/api/v1/adp/standard?teams=12&year=2026&position=all",
-      "count": 187,
+      "url": "https://fantasyfootballcalculator.com/api/v1/adp/2qb?teams=12&year=2026&position=all",
+      "count": 233,
       "error": null,
       "liveMeta": {
-        "type": "Non-PPR",
+        "type": "2 QB",
         "teams": 12,
         "rounds": 15,
-        "total_drafts": 156,
-        "start_date": "2026-09-08",
-        "end_date": "2026-09-15"
+        "total_drafts": 2357,
+        "start_date": "2026-08-29",
+        "end_date": "2026-09-28"
       },
-      "basis": "Most recent standard 12-team daily chart value from 2026-08-25 through 2026-09-08, before NFL Week 1.",
+      "basis": "Most recent 12-team 2-QB daily chart value from 2026-08-25 through 2026-09-08, before NFL Week 1.",
       "identitySourceUrls": [
-        "https://fantasyfootballcalculator.com/api/v1/adp/standard?teams=12&year=2025&position=all",
+        "https://fantasyfootballcalculator.com/api/v1/adp/2qb?teams=12&year=2025&position=all",
+        "https://fantasyfootballcalculator.com/api/v1/adp/2qb?teams=12&year=2026&position=all",
         "https://fantasyfootballcalculator.com/api/v1/adp/standard?teams=12&year=2026&position=all",
         "https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all",
         "https://fantasyfootballcalculator.com/api/v1/adp/half-ppr?teams=12&year=2026&position=all",
@@ -277,1133 +231,1410 @@
         {
           "name": "Jahmyr Gibbs",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5672&teams=12&format=standard&callback=?",
-          "adp": 1.5093
-        },
-        {
-          "name": "Bijan Robinson",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5670&teams=12&format=standard&callback=?",
-          "adp": 2.339
-        },
-        {
-          "name": "Jonathan Taylor",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4864&teams=12&format=standard&callback=?",
-          "adp": 3.3934
-        },
-        {
-          "name": "Puka Nacua",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5714&teams=12&format=standard&callback=?",
-          "adp": 4.5833
-        },
-        {
-          "name": "Ja'Marr Chase",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5177&teams=12&format=standard&callback=?",
-          "adp": 4.6846
-        },
-        {
-          "name": "Derrick Henry",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2350&teams=12&format=standard&callback=?",
-          "adp": 6.0392
-        },
-        {
-          "name": "Christian McCaffrey",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2434&teams=12&format=standard&callback=?",
-          "adp": 6.7308
-        },
-        {
-          "name": "Jaxon Smith-Njigba",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5671&teams=12&format=standard&callback=?",
-          "adp": 7.321
-        },
-        {
-          "name": "James Cook III",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5652&teams=12&format=standard&callback=?",
-          "adp": 8.0856
-        },
-        {
-          "name": "Amon-Ra St. Brown",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5182&teams=12&format=standard&callback=?",
-          "adp": 9.4412
-        },
-        {
-          "name": "De'Von Achane",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5683&teams=12&format=standard&callback=?",
-          "adp": 11.7045
-        },
-        {
-          "name": "Saquon Barkley",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2860&teams=12&format=standard&callback=?",
-          "adp": 11.955
-        },
-        {
-          "name": "CeeDee Lamb",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4869&teams=12&format=standard&callback=?",
-          "adp": 13.56
-        },
-        {
-          "name": "Chase Brown",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5706&teams=12&format=standard&callback=?",
-          "adp": 14.2346
-        },
-        {
-          "name": "Drake London",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5574&teams=12&format=standard&callback=?",
-          "adp": 14.8
-        },
-        {
-          "name": "Justin Jefferson",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4876&teams=12&format=standard&callback=?",
-          "adp": 15.5429
-        },
-        {
-          "name": "Kenneth Walker",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5625&teams=12&format=standard&callback=?",
-          "adp": 17.4421
-        },
-        {
-          "name": "George Pickens",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5576&teams=12&format=standard&callback=?",
-          "adp": 18.175
-        },
-        {
-          "name": "A.J. Brown",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=3247&teams=12&format=standard&callback=?",
-          "adp": 19.0991
-        },
-        {
-          "name": "Nico Collins",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5207&teams=12&format=standard&callback=?",
-          "adp": 19.5897
-        },
-        {
-          "name": "Rashee Rice",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5696&teams=12&format=standard&callback=?",
-          "adp": 22.4483
-        },
-        {
-          "name": "Kyren Williams",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5623&teams=12&format=standard&callback=?",
-          "adp": 22.4842
-        },
-        {
-          "name": "Omarion Hampton",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6538&teams=12&format=standard&callback=?",
-          "adp": 23.177
-        },
-        {
-          "name": "Zay Flowers",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5675&teams=12&format=standard&callback=?",
-          "adp": 23.5143
-        },
-        {
-          "name": "Javonte Williams",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5185&teams=12&format=standard&callback=?",
-          "adp": 24.3305
-        },
-        {
-          "name": "Chris Olave",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5544&teams=12&format=standard&callback=?",
-          "adp": 25.3818
-        },
-        {
-          "name": "Ashton Jeanty",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6500&teams=12&format=standard&callback=?",
-          "adp": 25.4519
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5672&teams=12&format=2qb&callback=?",
+          "adp": 1.7165
         },
         {
           "name": "Josh Allen",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2885&teams=12&format=standard&callback=?",
-          "adp": 27.23
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2885&teams=12&format=2qb&callback=?",
+          "adp": 1.893
         },
         {
-          "name": "Tee Higgins",
+          "name": "Bijan Robinson",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4870&teams=12&format=standard&callback=?",
-          "adp": 29.0357
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5670&teams=12&format=2qb&callback=?",
+          "adp": 2.6178
         },
         {
-          "name": "Jameson Williams",
+          "name": "Puka Nacua",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5643&teams=12&format=standard&callback=?",
-          "adp": 30.2286
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5714&teams=12&format=2qb&callback=?",
+          "adp": 5.043
         },
         {
-          "name": "Breece Hall",
+          "name": "Jonathan Taylor",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5503&teams=12&format=standard&callback=?",
-          "adp": 30.386
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4864&teams=12&format=2qb&callback=?",
+          "adp": 5.1648
         },
         {
-          "name": "Malik Nabers",
+          "name": "Ja'Marr Chase",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6183&teams=12&format=standard&callback=?",
-          "adp": 31.5882
-        },
-        {
-          "name": "Jeremiyah Love",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6769&teams=12&format=standard&callback=?",
-          "adp": 32.3494
-        },
-        {
-          "name": "Tetairoa McMillan",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6561&teams=12&format=standard&callback=?",
-          "adp": 32.3774
-        },
-        {
-          "name": "Emeka Egbuka",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6576&teams=12&format=standard&callback=?",
-          "adp": 34.675
-        },
-        {
-          "name": "Travis Etienne Jr.",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4863&teams=12&format=standard&callback=?",
-          "adp": 35.0824
-        },
-        {
-          "name": "Cam Skattebo",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6509&teams=12&format=standard&callback=?",
-          "adp": 35.7143
-        },
-        {
-          "name": "Davante Adams",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2125&teams=12&format=standard&callback=?",
-          "adp": 35.9661
-        },
-        {
-          "name": "DeVonta Smith",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4883&teams=12&format=standard&callback=?",
-          "adp": 36.1138
-        },
-        {
-          "name": "D'Andre Swift",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4862&teams=12&format=standard&callback=?",
-          "adp": 38.3429
-        },
-        {
-          "name": "Garrett Wilson",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5548&teams=12&format=standard&callback=?",
-          "adp": 40.7945
-        },
-        {
-          "name": "Terry McLaurin",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=3449&teams=12&format=standard&callback=?",
-          "adp": 42.9737
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5177&teams=12&format=2qb&callback=?",
+          "adp": 6.057
         },
         {
           "name": "Drake Maye",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6187&teams=12&format=standard&callback=?",
-          "adp": 43.5143
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6187&teams=12&format=2qb&callback=?",
+          "adp": 7.721
         },
         {
-          "name": "Rome Odunze",
+          "name": "Jaxon Smith-Njigba",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6194&teams=12&format=standard&callback=?",
-          "adp": 43.7419
-        },
-        {
-          "name": "Ladd McConkey",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6281&teams=12&format=standard&callback=?",
-          "adp": 44.128
-        },
-        {
-          "name": "Christian Watson",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5360&teams=12&format=standard&callback=?",
-          "adp": 46.3239
-        },
-        {
-          "name": "Bucky Irving",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6190&teams=12&format=standard&callback=?",
-          "adp": 46.7885
-        },
-        {
-          "name": "Jaylen Waddle",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5178&teams=12&format=standard&callback=?",
-          "adp": 47.084
-        },
-        {
-          "name": "Brock Bowers",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6178&teams=12&format=standard&callback=?",
-          "adp": 47.1205
-        },
-        {
-          "name": "Quinshon Judkins",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6531&teams=12&format=standard&callback=?",
-          "adp": 47.6441
-        },
-        {
-          "name": "DJ Moore",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2876&teams=12&format=standard&callback=?",
-          "adp": 48.6471
-        },
-        {
-          "name": "Bhayshul Tuten",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6513&teams=12&format=standard&callback=?",
-          "adp": 49.0
-        },
-        {
-          "name": "David Montgomery",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=3238&teams=12&format=standard&callback=?",
-          "adp": 51.7383
-        },
-        {
-          "name": "Trey McBride",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5656&teams=12&format=standard&callback=?",
-          "adp": 53.8587
-        },
-        {
-          "name": "Joe Burrow",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4882&teams=12&format=standard&callback=?",
-          "adp": 54.2857
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5671&teams=12&format=2qb&callback=?",
+          "adp": 8.5461
         },
         {
           "name": "Lamar Jackson",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2888&teams=12&format=standard&callback=?",
-          "adp": 55.8036
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2888&teams=12&format=2qb&callback=?",
+          "adp": 8.6607
         },
         {
-          "name": "Luther Burden III",
+          "name": "Christian McCaffrey",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6559&teams=12&format=standard&callback=?",
-          "adp": 56.3689
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2434&teams=12&format=2qb&callback=?",
+          "adp": 9.3853
         },
         {
-          "name": "Alec Pierce",
+          "name": "Joe Burrow",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5641&teams=12&format=standard&callback=?",
-          "adp": 56.7813
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4882&teams=12&format=2qb&callback=?",
+          "adp": 9.6458
         },
         {
-          "name": "Mike Evans",
+          "name": "Derrick Henry",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2111&teams=12&format=standard&callback=?",
-          "adp": 56.8281
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2350&teams=12&format=2qb&callback=?",
+          "adp": 10.0175
         },
         {
-          "name": "TreVeyon Henderson",
+          "name": "Amon-Ra St. Brown",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6490&teams=12&format=standard&callback=?",
-          "adp": 57.7692
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5182&teams=12&format=2qb&callback=?",
+          "adp": 13.1406
         },
         {
-          "name": "Rhamondre Stevenson",
+          "name": "James Cook III",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5210&teams=12&format=standard&callback=?",
-          "adp": 60.2045
-        },
-        {
-          "name": "Jadarian Price",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6776&teams=12&format=standard&callback=?",
-          "adp": 60.8304
-        },
-        {
-          "name": "DK Metcalf",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=3239&teams=12&format=standard&callback=?",
-          "adp": 62.9265
-        },
-        {
-          "name": "Courtland Sutton",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2862&teams=12&format=standard&callback=?",
-          "adp": 63.1429
-        },
-        {
-          "name": "Parker Washington",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5705&teams=12&format=standard&callback=?",
-          "adp": 64.1912
-        },
-        {
-          "name": "Jaylen Warren",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5443&teams=12&format=standard&callback=?",
-          "adp": 65.0588
-        },
-        {
-          "name": "Marvin Harrison Jr.",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6193&teams=12&format=standard&callback=?",
-          "adp": 65.6667
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5652&teams=12&format=2qb&callback=?",
+          "adp": 13.7333
         },
         {
           "name": "Dak Prescott",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2377&teams=12&format=standard&callback=?",
-          "adp": 65.8095
-        },
-        {
-          "name": "Colston Loveland",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6501&teams=12&format=standard&callback=?",
-          "adp": 67.2923
-        },
-        {
-          "name": "Tony Pollard",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=3435&teams=12&format=standard&callback=?",
-          "adp": 68.2692
-        },
-        {
-          "name": "J.K. Dobbins",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4888&teams=12&format=standard&callback=?",
-          "adp": 68.5246
-        },
-        {
-          "name": "Brian Thomas Jr.",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6175&teams=12&format=standard&callback=?",
-          "adp": 69.06
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2377&teams=12&format=2qb&callback=?",
+          "adp": 14.0986
         },
         {
           "name": "Jayden Daniels",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5854&teams=12&format=standard&callback=?",
-          "adp": 71.0513
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5854&teams=12&format=2qb&callback=?",
+          "adp": 14.4583
         },
         {
           "name": "Matthew Stafford",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1664&teams=12&format=standard&callback=?",
-          "adp": 72.2564
-        },
-        {
-          "name": "Carnell Tate",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6768&teams=12&format=standard&callback=?",
-          "adp": 73.2295
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1664&teams=12&format=2qb&callback=?",
+          "adp": 17.3432
         },
         {
           "name": "Jalen Hurts",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5025&teams=12&format=standard&callback=?",
-          "adp": 74.661
-        },
-        {
-          "name": "Michael Wilson",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5721&teams=12&format=standard&callback=?",
-          "adp": 75.5915
-        },
-        {
-          "name": "Josh Jacobs",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=3255&teams=12&format=standard&callback=?",
-          "adp": 77.7222
-        },
-        {
-          "name": "Quentin Johnston",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5674&teams=12&format=standard&callback=?",
-          "adp": 78.0357
-        },
-        {
-          "name": "Chuba Hubbard",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4873&teams=12&format=standard&callback=?",
-          "adp": 79.0606
-        },
-        {
-          "name": "Tyler Warren",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6504&teams=12&format=standard&callback=?",
-          "adp": 79.5464
-        },
-        {
-          "name": "Chris Godwin Jr.",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2465&teams=12&format=standard&callback=?",
-          "adp": 80.5294
-        },
-        {
-          "name": "Seattle Defense",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1327&teams=12&format=standard&callback=?",
-          "adp": 81.8276
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5025&teams=12&format=2qb&callback=?",
+          "adp": 17.7393
         },
         {
           "name": "Brock Purdy",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5648&teams=12&format=standard&callback=?",
-          "adp": 82.8462
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5648&teams=12&format=2qb&callback=?",
+          "adp": 19.8726
         },
         {
-          "name": "Jordan Addison",
+          "name": "De'Von Achane",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5673&teams=12&format=standard&callback=?",
-          "adp": 83.1695
-        },
-        {
-          "name": "Jayden Reed",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5707&teams=12&format=standard&callback=?",
-          "adp": 84.6471
-        },
-        {
-          "name": "Tucker Kraft",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5718&teams=12&format=standard&callback=?",
-          "adp": 85.5278
-        },
-        {
-          "name": "Jacory Croskey-Merritt",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6595&teams=12&format=standard&callback=?",
-          "adp": 87.6625
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5683&teams=12&format=2qb&callback=?",
+          "adp": 19.9391
         },
         {
           "name": "Caleb Williams",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6173&teams=12&format=standard&callback=?",
-          "adp": 88.0545
-        },
-        {
-          "name": "Xavier Worthy",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6172&teams=12&format=standard&callback=?",
-          "adp": 89.8
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6173&teams=12&format=2qb&callback=?",
+          "adp": 20.683
         },
         {
           "name": "Trevor Lawrence",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5186&teams=12&format=standard&callback=?",
-          "adp": 90.0943
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5186&teams=12&format=2qb&callback=?",
+          "adp": 20.9218
         },
         {
-          "name": "Michael Pittman Jr.",
+          "name": "Saquon Barkley",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4880&teams=12&format=standard&callback=?",
-          "adp": 90.6923
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2860&teams=12&format=2qb&callback=?",
+          "adp": 23.5672
         },
         {
-          "name": "Denver Defense",
+          "name": "CeeDee Lamb",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1309&teams=12&format=standard&callback=?",
-          "adp": 91.8636
-        },
-        {
-          "name": "Jakobi Meyers",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=3496&teams=12&format=standard&callback=?",
-          "adp": 91.9677
-        },
-        {
-          "name": "Matthew Golden",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6523&teams=12&format=standard&callback=?",
-          "adp": 93.7969
-        },
-        {
-          "name": "Jordan Mason",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5330&teams=12&format=standard&callback=?",
-          "adp": 93.8829
-        },
-        {
-          "name": "George Kittle",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2499&teams=12&format=standard&callback=?",
-          "adp": 94.4615
-        },
-        {
-          "name": "Deebo Samuel Sr.",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=3246&teams=12&format=standard&callback=?",
-          "adp": 95.625
-        },
-        {
-          "name": "Romeo Doubs",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5586&teams=12&format=standard&callback=?",
-          "adp": 96.4167
-        },
-        {
-          "name": "Houston Defense",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1312&teams=12&format=standard&callback=?",
-          "adp": 98.6279
-        },
-        {
-          "name": "Stefon Diggs",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2316&teams=12&format=standard&callback=?",
-          "adp": 99.6133
-        },
-        {
-          "name": "Blake Corum",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5965&teams=12&format=standard&callback=?",
-          "adp": 101.8544
-        },
-        {
-          "name": "Josh Downs",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5680&teams=12&format=standard&callback=?",
-          "adp": 102.2453
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4869&teams=12&format=2qb&callback=?",
+          "adp": 24.6726
         },
         {
           "name": "Jared Goff",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2351&teams=12&format=standard&callback=?",
-          "adp": 104.3462
-        },
-        {
-          "name": "Rashid Shaheed",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5896&teams=12&format=standard&callback=?",
-          "adp": 105.4286
-        },
-        {
-          "name": "LA Rams Defense",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1328&teams=12&format=standard&callback=?",
-          "adp": 105.6789
-        },
-        {
-          "name": "Wan'Dale Robinson",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5588&teams=12&format=standard&callback=?",
-          "adp": 105.825
-        },
-        {
-          "name": "Patrick Mahomes",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2462&teams=12&format=standard&callback=?",
-          "adp": 107.2842
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2351&teams=12&format=2qb&callback=?",
+          "adp": 24.9768
         },
         {
           "name": "Justin Herbert",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4887&teams=12&format=standard&callback=?",
-          "adp": 109.5497
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4887&teams=12&format=2qb&callback=?",
+          "adp": 25.4485
         },
         {
-          "name": "Dallas Goedert",
+          "name": "Patrick Mahomes",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2896&teams=12&format=standard&callback=?",
-          "adp": 109.6
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2462&teams=12&format=2qb&callback=?",
+          "adp": 25.4774
         },
         {
-          "name": "Khalil Shakir",
+          "name": "Drake London",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5636&teams=12&format=standard&callback=?",
-          "adp": 109.9259
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5574&teams=12&format=2qb&callback=?",
+          "adp": 25.9841
         },
         {
-          "name": "Aaron Jones Sr.",
+          "name": "Justin Jefferson",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2507&teams=12&format=standard&callback=?",
-          "adp": 111.56
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4876&teams=12&format=2qb&callback=?",
+          "adp": 27.3826
         },
         {
-          "name": "Jalen Coker",
+          "name": "Chase Brown",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6302&teams=12&format=standard&callback=?",
-          "adp": 113.4412
-        },
-        {
-          "name": "KC Concepcion Jr.",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6774&teams=12&format=standard&callback=?",
-          "adp": 114.325
-        },
-        {
-          "name": "MarShawn Lloyd",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5622&teams=12&format=standard&callback=?",
-          "adp": 114.4532
-        },
-        {
-          "name": "Jayden Higgins",
-          "date": "2026-08-26",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6577&teams=12&format=standard&callback=?",
-          "adp": 114.5
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5706&teams=12&format=2qb&callback=?",
+          "adp": 28.4121
         },
         {
           "name": "Bo Nix",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6253&teams=12&format=standard&callback=?",
-          "adp": 115.4531
-        },
-        {
-          "name": "De'Zhaun Stribling",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6777&teams=12&format=standard&callback=?",
-          "adp": 116.9722
-        },
-        {
-          "name": "Sam LaPorta",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5564&teams=12&format=standard&callback=?",
-          "adp": 117.431
-        },
-        {
-          "name": "RJ Harvey",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6530&teams=12&format=standard&callback=?",
-          "adp": 118.881
-        },
-        {
-          "name": "Minnesota Defense",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1317&teams=12&format=standard&callback=?",
-          "adp": 119.0
-        },
-        {
-          "name": "Makai Lemon",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6772&teams=12&format=standard&callback=?",
-          "adp": 121.4198
-        },
-        {
-          "name": "Kyle Pitts Sr.",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5181&teams=12&format=standard&callback=?",
-          "adp": 122.5957
-        },
-        {
-          "name": "Kenny Gainwell",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5196&teams=12&format=standard&callback=?",
-          "adp": 123.6709
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6253&teams=12&format=2qb&callback=?",
+          "adp": 29.9352
         },
         {
           "name": "Jaxson Dart",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6568&teams=12&format=standard&callback=?",
-          "adp": 124.4231
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6568&teams=12&format=2qb&callback=?",
+          "adp": 32.5613
         },
         {
-          "name": "Hunter Henry",
+          "name": "Ashton Jeanty",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2354&teams=12&format=standard&callback=?",
-          "adp": 127.8333
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6500&teams=12&format=2qb&callback=?",
+          "adp": 33.17
         },
         {
-          "name": "Jerry Jeudy",
+          "name": "George Pickens",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4861&teams=12&format=standard&callback=?",
-          "adp": 128.2581
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5576&teams=12&format=2qb&callback=?",
+          "adp": 33.2784
         },
         {
-          "name": "Detroit Defense",
+          "name": "Rashee Rice",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1310&teams=12&format=standard&callback=?",
-          "adp": 128.9286
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5696&teams=12&format=2qb&callback=?",
+          "adp": 33.9686
         },
         {
-          "name": "Brandon Aubrey",
+          "name": "A.J. Brown",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6162&teams=12&format=standard&callback=?",
-          "adp": 129.0794
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=3247&teams=12&format=2qb&callback=?",
+          "adp": 34.5157
         },
         {
-          "name": "Jalen McMillan",
+          "name": "Kenneth Walker",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6282&teams=12&format=standard&callback=?",
-          "adp": 129.7143
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5625&teams=12&format=2qb&callback=?",
+          "adp": 34.8168
         },
         {
-          "name": "Philadelphia Defense",
+          "name": "Nico Collins",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1323&teams=12&format=standard&callback=?",
-          "adp": 130.4324
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5207&teams=12&format=2qb&callback=?",
+          "adp": 35.9459
         },
         {
-          "name": "Mark Andrews",
+          "name": "Kyren Williams",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2872&teams=12&format=standard&callback=?",
-          "adp": 130.6667
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5623&teams=12&format=2qb&callback=?",
+          "adp": 37.5602
         },
         {
-          "name": "Isaiah Likely",
+          "name": "Omarion Hampton",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5661&teams=12&format=standard&callback=?",
-          "adp": 132.7215
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6538&teams=12&format=2qb&callback=?",
+          "adp": 38.829
         },
         {
-          "name": "Rachaad White",
+          "name": "Zay Flowers",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5626&teams=12&format=standard&callback=?",
-          "adp": 135.8
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5675&teams=12&format=2qb&callback=?",
+          "adp": 41.346
         },
         {
-          "name": "Kyler Murray",
+          "name": "Chris Olave",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=3299&teams=12&format=standard&callback=?",
-          "adp": 137.02
-        },
-        {
-          "name": "Dalton Kincaid",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5688&teams=12&format=standard&callback=?",
-          "adp": 137.8514
-        },
-        {
-          "name": "Calvin Ridley",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2866&teams=12&format=standard&callback=?",
-          "adp": 138.5
-        },
-        {
-          "name": "Rashod Bateman",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5180&teams=12&format=standard&callback=?",
-          "adp": 138.8235
-        },
-        {
-          "name": "Pittsburgh Defense",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1324&teams=12&format=standard&callback=?",
-          "adp": 139.0217
-        },
-        {
-          "name": "Zach Charbonnet",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5677&teams=12&format=standard&callback=?",
-          "adp": 139.3409
-        },
-        {
-          "name": "Woody Marks",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6529&teams=12&format=standard&callback=?",
-          "adp": 139.4375
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5544&teams=12&format=2qb&callback=?",
+          "adp": 41.4323
         },
         {
           "name": "Baker Mayfield",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2886&teams=12&format=standard&callback=?",
-          "adp": 139.9118
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2886&teams=12&format=2qb&callback=?",
+          "adp": 43.3379
         },
         {
-          "name": "Ka'imi Fairbairn",
+          "name": "Javonte Williams",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2531&teams=12&format=standard&callback=?",
-          "adp": 140.875
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5185&teams=12&format=2qb&callback=?",
+          "adp": 44.485
         },
         {
-          "name": "Jauan Jennings",
+          "name": "Malik Nabers",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5020&teams=12&format=standard&callback=?",
-          "adp": 141.0
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6183&teams=12&format=2qb&callback=?",
+          "adp": 46.4129
         },
         {
-          "name": "Travis Kelce",
+          "name": "Jeremiyah Love",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1989&teams=12&format=standard&callback=?",
-          "adp": 141.55
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6769&teams=12&format=2qb&callback=?",
+          "adp": 48.73
         },
         {
-          "name": "Kayshon Boutte",
+          "name": "Breece Hall",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5694&teams=12&format=standard&callback=?",
-          "adp": 144.2667
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5503&teams=12&format=2qb&callback=?",
+          "adp": 49.4277
         },
         {
-          "name": "Jordan Love",
+          "name": "Kyler Murray",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4892&teams=12&format=standard&callback=?",
-          "adp": 144.3714
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=3299&teams=12&format=2qb&callback=?",
+          "adp": 50.2473
         },
         {
-          "name": "Keenan Allen",
+          "name": "Tee Higgins",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1992&teams=12&format=standard&callback=?",
-          "adp": 144.48
-        },
-        {
-          "name": "Cameron Dicker",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5538&teams=12&format=standard&callback=?",
-          "adp": 145.2222
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4870&teams=12&format=2qb&callback=?",
+          "adp": 50.4049
         },
         {
           "name": "Tyler Shough",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5602&teams=12&format=standard&callback=?",
-          "adp": 146.4839
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5602&teams=12&format=2qb&callback=?",
+          "adp": 50.6509
         },
         {
-          "name": "Isiah Pacheco",
-          "date": "2026-09-07",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5337&teams=12&format=standard&callback=?",
-          "adp": 146.625
-        },
-        {
-          "name": "Jake Ferguson",
+          "name": "Jameson Williams",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5561&teams=12&format=standard&callback=?",
-          "adp": 147.0
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5643&teams=12&format=2qb&callback=?",
+          "adp": 51.2682
         },
         {
-          "name": "NY Giants Defense",
-          "date": "2026-08-31",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1320&teams=12&format=standard&callback=?",
-          "adp": 147.6
-        },
-        {
-          "name": "Tyjae Spears",
+          "name": "Tetairoa McMillan",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5692&teams=12&format=standard&callback=?",
-          "adp": 149.0
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6561&teams=12&format=2qb&callback=?",
+          "adp": 51.2848
         },
         {
-          "name": "Braelon Allen",
+          "name": "Emeka Egbuka",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6176&teams=12&format=standard&callback=?",
-          "adp": 149.6
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6576&teams=12&format=2qb&callback=?",
+          "adp": 51.9166
         },
         {
-          "name": "Jake Bates",
+          "name": "Josh Jacobs",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6055&teams=12&format=standard&callback=?",
-          "adp": 150.0
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=3255&teams=12&format=2qb&callback=?",
+          "adp": 52.0399
         },
         {
-          "name": "Chase McLaughlin",
+          "name": "Davante Adams",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4865&teams=12&format=standard&callback=?",
-          "adp": 150.381
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2125&teams=12&format=2qb&callback=?",
+          "adp": 52.8957
         },
         {
-          "name": "Tyrone Tracy Jr.",
+          "name": "Cam Skattebo",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6276&teams=12&format=standard&callback=?",
-          "adp": 150.5714
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6509&teams=12&format=2qb&callback=?",
+          "adp": 54.0088
         },
         {
-          "name": "C.J. Stroud",
+          "name": "DeVonta Smith",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5676&teams=12&format=standard&callback=?",
-          "adp": 150.7895
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4883&teams=12&format=2qb&callback=?",
+          "adp": 55.1086
         },
         {
-          "name": "Tank Bigsby",
+          "name": "Travis Etienne Jr.",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5691&teams=12&format=standard&callback=?",
-          "adp": 152.0667
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4863&teams=12&format=2qb&callback=?",
+          "adp": 55.5733
         },
         {
-          "name": "Chris Boswell",
-          "date": "2026-09-04",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2340&teams=12&format=standard&callback=?",
-          "adp": 153.2
-        },
-        {
-          "name": "Harrison Butker",
+          "name": "D'Andre Swift",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2514&teams=12&format=standard&callback=?",
-          "adp": 153.4583
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4862&teams=12&format=2qb&callback=?",
+          "adp": 57.9559
+        },
+        {
+          "name": "Garrett Wilson",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5548&teams=12&format=2qb&callback=?",
+          "adp": 58.685
+        },
+        {
+          "name": "Jordan Love",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4892&teams=12&format=2qb&callback=?",
+          "adp": 59.0707
         },
         {
           "name": "Sam Darnold",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2884&teams=12&format=standard&callback=?",
-          "adp": 153.5455
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2884&teams=12&format=2qb&callback=?",
+          "adp": 60.3604
+        },
+        {
+          "name": "Brock Bowers",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6178&teams=12&format=2qb&callback=?",
+          "adp": 60.6272
+        },
+        {
+          "name": "Rome Odunze",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6194&teams=12&format=2qb&callback=?",
+          "adp": 63.167
+        },
+        {
+          "name": "Terry McLaurin",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=3449&teams=12&format=2qb&callback=?",
+          "adp": 63.9724
+        },
+        {
+          "name": "Ladd McConkey",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6281&teams=12&format=2qb&callback=?",
+          "adp": 64.164
+        },
+        {
+          "name": "Trey McBride",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5656&teams=12&format=2qb&callback=?",
+          "adp": 64.4809
+        },
+        {
+          "name": "Bucky Irving",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6190&teams=12&format=2qb&callback=?",
+          "adp": 65.0526
+        },
+        {
+          "name": "Bhayshul Tuten",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6513&teams=12&format=2qb&callback=?",
+          "adp": 66.7819
+        },
+        {
+          "name": "Quinshon Judkins",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6531&teams=12&format=2qb&callback=?",
+          "adp": 67.255
+        },
+        {
+          "name": "DJ Moore",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2876&teams=12&format=2qb&callback=?",
+          "adp": 69.0626
+        },
+        {
+          "name": "Christian Watson",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5360&teams=12&format=2qb&callback=?",
+          "adp": 70.05
+        },
+        {
+          "name": "David Montgomery",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=3238&teams=12&format=2qb&callback=?",
+          "adp": 71.4208
+        },
+        {
+          "name": "Jaylen Waddle",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5178&teams=12&format=2qb&callback=?",
+          "adp": 71.4914
+        },
+        {
+          "name": "Mike Evans",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2111&teams=12&format=2qb&callback=?",
+          "adp": 73.4767
+        },
+        {
+          "name": "C.J. Stroud",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5676&teams=12&format=2qb&callback=?",
+          "adp": 73.9723
+        },
+        {
+          "name": "Alec Pierce",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5641&teams=12&format=2qb&callback=?",
+          "adp": 74.7342
+        },
+        {
+          "name": "Daniel Jones",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=3264&teams=12&format=2qb&callback=?",
+          "adp": 74.8816
+        },
+        {
+          "name": "TreVeyon Henderson",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6490&teams=12&format=2qb&callback=?",
+          "adp": 76.4971
+        },
+        {
+          "name": "Luther Burden III",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6559&teams=12&format=2qb&callback=?",
+          "adp": 79.3007
+        },
+        {
+          "name": "Colston Loveland",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6501&teams=12&format=2qb&callback=?",
+          "adp": 80.7498
+        },
+        {
+          "name": "Courtland Sutton",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2862&teams=12&format=2qb&callback=?",
+          "adp": 81.6333
+        },
+        {
+          "name": "DK Metcalf",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=3239&teams=12&format=2qb&callback=?",
+          "adp": 82.5294
+        },
+        {
+          "name": "Rhamondre Stevenson",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5210&teams=12&format=2qb&callback=?",
+          "adp": 83.2184
+        },
+        {
+          "name": "Tony Pollard",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=3435&teams=12&format=2qb&callback=?",
+          "adp": 83.8011
+        },
+        {
+          "name": "Marvin Harrison Jr.",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6193&teams=12&format=2qb&callback=?",
+          "adp": 84.086
+        },
+        {
+          "name": "Malik Willis",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5545&teams=12&format=2qb&callback=?",
+          "adp": 84.7762
+        },
+        {
+          "name": "Parker Washington",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5705&teams=12&format=2qb&callback=?",
+          "adp": 85.0725
+        },
+        {
+          "name": "Jadarian Price",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6776&teams=12&format=2qb&callback=?",
+          "adp": 85.7775
+        },
+        {
+          "name": "Jaylen Warren",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5443&teams=12&format=2qb&callback=?",
+          "adp": 88.4545
+        },
+        {
+          "name": "Brian Thomas Jr.",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6175&teams=12&format=2qb&callback=?",
+          "adp": 89.7599
+        },
+        {
+          "name": "Bryce Young",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5678&teams=12&format=2qb&callback=?",
+          "adp": 89.9413
+        },
+        {
+          "name": "Tyler Warren",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6504&teams=12&format=2qb&callback=?",
+          "adp": 90.1992
+        },
+        {
+          "name": "Carnell Tate",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6768&teams=12&format=2qb&callback=?",
+          "adp": 91.9618
+        },
+        {
+          "name": "Rico Dowdle",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5095&teams=12&format=2qb&callback=?",
+          "adp": 93.0
+        },
+        {
+          "name": "J.K. Dobbins",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4888&teams=12&format=2qb&callback=?",
+          "adp": 94.7931
+        },
+        {
+          "name": "Michael Wilson",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5721&teams=12&format=2qb&callback=?",
+          "adp": 95.8894
+        },
+        {
+          "name": "Quentin Johnston",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5674&teams=12&format=2qb&callback=?",
+          "adp": 96.5665
+        },
+        {
+          "name": "Tucker Kraft",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5718&teams=12&format=2qb&callback=?",
+          "adp": 97.9868
+        },
+        {
+          "name": "Chris Godwin Jr.",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2465&teams=12&format=2qb&callback=?",
+          "adp": 98.338
+        },
+        {
+          "name": "Seattle Defense",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1327&teams=12&format=2qb&callback=?",
+          "adp": 98.6268
+        },
+        {
+          "name": "Chuba Hubbard",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4873&teams=12&format=2qb&callback=?",
+          "adp": 99.275
+        },
+        {
+          "name": "Jordan Addison",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5673&teams=12&format=2qb&callback=?",
+          "adp": 100.871
+        },
+        {
+          "name": "Cam Ward",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6457&teams=12&format=2qb&callback=?",
+          "adp": 102.2083
+        },
+        {
+          "name": "Harold Fannin Jr.",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6502&teams=12&format=2qb&callback=?",
+          "adp": 105.1158
+        },
+        {
+          "name": "Jayden Reed",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5707&teams=12&format=2qb&callback=?",
+          "adp": 105.2518
+        },
+        {
+          "name": "Jacory Croskey-Merritt",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6595&teams=12&format=2qb&callback=?",
+          "adp": 106.3481
+        },
+        {
+          "name": "Denver Defense",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1309&teams=12&format=2qb&callback=?",
+          "adp": 106.7905
+        },
+        {
+          "name": "Jakobi Meyers",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=3496&teams=12&format=2qb&callback=?",
+          "adp": 107.0735
+        },
+        {
+          "name": "Xavier Worthy",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6172&teams=12&format=2qb&callback=?",
+          "adp": 107.8991
+        },
+        {
+          "name": "Michael Pittman Jr.",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4880&teams=12&format=2qb&callback=?",
+          "adp": 108.9732
+        },
+        {
+          "name": "Jonathon Brooks",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6179&teams=12&format=2qb&callback=?",
+          "adp": 110.9467
+        },
+        {
+          "name": "Jacoby Brissett",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2365&teams=12&format=2qb&callback=?",
+          "adp": 112.2105
+        },
+        {
+          "name": "Dallas Goedert",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2896&teams=12&format=2qb&callback=?",
+          "adp": 112.6335
+        },
+        {
+          "name": "Kyle Monangai",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6534&teams=12&format=2qb&callback=?",
+          "adp": 112.6876
+        },
+        {
+          "name": "Aaron Rodgers",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1004&teams=12&format=2qb&callback=?",
+          "adp": 113.3618
+        },
+        {
+          "name": "Jordan Mason",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5330&teams=12&format=2qb&callback=?",
+          "adp": 115.1297
+        },
+        {
+          "name": "Houston Defense",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1312&teams=12&format=2qb&callback=?",
+          "adp": 115.3966
+        },
+        {
+          "name": "Stefon Diggs",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2316&teams=12&format=2qb&callback=?",
+          "adp": 115.9878
+        },
+        {
+          "name": "Matthew Golden",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6523&teams=12&format=2qb&callback=?",
+          "adp": 116.449
+        },
+        {
+          "name": "Chimere Dike",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6553&teams=12&format=2qb&callback=?",
+          "adp": 117.3939
+        },
+        {
+          "name": "Josh Downs",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5680&teams=12&format=2qb&callback=?",
+          "adp": 118.2582
+        },
+        {
+          "name": "Sam LaPorta",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5564&teams=12&format=2qb&callback=?",
+          "adp": 118.5835
+        },
+        {
+          "name": "Deebo Samuel Sr.",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=3246&teams=12&format=2qb&callback=?",
+          "adp": 118.7239
+        },
+        {
+          "name": "Kyle Pitts Sr.",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5181&teams=12&format=2qb&callback=?",
+          "adp": 119.7099
+        },
+        {
+          "name": "Blake Corum",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5965&teams=12&format=2qb&callback=?",
+          "adp": 120.9901
+        },
+        {
+          "name": "RJ Harvey",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6530&teams=12&format=2qb&callback=?",
+          "adp": 121.3894
+        },
+        {
+          "name": "Geno Smith",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1980&teams=12&format=2qb&callback=?",
+          "adp": 121.3943
+        },
+        {
+          "name": "Romeo Doubs",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5586&teams=12&format=2qb&callback=?",
+          "adp": 121.63
+        },
+        {
+          "name": "Kyle Williams",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6521&teams=12&format=2qb&callback=?",
+          "adp": 123.5714
+        },
+        {
+          "name": "Wan'Dale Robinson",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5588&teams=12&format=2qb&callback=?",
+          "adp": 123.9559
+        },
+        {
+          "name": "George Kittle",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2499&teams=12&format=2qb&callback=?",
+          "adp": 124.1496
+        },
+        {
+          "name": "LA Rams Defense",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1328&teams=12&format=2qb&callback=?",
+          "adp": 124.6138
+        },
+        {
+          "name": "MarShawn Lloyd",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5622&teams=12&format=2qb&callback=?",
+          "adp": 124.951
+        },
+        {
+          "name": "Jordyn Tyson",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6771&teams=12&format=2qb&callback=?",
+          "adp": 125.0327
+        },
+        {
+          "name": "Mark Andrews",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2872&teams=12&format=2qb&callback=?",
+          "adp": 125.4134
+        },
+        {
+          "name": "Brandon Aubrey",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6162&teams=12&format=2qb&callback=?",
+          "adp": 127.0169
+        },
+        {
+          "name": "Aaron Jones Sr.",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2507&teams=12&format=2qb&callback=?",
+          "adp": 127.8158
+        },
+        {
+          "name": "Makai Lemon",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6772&teams=12&format=2qb&callback=?",
+          "adp": 128.3107
+        },
+        {
+          "name": "Minnesota Defense",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1317&teams=12&format=2qb&callback=?",
+          "adp": 129.0071
+        },
+        {
+          "name": "Kenny Gainwell",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5196&teams=12&format=2qb&callback=?",
+          "adp": 129.0201
+        },
+        {
+          "name": "Ricky Pearsall",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6199&teams=12&format=2qb&callback=?",
+          "adp": 130.2857
+        },
+        {
+          "name": "Rashid Shaheed",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5896&teams=12&format=2qb&callback=?",
+          "adp": 132.5013
+        },
+        {
+          "name": "De'Zhaun Stribling",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6777&teams=12&format=2qb&callback=?",
+          "adp": 133.0639
+        },
+        {
+          "name": "Fernando Mendoza",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6767&teams=12&format=2qb&callback=?",
+          "adp": 133.129
+        },
+        {
+          "name": "Rachaad White",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5626&teams=12&format=2qb&callback=?",
+          "adp": 133.1359
+        },
+        {
+          "name": "KC Concepcion Jr.",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6774&teams=12&format=2qb&callback=?",
+          "adp": 133.8797
+        },
+        {
+          "name": "Jason Myers",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2424&teams=12&format=2qb&callback=?",
+          "adp": 133.9286
+        },
+        {
+          "name": "Ka'imi Fairbairn",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2531&teams=12&format=2qb&callback=?",
+          "adp": 134.5735
+        },
+        {
+          "name": "Jayden Higgins",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6577&teams=12&format=2qb&callback=?",
+          "adp": 134.9241
+        },
+        {
+          "name": "Khalil Shakir",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5636&teams=12&format=2qb&callback=?",
+          "adp": 135.3622
+        },
+        {
+          "name": "Pat Freiermuth",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5193&teams=12&format=2qb&callback=?",
+          "adp": 135.4211
+        },
+        {
+          "name": "San Francisco Defense",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1326&teams=12&format=2qb&callback=?",
+          "adp": 135.7
+        },
+        {
+          "name": "Michael Penix Jr.",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5649&teams=12&format=2qb&callback=?",
+          "adp": 136.1136
+        },
+        {
+          "name": "Philadelphia Defense",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1323&teams=12&format=2qb&callback=?",
+          "adp": 136.744
+        },
+        {
+          "name": "Jalen Coker",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6302&teams=12&format=2qb&callback=?",
+          "adp": 137.0893
+        },
+        {
+          "name": "Jonah Coleman",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6799&teams=12&format=2qb&callback=?",
+          "adp": 137.1585
+        },
+        {
+          "name": "Tua Tagovailoa",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4890&teams=12&format=2qb&callback=?",
+          "adp": 137.2018
+        },
+        {
+          "name": "Jake Ferguson",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5561&teams=12&format=2qb&callback=?",
+          "adp": 137.2188
+        },
+        {
+          "name": "New England Defense",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1318&teams=12&format=2qb&callback=?",
+          "adp": 137.5569
+        },
+        {
+          "name": "Detroit Defense",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1310&teams=12&format=2qb&callback=?",
+          "adp": 138.2453
+        },
+        {
+          "name": "Travis Kelce",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1989&teams=12&format=2qb&callback=?",
+          "adp": 138.7246
+        },
+        {
+          "name": "Tre Tucker",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5977&teams=12&format=2qb&callback=?",
+          "adp": 139.7422
+        },
+        {
+          "name": "Cameron Dicker",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5538&teams=12&format=2qb&callback=?",
+          "adp": 139.9144
+        },
+        {
+          "name": "Deshaun Watson",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2444&teams=12&format=2qb&callback=?",
+          "adp": 140.9552
+        },
+        {
+          "name": "Pittsburgh Defense",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1324&teams=12&format=2qb&callback=?",
+          "adp": 141.0102
+        },
+        {
+          "name": "Isaiah Likely",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5661&teams=12&format=2qb&callback=?",
+          "adp": 141.1914
+        },
+        {
+          "name": "Jerry Jeudy",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4861&teams=12&format=2qb&callback=?",
+          "adp": 141.2453
+        },
+        {
+          "name": "Isiah Pacheco",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5337&teams=12&format=2qb&callback=?",
+          "adp": 141.9474
+        },
+        {
+          "name": "Shedeur Sanders",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6486&teams=12&format=2qb&callback=?",
+          "adp": 142.0
+        },
+        {
+          "name": "Braelon Allen",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6176&teams=12&format=2qb&callback=?",
+          "adp": 142.7143
+        },
+        {
+          "name": "James Conner",
+          "date": "2026-09-05",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2470&teams=12&format=2qb&callback=?",
+          "adp": 143.0
+        },
+        {
+          "name": "Dalton Kincaid",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5688&teams=12&format=2qb&callback=?",
+          "adp": 143.4049
+        },
+        {
+          "name": "Keaton Mitchell",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5982&teams=12&format=2qb&callback=?",
+          "adp": 143.6098
+        },
+        {
+          "name": "Dylan Sampson",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6511&teams=12&format=2qb&callback=?",
+          "adp": 143.8333
+        },
+        {
+          "name": "Zach Charbonnet",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5677&teams=12&format=2qb&callback=?",
+          "adp": 143.9528
+        },
+        {
+          "name": "Jake Bates",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6055&teams=12&format=2qb&callback=?",
+          "adp": 144.4678
+        },
+        {
+          "name": "Jalen McMillan",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6282&teams=12&format=2qb&callback=?",
+          "adp": 145.25
+        },
+        {
+          "name": "Calvin Ridley",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2866&teams=12&format=2qb&callback=?",
+          "adp": 145.9231
+        },
+        {
+          "name": "Kirk Cousins",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1902&teams=12&format=2qb&callback=?",
+          "adp": 146.1085
+        },
+        {
+          "name": "J.J. McCarthy",
+          "date": "2026-09-03",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6185&teams=12&format=2qb&callback=?",
+          "adp": 146.2
+        },
+        {
+          "name": "Harrison Mevis",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6299&teams=12&format=2qb&callback=?",
+          "adp": 146.2069
+        },
+        {
+          "name": "Hunter Henry",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2354&teams=12&format=2qb&callback=?",
+          "adp": 146.6667
+        },
+        {
+          "name": "LA Chargers Defense",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1325&teams=12&format=2qb&callback=?",
+          "adp": 146.9647
+        },
+        {
+          "name": "Rashod Bateman",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5180&teams=12&format=2qb&callback=?",
+          "adp": 147.0238
+        },
+        {
+          "name": "Germie Bernard",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6779&teams=12&format=2qb&callback=?",
+          "adp": 148.0769
+        },
+        {
+          "name": "Woody Marks",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6529&teams=12&format=2qb&callback=?",
+          "adp": 148.75
+        },
+        {
+          "name": "Dallas Defense",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1308&teams=12&format=2qb&callback=?",
+          "adp": 148.8333
         },
         {
           "name": "Mike Washington Jr.",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6803&teams=12&format=standard&callback=?",
-          "adp": 154.75
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6803&teams=12&format=2qb&callback=?",
+          "adp": 149.5068
         },
         {
-          "name": "Cam Little",
+          "name": "Chris Rodriguez Jr.",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6188&teams=12&format=standard&callback=?",
-          "adp": 155.037
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5717&teams=12&format=2qb&callback=?",
+          "adp": 149.8049
         },
         {
-          "name": "Baltimore Defense",
+          "name": "Chris Boswell",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1332&teams=12&format=standard&callback=?",
-          "adp": 155.4
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2340&teams=12&format=2qb&callback=?",
+          "adp": 149.96
         },
         {
-          "name": "Cooper Kupp",
+          "name": "Chase McLaughlin",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2449&teams=12&format=standard&callback=?",
-          "adp": 155.8205
-        },
-        {
-          "name": "Darren Waller",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2322&teams=12&format=standard&callback=?",
-          "adp": 156.625
-        },
-        {
-          "name": "Tyler Bass",
-          "date": "2026-09-01",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5036&teams=12&format=standard&callback=?",
-          "adp": 156.8
-        },
-        {
-          "name": "Isaac TeSlaa",
-          "date": "2026-08-29",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6580&teams=12&format=standard&callback=?",
-          "adp": 157.2
-        },
-        {
-          "name": "Evan McPherson",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5669&teams=12&format=standard&callback=?",
-          "adp": 158.4545
-        },
-        {
-          "name": "Tyler Allgeier",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5655&teams=12&format=standard&callback=?",
-          "adp": 159.7037
-        },
-        {
-          "name": "Travis Hunter",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6563&teams=12&format=standard&callback=?",
-          "adp": 159.7895
-        },
-        {
-          "name": "Buffalo Defense",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1303&teams=12&format=standard&callback=?",
-          "adp": 161.2143
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=4865&teams=12&format=2qb&callback=?",
+          "adp": 150.2967
         },
         {
           "name": "Alvin Kamara",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2439&teams=12&format=standard&callback=?",
-          "adp": 162.1111
-        },
-        {
-          "name": "Dallas Defense",
-          "date": "2026-08-31",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1308&teams=12&format=standard&callback=?",
-          "adp": 162.1429
-        },
-        {
-          "name": "Keon Coleman",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6189&teams=12&format=standard&callback=?",
-          "adp": 162.4
-        },
-        {
-          "name": "Wil Lutz",
-          "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2522&teams=12&format=standard&callback=?",
-          "adp": 162.85
-        },
-        {
-          "name": "Ray Davis",
-          "date": "2026-08-30",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6197&teams=12&format=standard&callback=?",
-          "adp": 163.0
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2439&teams=12&format=2qb&callback=?",
+          "adp": 150.775
         },
         {
           "name": "Tre' Harris",
-          "date": "2026-08-29",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6525&teams=12&format=standard&callback=?",
-          "adp": 164.2
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6525&teams=12&format=2qb&callback=?",
+          "adp": 151.5556
         },
         {
-          "name": "Darius Slayton",
-          "date": "2026-09-05",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=3437&teams=12&format=standard&callback=?",
-          "adp": 164.2
+          "name": "Trey Smack",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6835&teams=12&format=2qb&callback=?",
+          "adp": 151.913
         },
         {
           "name": "Tyler Loop",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6587&teams=12&format=standard&callback=?",
-          "adp": 165.0
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6587&teams=12&format=2qb&callback=?",
+          "adp": 151.9451
+        },
+        {
+          "name": "Jauan Jennings",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5020&teams=12&format=2qb&callback=?",
+          "adp": 152.0506
+        },
+        {
+          "name": "Tyjae Spears",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5692&teams=12&format=2qb&callback=?",
+          "adp": 152.1622
+        },
+        {
+          "name": "Cam Little",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6188&teams=12&format=2qb&callback=?",
+          "adp": 152.2131
+        },
+        {
+          "name": "Tank Bigsby",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5691&teams=12&format=2qb&callback=?",
+          "adp": 153.0
         },
         {
           "name": "Will Reichard",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6296&teams=12&format=standard&callback=?",
-          "adp": 167.5
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6296&teams=12&format=2qb&callback=?",
+          "adp": 153.7526
         },
         {
-          "name": "Brian Robinson",
+          "name": "Travis Hunter",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5605&teams=12&format=standard&callback=?",
-          "adp": 168.875
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6563&teams=12&format=2qb&callback=?",
+          "adp": 154.1304
         },
         {
-          "name": "Tampa Bay Defense",
-          "date": "2026-09-05",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1329&teams=12&format=standard&callback=?",
-          "adp": 169.0
+          "name": "Tyler Allgeier",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5655&teams=12&format=2qb&callback=?",
+          "adp": 154.1616
+        },
+        {
+          "name": "Evan McPherson",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5669&teams=12&format=2qb&callback=?",
+          "adp": 154.4524
+        },
+        {
+          "name": "Jacksonville Defense",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1314&teams=12&format=2qb&callback=?",
+          "adp": 154.7045
+        },
+        {
+          "name": "Baltimore Defense",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1332&teams=12&format=2qb&callback=?",
+          "adp": 154.812
+        },
+        {
+          "name": "Ja'Kobi Lane",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6787&teams=12&format=2qb&callback=?",
+          "adp": 155.75
         },
         {
           "name": "Green Bay Defense",
-          "date": "2026-08-27",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1311&teams=12&format=standard&callback=?",
-          "adp": 169.3333
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1311&teams=12&format=2qb&callback=?",
+          "adp": 155.8
+        },
+        {
+          "name": "Denzel Boston",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6778&teams=12&format=2qb&callback=?",
+          "adp": 156.0081
+        },
+        {
+          "name": "Jalen Nailor",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5334&teams=12&format=2qb&callback=?",
+          "adp": 156.2583
+        },
+        {
+          "name": "Juwan Johnson",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5151&teams=12&format=2qb&callback=?",
+          "adp": 156.3333
+        },
+        {
+          "name": "Eddy Piñeiro",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=3097&teams=12&format=2qb&callback=?",
+          "adp": 156.4179
+        },
+        {
+          "name": "Ryan Flournoy",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6304&teams=12&format=2qb&callback=?",
+          "adp": 157.2
+        },
+        {
+          "name": "Keenan Allen",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1992&teams=12&format=2qb&callback=?",
+          "adp": 157.3402
+        },
+        {
+          "name": "Cairo Santos",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2335&teams=12&format=2qb&callback=?",
+          "adp": 157.3548
+        },
+        {
+          "name": "Harrison Butker",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2514&teams=12&format=2qb&callback=?",
+          "adp": 157.7698
+        },
+        {
+          "name": "Tyrone Tracy Jr.",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6276&teams=12&format=2qb&callback=?",
+          "adp": 158.1163
+        },
+        {
+          "name": "Buffalo Defense",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1303&teams=12&format=2qb&callback=?",
+          "adp": 158.7087
+        },
+        {
+          "name": "Tyler Bass",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5036&teams=12&format=2qb&callback=?",
+          "adp": 158.9231
+        },
+        {
+          "name": "Kaelon Black",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6798&teams=12&format=2qb&callback=?",
+          "adp": 159.1176
+        },
+        {
+          "name": "Caleb Douglas",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6790&teams=12&format=2qb&callback=?",
+          "adp": 159.2308
         },
         {
           "name": "Cleveland Defense",
           "date": "2026-09-08",
-          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1307&teams=12&format=standard&callback=?",
-          "adp": 171.8333
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1307&teams=12&format=2qb&callback=?",
+          "adp": 159.9796
+        },
+        {
+          "name": "Chicago Defense",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1305&teams=12&format=2qb&callback=?",
+          "adp": 160.0
+        },
+        {
+          "name": "Brian Robinson",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5605&teams=12&format=2qb&callback=?",
+          "adp": 160.7647
+        },
+        {
+          "name": "Kayshon Boutte",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=5694&teams=12&format=2qb&callback=?",
+          "adp": 160.7681
+        },
+        {
+          "name": "Wil Lutz",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2522&teams=12&format=2qb&callback=?",
+          "adp": 162.5949
+        },
+        {
+          "name": "Atlanta Defense",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1334&teams=12&format=2qb&callback=?",
+          "adp": 163.0
+        },
+        {
+          "name": "Malik Washington",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6287&teams=12&format=2qb&callback=?",
+          "adp": 163.6966
+        },
+        {
+          "name": "Cooper Kupp",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2449&teams=12&format=2qb&callback=?",
+          "adp": 164.5542
+        },
+        {
+          "name": "Tampa Bay Defense",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=1329&teams=12&format=2qb&callback=?",
+          "adp": 164.8
+        },
+        {
+          "name": "Devaughn Vele",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6315&teams=12&format=2qb&callback=?",
+          "adp": 166.0
+        },
+        {
+          "name": "Adonai Mitchell",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=6184&teams=12&format=2qb&callback=?",
+          "adp": 169.0682
+        },
+        {
+          "name": "Jake Elliott",
+          "date": "2026-09-08",
+          "url": "https://fantasyfootballcalculator.com/adp/graph/data?is_v2=1&player=2529&teams=12&format=2qb&callback=?",
+          "adp": 172.0
         }
       ]
     }
   },
   "notes": [
-    "2007 official API and page have no player rows. A 2007 FFToday table exists, but FFC attribution could not be verified, so it is excluded rather than mixing providers.",
-    "2008 and 2009 FFC archive end_date metadata says 2010-06-20. Lists identify their respective seasons, but date metadata is anomalous and retained verbatim.",
-    "Historical FFC team labels can reflect subsequent trades or franchise relocations. NFLQuery appearances determine historical teams when available.",
-    "2026 ADP recovered from same-provider preseason charts; daily sample sizes are not provided. Other format endpoints were used only to discover player identities, never for ADP values.",
-    "Missing ADP is reported as unscored, never silently assigned an invented draft value."
+    "FFC publishes 2-QB ADP, not a separate superflex dataset. This is the user-approved superflex proxy, not actual superflex draft observations.",
+    "The 2007–2013 2-QB archive endpoints return no ADP data. Populated 12-team 2-QB history begins in 2014; no standard-scoring fallback is used.",
+    "2026 live ADP includes in-season drafts and is retained only as metadata. All saved 2026 values are preseason 2-QB player-chart points.",
+    "Other format endpoints discover player identities only; every saved ADP value is 12-team 2-QB.",
+    "Historical FFC team labels may reflect later trades or franchise relocations; NFLQuery appearances determine historical teams when available.",
+    "Daily 2026 chart sample sizes are unavailable. Missing qualifying ADP is not replaced with invented values."
   ]
 }

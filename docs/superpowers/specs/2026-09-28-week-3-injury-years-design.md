@@ -1,6 +1,6 @@
 # Week 3 injury years — revised September 28, 2026
 
-The permanent WEEK_3_INJURY_YEARS dropdown uses only NFLQuery data_v6 for historical appearances/schedules and one provider, Fantasy Football Calculator standard12-team, for static ADP2008–2026. No fantasy420 dependency. No historical injury news or forecasts.
+The permanent WEEK_3_INJURY_YEARS dropdown uses only NFLQuery data_v6 for historical appearances/schedules and one provider, Fantasy Football Calculator 12-team 2-QB (the user-approved superflex proxy), for static ADP2014–2026. No fantasy420 dependency. No historical injury news or forecasts.
 
 The full extraction, inference and scoring code remains readable and editable in the textboxes after production minification. QueryHelpers exposes static ADP, injury week map and source metadata only.
 
@@ -11,3 +11,5 @@ For2026 independently review all34 original names against current reporting, inc
 Raw draftWeight=exp(-(ADP-1)/35). Exclude weight<0.1 before considering absence duration. Contribution=weight/exp(-(10-1)/35)*missedGames. Thus ADP10 for10missedgames=10 without changing which players qualify. Return only x(year), y(sum rounded3decimals), label(player ADP, count of weeks, contribution3decimals; descending). No bulky metadata in output.
 
 Validate historical early returns, ongoing absences, Week3 exits, Week4 byes, later injuries excluded, trades, namesakes, current full week map, cutoff independent ofduration, normalizedscale, minimaloutput and Customize serialization. Refresh completed2026 games using existing NFLQuery ingestion. Run focusedtests, TypeScript, productionbuild, independent spec/code review and browser checks. Commit task-owned changes and deploy main as requested.
+
+ADP format revision: The user explicitly chose FFC 2-QB as a proxy rather than requiring actual superflex observations. Only populated 2-QB years2014–2026 are included;2007–2013 are unavailable. For2026 use preseason2-QB chart values throughSeptember8, never the live in-season ADP. Preserve frozen injury weeks and all scoring/output behavior. Record the format distinction in metadata, README and tooltip.

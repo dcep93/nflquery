@@ -155,6 +155,6 @@ const source = {
 
 export default BuildQueryConfig<TeamAppearance>({
   tooltip:
-    "Week 3 injury burden: ADP-weighted missed games in Weeks 1–3 plus continuous absence after Week 3. ADP 10 missing 10 games = 10; raw draft weights below 0.1 are excluded. Historical box-score absences are a proxy and can include non-injury causes; 2026 uses fixed observed/estimated weeks. Higher = worse. Full calculation is editable; static data lives in window.QueryHelpers.",
+    "12-team 2-QB ADP (superflex proxy), 2014–2026. Week 3 injury burden: ADP-weighted missed games in Weeks 1–3 plus continuous absence after Week 3. ADP 10 missing 10 games = 10; raw draft weights below 0.1 are excluded. Historical box-score absences are a proxy and can include non-injury causes; 2026 uses fixed observed/estimated weeks. Higher = worse. Full calculation is editable; static data lives in window.QueryHelpers.",
   queryFunctions: () => evalFunctions(source) as QueryFunctions<TeamAppearance>,
 });

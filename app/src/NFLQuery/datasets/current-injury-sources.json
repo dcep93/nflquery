@@ -1127,19 +1127,55 @@
         }
       ],
       "confirmedUpcomingMissedWeeks": []
+    },
+    "Kyler Murray": {
+      "status": "CLEARED",
+      "injury": "Concussion; returned Week 3",
+      "team": "MIN",
+      "byeWeek": 6,
+      "estimatedReturnWeek": 3,
+      "rationale": "Missed Week 2 through injury after playing Week 1; returned in Week 3, confirmed by NFLQuery passing box scores. Count the early missed game despite recovery before the snapshot. No additional absence projected. Added when switching to 2-QB ADP.",
+      "sources": [
+        {
+          "url": "https://www.vikings.com/news/injury-report-week-2-chicago-bears-2026",
+          "title": "Final Vikings at Bears Injury Report for Week 2 of 2026",
+          "publishedAt": "2026-09-18",
+          "fact": "Team ruled the quarterback out for Week 2 with concussion.",
+          "accessedAt": "2026-09-28"
+        }
+      ],
+      "observedMissedWeeks": [
+        2
+      ],
+      "estimatedFutureMissedWeeks": [],
+      "confirmedUpcomingMissedWeeks": []
+    },
+    "Sam Darnold": {
+      "status": "CLEARED",
+      "injury": "Glute; returned Week 3",
+      "team": "SEA",
+      "byeWeek": 11,
+      "estimatedReturnWeek": 3,
+      "rationale": "Missed Week 2 through injury after playing Week 1; returned in Week 3, confirmed by NFLQuery passing box scores. Count the early missed game despite recovery before the snapshot. No additional absence projected. Added when switching to 2-QB ADP.",
+      "sources": [
+        {
+          "url": "https://www.seahawks.com/news/sam-darnold-ruled-out-for-seahawks-week-2-game-at-arizona-drew-lock-will-start",
+          "title": "Sam Darnold Ruled Out For Seahawks’ Week 2 Game At Arizona; Drew Lock Will Start",
+          "publishedAt": "2026-09-16",
+          "fact": "Team ruled the quarterback out for Week 2 with glute.",
+          "accessedAt": "2026-09-28"
+        }
+      ],
+      "observedMissedWeeks": [
+        2
+      ],
+      "estimatedFutureMissedWeeks": [],
+      "confirmedUpcomingMissedWeeks": []
     }
   },
   "missingAdpPlayers": [
     "Devin Singletary",
-    "Adonai Mitchell",
-    "Jonah Coleman",
-    "Rico Dowdle",
-    "Caleb Douglas",
     "Tyreek Hill",
-    "Jonathon Brooks",
-    "Ja'Kobi Lane",
-    "Dylan Sampson",
-    "Tank Dell",
-    "Jordyn Tyson"
+    "Tank Dell"
   ]
 }

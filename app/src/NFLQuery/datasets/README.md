@@ -4,7 +4,7 @@
 
 ## Variables available to custom queries
 
-- `window.QueryHelpers.ADP_BY_YEAR`: year → Fantasy Football Calculator standard 12-team player list with name, position, team, numeric ADP and bye.
+- `window.QueryHelpers.ADP_BY_YEAR`: year → Fantasy Football Calculator 12-team 2-QB player list (the approved superflex proxy) with name, position, team, numeric ADP and bye.
 - `window.QueryHelpers.CURRENT_INJURY_WEEKS`: player → complete injury-missed regular-season week numbers: known Weeks 1–3 absences plus estimated future absences. Frozen September 28, 2026 before Week 3 Monday Night Football. Empty arrays mean no full-game injury absences included in the snapshot.
 - `window.QueryHelpers.CURRENT_INJURY_SOURCES`: snapshot date and per-player evidence/rationale, including team, bye and return-week assumptions.
 - `window.QueryHelpers.ADP_SOURCES`: provider, original archive metadata, retrieval date, per-player 2026 chart URLs/dates and known gaps.
@@ -32,8 +32,10 @@ Output is exactly `x`, `y`, and `label`. Each label contains descending player c
 
 ## ADP provenance and limits
 
-[Fantasy Football Calculator](https://fantasyfootballcalculator.com/) provides all ADP values under its [free API attribution terms](https://help.fantasyfootballcalculator.com/article/42-adp-rest-api). The checked-in archive covers 2008–2026. The official 2007 archive currently returns no player records. An FFToday 2007 mirror was found but not used because its provider attribution could not be verified. Historical 2008/2009 lists have anomalous archive end dates in the API; the original metadata is preserved.
+[Fantasy Football Calculator](https://fantasyfootballcalculator.com/adp/2qb) supplies all ADP under its [free API attribution terms](https://help.fantasyfootballcalculator.com/article/42-adp-rest-api). The provider calls this format **2-QB**, not superflex. The user approved it as a superflex proxy; a mandatory second QB and an optional superflex slot are not identical formats.
 
-2026 live ADP was sparse and already in-season, so the dump instead uses each player's latest standard 12-team chart point between August 25 and September 8, before Week 1. Other FFC format endpoints were used only to discover player IDs; their ADP values are never mixed into this standard-scoring dataset. All player chart dates/URLs are retained. Some injured players have no qualifying ADP in this source; they remain in the static snapshot but do not score. The source metadata lists them, while the query output stays concise. No invented ADP values are assigned.
+The checked-in 12-team 2-QB archive covers **2014–2026**. The official 2007–2013 2-QB endpoints return no data. Their responses are recorded in the source metadata, and those years are excluded rather than mixing in standard ADP. All populated historical archives identify their format as `2 QB` and end before that season's opener.
 
-`scripts/import-week3-adp.py` deliberately refreshes the 2026 preseason chart extraction using the checked-in historical archive as its starting point. It is an authoring tool, never run by the app. Do not refresh the frozen current injury map automatically.
+2026 live ADP already includes in-season drafts, so the dump instead uses each player's latest **2-QB** chart point between August 25 and September 8, before Week 1. Other FFC format endpoints discover player identities only; their ADP values are never used. Each included player's chart date, URL and value is retained. Daily chart sample sizes are unavailable. Some injured players have no qualifying ADP; they remain in the injury snapshot but do not score. The injury source metadata lists missing ADP names without adding them to the query output. No invented ADP values are assigned.
+
+`scripts/import-week3-adp.py` rebuilds the static 2-QB archive and 2026 preseason charts. It validates the provider's format/team-count metadata, rejects invalid ADP, and aborts on fetch errors or insufficient current coverage before writing the dump. Optional `--cache-dir /path/to/cache` saves public responses for reproducible reruns. This is an authoring tool, never run by the app. Do not refresh the frozen injury estimates automatically when changing ADP format.
