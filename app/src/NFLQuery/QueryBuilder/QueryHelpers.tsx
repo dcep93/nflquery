@@ -1,4 +1,12 @@
 import { PlayType } from "../Data";
+import {
+  ADP_BY_YEAR,
+  ADP_SOURCES,
+  CURRENT_INJURY_WEEKS,
+  CURRENT_INJURY_SOURCES,
+  NFL_TEAM_ALIASES,
+  NFL_PLAYER_ALIASES,
+} from "../datasets";
 
 function groupByF<T, U>(ts: T[], f: (t: T) => U): { key: U; group: T[] }[] {
   return Array.from(
@@ -82,6 +90,12 @@ declare global {
 }
 
 const QueryHelpers = {
+  ADP_BY_YEAR,
+  ADP_SOURCES,
+  CURRENT_INJURY_WEEKS,
+  CURRENT_INJURY_SOURCES,
+  NFL_TEAM_ALIASES,
+  NFL_PLAYER_ALIASES,
   groupByF,
   clockToSeconds,
   totalGameSeconds,

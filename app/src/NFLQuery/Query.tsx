@@ -31,10 +31,12 @@ import TotalHighScore from "./queries/TotalHighScore";
 import TotalLowScore from "./queries/TotalLowScore";
 import TurnoverOnDowns from "./queries/TurnoverOnDowns";
 import Year4thDown from "./queries/Year4thDown";
+import Week3InjuryYears from "./queries/Week3InjuryYears";
 
 var initialized = false;
 const allQueries = {
   Receptions,
+  WEEK_3_INJURY_YEARS: Week3InjuryYears,
   MostFieldGoalsNoTD,
   FewestFieldGoalsNoTD,
   GamePassingYards,

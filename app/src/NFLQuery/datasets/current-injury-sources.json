@@ -1,0 +1,518 @@
+{
+  "year": 2026,
+  "asOf": "2026-09-28",
+  "cutoffWeek": 3,
+  "description": "One manually researched point estimate of injury-related future missed regular-season games, Weeks 4-18, before Week 3 Monday Night Football. Estimates are modeling judgments, not medical predictions or confirmed return dates. Empty arrays mean no additional injury absence is expected. A null estimatedReturnWeek means no return projected through Week 18, not necessarily a confirmed season-ending injury. Week 3 and earlier games are excluded. Known team byes are excluded using the official 2026 NFL bye schedule: https://www.nfl.com/news/2026-nfl-schedule-release-every-team-bye-week (publication date not displayed; accessed 2026-09-28), cross-checked against https://www.footballguys.com/article/2026-nfl-schedule-bye-weeks. Only the current injury episode and current clearance news inform the estimates. Status strings preserve the supplied snapshot except cleared players. No future injuries or healthy scratches are projected.",
+  "players": {
+    "Justin Jefferson": {
+      "status": "QUESTIONABLE",
+      "injury": "Left ankle",
+      "team": "MIN",
+      "byeWeek": 6,
+      "estimatedReturnWeek": 4,
+      "rationale": "Modeling judgment: no additional missed game. He nearly returned Sunday; Monday evaluation remained pending.",
+      "sources": [
+        {
+          "url": "https://sports.yahoo.com/articles/kevin-oconnell-provides-updates-justin-002138419.html",
+          "title": "Kevin O'Connell provides updates on Justin Jefferson, other Vikings injuries",
+          "publishedAt": "2026-09-28"
+        }
+      ]
+    },
+    "Baker Mayfield": {
+      "status": "QUESTIONABLE",
+      "injury": "Dislocated right thumb",
+      "team": "TB",
+      "byeWeek": 10,
+      "estimatedReturnWeek": 6,
+      "rationale": "Modeling judgment: miss Weeks 4 and 5 for a throwing-hand injury. X-rays showed no fracture; MRI and prognosis were pending.",
+      "sources": [
+        {
+          "url": "https://amp.nfl.com/news/buccaneers-qb-baker-mayfield-suffered-dislocated-right-thumb-in-loss-to-vikings",
+          "title": "Buccaneers QB Baker Mayfield suffered dislocated right thumb in loss to Vikings",
+          "publishedAt": "2026-09-27"
+        }
+      ]
+    },
+    "Mike Evans": {
+      "status": "QUESTIONABLE",
+      "injury": "Ribs; preceding hip injury",
+      "team": "SF",
+      "byeWeek": 8,
+      "estimatedReturnWeek": 6,
+      "rationale": "Modeling judgment: miss two more games following Sunday's new rib injury. Severity and a return date were not established.",
+      "sources": [
+        {
+          "url": "https://dknetwork.draftkings.com/2026/09/27/what-happened-to-mike-evans-live-injury-updates-for-49ers-vs-cardinals-on-sunday-9-27-26/",
+          "title": "What happened to Mike Evans? Live injury updates for 49ers vs. Cardinals",
+          "publishedAt": "2026-09-27"
+        }
+      ]
+    },
+    "Puka Nacua": {
+      "status": "OUT",
+      "injury": "Hip/groin",
+      "team": "LAR",
+      "byeWeek": 11,
+      "estimatedReturnWeek": 4,
+      "rationale": "Modeling judgment: Week 4 return, consistent with reported near-term possibility. This is not clearance; persistent symptoms could change the estimate.",
+      "sources": [
+        {
+          "url": "https://ca.sports.yahoo.com/news/puka-nacua-injury-update-rams-star-could-return-in-week-4-surgery-still-on-the-table-if-he-cant-improve-133134190.html",
+          "title": "Puka Nacua injury update: Rams star could return in Week 4, surgery still on the table if he can't improve",
+          "publishedAt": "2026-09-27"
+        }
+      ]
+    },
+    "Travis Etienne Jr": {
+      "status": "QUESTIONABLE",
+      "injury": "Hamstring",
+      "team": "NO",
+      "byeWeek": 8,
+      "estimatedReturnWeek": 6,
+      "rationale": "Modeling judgment: miss Weeks 4 and 5 after exiting Sunday's game. No injury grade or official return date was reported.",
+      "sources": [
+        {
+          "url": "https://sports.yahoo.com/nfl/breaking-news/article/saints-rb-travis-etienne-leaves-loss-to-raiders-early-with-apparent-hamstring-injury-225241795.html",
+          "title": "Saints RB Travis Etienne leaves loss to Raiders early with apparent hamstring injury",
+          "publishedAt": "2026-09-27"
+        }
+      ]
+    },
+    "Jalen Coker": {
+      "status": "QUESTIONABLE",
+      "injury": "New quadriceps injury; preceding ankle injury",
+      "team": "CAR",
+      "byeWeek": 5,
+      "estimatedReturnWeek": 6,
+      "rationale": "Modeling judgment: miss Week 4, then return after the Week 5 bye. Sunday's new quad injury supersedes the pregame ankle concern; prognosis is unknown.",
+      "sources": [
+        {
+          "url": "https://sports.yahoo.com/articles/jalen-coker-ruled-week-3-193959753.html",
+          "title": "Jalen Coker ruled out of Week 3 after injury",
+          "publishedAt": "2026-09-27"
+        }
+      ]
+    },
+    "De'Von Achane": {
+      "status": "DOUBTFUL",
+      "injury": "Knee; diagnosis pending",
+      "team": "MIA",
+      "byeWeek": 6,
+      "estimatedReturnWeek": null,
+      "rationale": "Provisional modeling judgment: no regular-season return, based on the coach's pessimistic assessment. This is not a confirmed season-ending diagnosis or an ACL report; MRI results were pending.",
+      "sources": [
+        {
+          "url": "https://sports.yahoo.com/articles/miami-dolphins-not-optimistic-knee-221218875.html",
+          "title": "Miami Dolphins not optimistic on knee injury to De'Von Achane",
+          "publishedAt": "2026-09-27"
+        }
+      ]
+    },
+    "Jalen McMillan": {
+      "status": "QUESTIONABLE",
+      "injury": "Left knee",
+      "team": "TB",
+      "byeWeek": 10,
+      "estimatedReturnWeek": 6,
+      "rationale": "Modeling judgment: miss two future games after Sunday's early exit. No confirmed severity or return timetable was available.",
+      "sources": [
+        {
+          "url": "https://www.rotowire.com/football/headlines/jalen-mcmillan-injury-questionable-to-return-sunday-639479",
+          "title": "Jalen McMillan Injury: Questionable to return Sunday",
+          "publishedAt": "2026-09-27"
+        }
+      ]
+    },
+    "Breece Hall": {
+      "status": "QUESTIONABLE",
+      "injury": "Thigh",
+      "team": "NYJ",
+      "byeWeek": 13,
+      "estimatedReturnWeek": 5,
+      "rationale": "Modeling judgment: one additional missed game. Monday imaging was pending, so Week 5 is an estimate rather than a reported prognosis.",
+      "sources": [
+        {
+          "url": "https://www.ksl.com/article/51629247/jets-rb-breece-hall-out-with-thigh-injury-headed-for-mri",
+          "title": "Jets RB Breece Hall out with thigh injury, headed for MRI",
+          "publishedAt": "2026-09-27"
+        }
+      ]
+    },
+    "Devin Singletary": {
+      "status": "OUT",
+      "injury": "None reported; coach's decision",
+      "team": "NYG",
+      "byeWeek": 8,
+      "estimatedReturnWeek": 4,
+      "rationale": "No injury absence projected. The Week 3 inactive designation was a coach's decision; this model does not count healthy scratches as injury absences.",
+      "sources": [
+        {
+          "url": "https://www.0.racing.cbssports.com/nfl/teams/NYG/new-york-giants/injuries/",
+          "title": "New York Giants Injury Report and Status 2026-27",
+          "publishedAt": "2026-09-27"
+        }
+      ]
+    },
+    "Adonai Mitchell": {
+      "status": "OUT",
+      "injury": "Finger",
+      "team": "NYJ",
+      "byeWeek": 13,
+      "estimatedReturnWeek": 4,
+      "rationale": "Modeling judgment: Week 4 return. He practiced on a limited basis before being inactive Sunday, with no reported longer-term timetable.",
+      "sources": [
+        {
+          "url": "https://sports.yahoo.com/articles/jets-adonai-mitchell-inactive-vs-154348373.html",
+          "title": "Jets' Adonai Mitchell inactive vs. Lions in latest hit to wide receiver group",
+          "publishedAt": "2026-09-27"
+        }
+      ]
+    },
+    "Jonah Coleman": {
+      "status": "INJURY_RESERVE",
+      "injury": "Ankle sprain",
+      "team": "DEN",
+      "byeWeek": 10,
+      "estimatedReturnWeek": 7,
+      "rationale": "Modeling judgment: return after the minimum four-game IR absence covering Weeks 3 through 6; no longer absence is assumed.",
+      "sources": [
+        {
+          "url": "https://amp.nfl.com/news/broncos-rookie-rb-jonah-coleman-heading-to-ir-with-ankle-injury",
+          "title": "Broncos rookie RB Jonah Coleman heading to IR with ankle injury",
+          "publishedAt": "2026-09-26"
+        }
+      ]
+    },
+    "Dallas Goedert": {
+      "status": "OUT",
+      "injury": "Right knee MCL sprain",
+      "team": "PHI",
+      "byeWeek": 10,
+      "estimatedReturnWeek": 5,
+      "rationale": "MCL sprain with a reported multiweek absence. Modeling judgment: return Week 5; Week 3 is outside the future-week horizon.",
+      "sources": [
+        {
+          "url": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/dallas-goedert-sprained-his-mcl-will-miss-a-few-weeks",
+          "title": "Dallas Goedert sprained his MCL, will miss a few weeks",
+          "publishedAt": "2026-09-21"
+        }
+      ]
+    },
+    "Caleb Williams": {
+      "status": "OUT",
+      "injury": "Grade 2 hamstring strain",
+      "team": "CHI",
+      "byeWeek": 10,
+      "estimatedReturnWeek": 6,
+      "rationale": "Reported Grade 2 hamstring strain. Modeling judgment: return Week 6, allowing four weeks after the Week 2 injury.",
+      "sources": [
+        {
+          "url": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/report-caleb-williams-has-a-grade-2-hamstring-strain",
+          "title": "Report: Caleb Williams has a Grade 2 hamstring strain",
+          "publishedAt": "2026-09-27"
+        }
+      ]
+    },
+    "Alec Pierce": {
+      "status": "INJURY_RESERVE",
+      "injury": "Heel aggravation",
+      "team": "IND",
+      "byeWeek": 13,
+      "estimatedReturnWeek": 8,
+      "rationale": "Modeling judgment: Week 8 return, allowing one game beyond the minimum IR absence for a recurring heel problem without a firm timetable.",
+      "sources": [
+        {
+          "url": "https://www.rotowire.com/football/headlines/alec-pierce-injury-officially-goes-on-injured-reserve-639266",
+          "title": "Alec Pierce Injury: Officially goes on injured reserve",
+          "publishedAt": "2026-09-26"
+        }
+      ]
+    },
+    "Rico Dowdle": {
+      "status": "OUT",
+      "injury": "Toe",
+      "team": "PIT",
+      "byeWeek": 9,
+      "estimatedReturnWeek": 5,
+      "rationale": "Modeling judgment: also miss the short Week 4 turnaround, then return Week 5. The toe injury required a boot and kept him out of Week 3.",
+      "sources": [
+        {
+          "url": "https://www.rotowire.com/football/headlines/rico-dowdle-injury-sitting-out-practice-sporting-boot-on-foot-638812",
+          "title": "Rico Dowdle Injury: Sitting out practice, sporting boot on foot",
+          "publishedAt": "2026-09-23"
+        }
+      ]
+    },
+    "Nico Collins": {
+      "status": "OUT",
+      "injury": "Grade 1 hamstring strain",
+      "team": "HOU",
+      "byeWeek": 8,
+      "estimatedReturnWeek": 4,
+      "rationale": "Modeling judgment: no future absence after Week 3. The latest report described positive progress toward Week 4, subject to increasing activity.",
+      "sources": [
+        {
+          "url": "https://www.fantasyguru.com/texans-nico-collins-making-progress-status-for-cowboys-game-positive",
+          "title": "Texans | Nico Collins making progress, status for Cowboys game positive",
+          "publishedAt": "2026-09-27"
+        }
+      ]
+    },
+    "Caleb Douglas": {
+      "status": "OUT",
+      "injury": "Right ankle",
+      "team": "MIA",
+      "byeWeek": 6,
+      "estimatedReturnWeek": 5,
+      "rationale": "Modeling judgment: one additional missed game, returning Week 5. He missed Week 3 after an ankle injury; no firm return date was reported.",
+      "sources": [
+        {
+          "url": "https://www.rotowire.com/football/headlines/caleb-douglas-injury-hurts-ankle-in-fourth-quarter-638321",
+          "title": "Caleb Douglas Injury: Hurts ankle in fourth quarter",
+          "publishedAt": "2026-09-20"
+        }
+      ]
+    },
+    "Tyreek Hill": {
+      "status": "OUT",
+      "injury": "Knee rehabilitation",
+      "team": "FA",
+      "byeWeek": null,
+      "estimatedReturnWeek": 6,
+      "rationale": "Modeling judgment: medical readiness in Week 6 following advice to wait until October. He is unsigned, so no team bye can be assigned; signing-related absence is not projected as injury absence.",
+      "sources": [
+        {
+          "url": "https://sports.yahoo.com/articles/doctors-recommend-tyreek-hill-hold-214215736.html",
+          "title": "Doctors recommend Tyreek Hill hold off on coming back until October",
+          "publishedAt": "2026-09-09"
+        }
+      ]
+    },
+    "Jaxson Dart": {
+      "status": "INJURY_RESERVE",
+      "injury": "Left knee meniscus, MCL and PCL injuries",
+      "team": "NYG",
+      "byeWeek": 8,
+      "estimatedReturnWeek": null,
+      "rationale": "The team confirmed surgery would end his regular season. Project every remaining scheduled regular-season game missed, excluding the bye.",
+      "sources": [
+        {
+          "url": "https://amp.nfl.com/news/giants-qb-jaxson-dart-season-ending-knee-surgery",
+          "title": "Giants QB Jaxson Dart to undergo season-ending knee surgery",
+          "publishedAt": "2026-09-23"
+        }
+      ]
+    },
+    "Jayden Reed": {
+      "status": "OUT",
+      "injury": "Neck",
+      "team": "GB",
+      "byeWeek": 11,
+      "estimatedReturnWeek": 12,
+      "rationale": "Provisional modeling judgment: return Week 12 after an extended recovery. The team has not established a timetable and has not determined whether he can return this season; this date is not reported medical guidance.",
+      "sources": [
+        {
+          "url": "https://www.fantasypros.com/nfl/news/609906/jayden-reed-neck-uncertain-on-returning-this-season.php",
+          "title": "Jayden Reed (neck) uncertain on returning this season",
+          "publishedAt": "2026-09-22"
+        }
+      ]
+    },
+    "Jayden Daniels": {
+      "status": "OUT",
+      "injury": "Dislocated left elbow",
+      "team": "WAS",
+      "byeWeek": 7,
+      "estimatedReturnWeek": 6,
+      "rationale": "Modeling judgment: Week 6 return. The latest team update said surgery was not planned and IR had not been discussed, supporting a shorter absence than early speculation.",
+      "sources": [
+        {
+          "url": "https://sports.yahoo.com/nfl/article/elbow-surgery-not-on-the-table-for-qb-jayden-daniels-right-now-commanders-gm-adam-peters-says-190331996.html",
+          "title": "Elbow surgery not on the table for QB Jayden Daniels right now, Commanders GM Adam Peters says",
+          "publishedAt": "2026-09-25"
+        }
+      ]
+    },
+    "Jonathon Brooks": {
+      "status": "INJURY_RESERVE",
+      "injury": "Core muscle injury; surgery",
+      "team": "CAR",
+      "byeWeek": 5,
+      "estimatedReturnWeek": 9,
+      "rationale": "Modeling judgment: Week 9 return after September 23 surgery, translating the reported recovery into one estimate and excluding Carolina's Week 5 bye.",
+      "sources": [
+        {
+          "url": "https://www.fantasypros.com/nfl/news/610046/jonathon-brooks-core-expected-to-miss-6-8-weeks.php",
+          "title": "Jonathon Brooks (core) expected to miss 6-8 weeks",
+          "publishedAt": "2026-09-23"
+        }
+      ]
+    },
+    "De'Zhaun Stribling": {
+      "status": "INJURY_RESERVE",
+      "injury": "Left ankle; surgery",
+      "team": "SF",
+      "byeWeek": 8,
+      "estimatedReturnWeek": 12,
+      "rationale": "Reported recovery is approximately ten weeks. Modeling judgment: Week 12 return, with the Week 8 bye excluded.",
+      "sources": [
+        {
+          "url": "https://www.washingtonpost.com/sports/nfl/2026/09/16/san-francisco-49ers-dezhaun-stribling/81f5c528-b20e-11f1-92c2-5c918f4a6127_story.html",
+          "title": "49ers rookie receiver De'Zhaun Stribling to miss about 10 weeks after undergoing ankle surgery",
+          "publishedAt": "2026-09-16"
+        }
+      ]
+    },
+    "Ja'Kobi Lane": {
+      "status": "INJURY_RESERVE",
+      "injury": "Fractured wrist; surgery",
+      "team": "BAL",
+      "byeWeek": 13,
+      "estimatedReturnWeek": 6,
+      "rationale": "Modeling judgment: Week 6 return, matching the team's stated aim of a minimum IR stay after successful surgery.",
+      "sources": [
+        {
+          "url": "https://www.baltimoreravens.com/news/jakobi-lane-injured-reserve-wrist-surgery-ravens-rookie-wide-receiver-2026",
+          "title": "Ravens Place Promising Rookie Ja'Kobi Lane on Injured Reserve",
+          "publishedAt": "2026-09-16"
+        }
+      ]
+    },
+    "Jordan Mason": {
+      "status": "INJURY_RESERVE",
+      "injury": "Fractured thumb; surgery",
+      "team": "MIN",
+      "byeWeek": 6,
+      "estimatedReturnWeek": 7,
+      "rationale": "Modeling judgment: return at the first game after the minimum IR stay and Week 6 bye. The coach anticipated a short-term absence.",
+      "sources": [
+        {
+          "url": "https://amp.nfl.com/news/vikings-rb-jordan-mason-heads-to-ir-with-fractured-thumb",
+          "title": "Vikings RB Jordan Mason heads to IR with fractured thumb",
+          "publishedAt": "2026-09-16"
+        }
+      ]
+    },
+    "Dylan Sampson": {
+      "status": "INJURY_RESERVE",
+      "injury": "Left knee",
+      "team": "CLE",
+      "byeWeek": 11,
+      "estimatedReturnWeek": 9,
+      "rationale": "Modeling judgment: Week 9 return for a significant knee injury on IR. Reporting supports an extended absence but does not supply a specific recovery date.",
+      "sources": [
+        {
+          "url": "https://sports.yahoo.com/articles/dylan-sampson-placed-injured-knee-191408120.html",
+          "title": "Dylan Sampson placed on injured reserve after knee injury in Browns opener",
+          "publishedAt": "2026-09-15"
+        }
+      ]
+    },
+    "AJ Brown": {
+      "status": "INJURY_RESERVE",
+      "injury": "Right high ankle sprain",
+      "team": "NE",
+      "byeWeek": 11,
+      "estimatedReturnWeek": 7,
+      "rationale": "Modeling judgment: Week 7 return after the reported roughly six-week recovery; he was injured in the Week 1 opener before going on IR.",
+      "sources": [
+        {
+          "url": "https://nesn.com/new-england-patriots/news/aj-brown-ankle-injury-updates-return-timeline-patriots/02c683993e55451543a6df31",
+          "title": "How Long Is A.J. Brown Out? Ankle Injury Updates, Return Timeline for Patriots WR",
+          "publishedAt": "2026-09-25"
+        }
+      ]
+    },
+    "Tank Dell": {
+      "status": "INJURY_RESERVE",
+      "injury": "Knee rehabilitation",
+      "team": "HOU",
+      "byeWeek": 8,
+      "estimatedReturnWeek": 5,
+      "rationale": "Modeling judgment: return at Week 5 eligibility. The general manager described him as close but still needing to regain his form; clearance is not confirmed.",
+      "sources": [
+        {
+          "url": "https://www.fantasypros.com/nfl/news/605356/tank-dell-knee-is-close-but-not-quite-there.php",
+          "title": "Tank Dell (knee) is close but not quite there",
+          "publishedAt": "2026-09-01"
+        }
+      ]
+    },
+    "Jordyn Tyson": {
+      "status": "INJURY_RESERVE",
+      "injury": "Hamstring",
+      "team": "NO",
+      "byeWeek": 8,
+      "estimatedReturnWeek": 7,
+      "rationale": "Modeling judgment: Week 7 return. The current IR report expects recovery beyond Week 5 eligibility after the preseason hamstring setback.",
+      "sources": [
+        {
+          "url": "https://www.rotowire.com/betting/nfl/player/jordyn-tyson-odds-19233",
+          "title": "Jordyn Tyson: Lands on IR, designated to return",
+          "publishedAt": "2026-08-30"
+        }
+      ]
+    },
+    "Zach Charbonnet": {
+      "status": "OUT",
+      "injury": "Left knee ACL rehabilitation; reserve/PUP",
+      "team": "SEA",
+      "byeWeek": 11,
+      "estimatedReturnWeek": 6,
+      "rationale": "Modeling judgment: Week 6 return, allowing practice progression beyond Week 5 eligibility. A Week 4 practice return was only a possibility.",
+      "sources": [
+        {
+          "url": "https://www.rotowire.com/football/headlines/zach-charbonnet-injury-may-practice-next-week-639160",
+          "title": "Zach Charbonnet Injury: May practice next week",
+          "publishedAt": "2026-09-25"
+        }
+      ]
+    },
+    "Isiah Pacheco": {
+      "status": "INJURY_RESERVE",
+      "injury": "Back; surgery",
+      "team": "DET",
+      "byeWeek": 6,
+      "estimatedReturnWeek": 13,
+      "rationale": "Modeling judgment: Week 13 return in early December, consistent with the reported postoperative recovery. Excludes Detroit's Week 6 bye.",
+      "sources": [
+        {
+          "url": "https://as.com/us/nfl/lions-la-dupla-pacheco-gibbs-tendra-que-esperar-f202609-n/",
+          "title": "Lions, la dupla Pacheco-Gibbs tendrá que esperar",
+          "publishedAt": "2026-09-14"
+        }
+      ]
+    },
+    "Zay Flowers": {
+      "status": "CLEARED",
+      "injury": "Hamstring",
+      "team": "BAL",
+      "byeWeek": 13,
+      "estimatedReturnWeek": 4,
+      "rationale": "Cleared to play in Week 3. Modeling judgment: no further full-game absence; a reduced workload is not counted as a missed game.",
+      "sources": [
+        {
+          "url": "https://www.fantasypros.com/nfl/news/610973/zay-flowers-hamstring-active-week-3.php",
+          "title": "Zay Flowers (hamstring) active for Week 3",
+          "publishedAt": "2026-09-27"
+        }
+      ]
+    },
+    "Brock Bowers": {
+      "status": "CLEARED",
+      "injury": "Knee",
+      "team": "LV",
+      "byeWeek": 13,
+      "estimatedReturnWeek": 4,
+      "rationale": "Active for Week 3 following the knee issue. Modeling judgment: no additional full-game absence.",
+      "sources": [
+        {
+          "url": "https://www.rotowire.com/football/headlines/brock-bowers-injury-active-as-expected-sunday-639445",
+          "title": "Brock Bowers Injury: Active as expected Sunday",
+          "publishedAt": "2026-09-27"
+        }
+      ]
+    }
+  }
+}
