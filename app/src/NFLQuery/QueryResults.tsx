@@ -2,10 +2,37 @@ import type { PointType } from "./Query";
 
 export type QueryOutput = {
   num_points: number;
-  points: Array<PointType & { index: number } & Record<string, unknown>>;
+  points: Array<PointType & { index?: number } & Record<string, unknown>>;
 };
 
+function isFormulaHeader(point: PointType & Record<string, unknown>) {
+  const { x, y, label, index, ...extras } = point;
+  return (
+    x === "" &&
+    label === "" &&
+    y === Number.MAX_VALUE &&
+    Object.keys(extras).length > 0
+  );
+}
+
+export function buildQueryOutput(points: PointType[]): QueryOutput {
+  let rank = 0;
+  const displayed: QueryOutput["points"] = [];
+  points.forEach((point) => {
+    if (isFormulaHeader(point)) {
+      displayed.push({ ...point, index: undefined });
+    } else {
+      rank += 1;
+      if (rank <= 100) displayed.push({ ...point, index: rank });
+    }
+  });
+  return { num_points: rank, points: displayed };
+}
+
 export default function QueryResults({ output }: { output: QueryOutput }) {
+  const displayedResults = output.points.filter(
+    (point) => !isFormulaHeader(point),
+  ).length;
   return (
     <section
       aria-label="Query results"
@@ -16,23 +43,22 @@ export default function QueryResults({ output }: { output: QueryOutput }) {
           {output.num_points.toLocaleString()}{" "}
           {output.num_points === 1 ? "result" : "results"}
         </strong>
-        {output.points.length < output.num_points && (
+        {displayedResults < output.num_points && (
           <span>
-            {" — "}Showing {output.points.length.toLocaleString()} of{" "}
+            {" — "}Showing {displayedResults.toLocaleString()} of{" "}
             {output.num_points.toLocaleString()}
           </span>
         )}
       </p>
       <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
-        {output.points.map((point) => {
+        {output.points.map((point, position) => {
           const { x, y, label, index, ...extras } = point;
           const hasExtras = Object.keys(extras).length > 0;
-          const isFormulaHeader =
-            x === "" && label === "" && y === Number.MAX_VALUE && hasExtras;
+          const formulaHeader = isFormulaHeader(point);
 
           return (
             <li
-              key={index}
+              key={position}
               style={{
                 border: "1px solid #ccc",
                 borderRadius: "0.4rem",
@@ -40,7 +66,7 @@ export default function QueryResults({ output }: { output: QueryOutput }) {
                 marginBottom: "0.75rem",
               }}
             >
-              {!isFormulaHeader && (
+              {!formulaHeader && (
                 <>
                   <div
                     style={{
@@ -82,7 +108,7 @@ export default function QueryResults({ output }: { output: QueryOutput }) {
               {hasExtras && (
                 <pre
                   style={{
-                    margin: isFormulaHeader ? 0 : "0.75rem 0 0",
+                    margin: formulaHeader ? 0 : "0.75rem 0 0",
                     whiteSpace: "pre-wrap",
                     overflowWrap: "anywhere",
                   }}

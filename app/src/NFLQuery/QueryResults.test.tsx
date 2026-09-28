@@ -1,5 +1,5 @@
 import { renderToStaticMarkup } from "react-dom/server";
-import QueryResults from "./QueryResults";
+import QueryResults, { buildQueryOutput } from "./QueryResults";
 import type { QueryOutput } from "./QueryResults";
 
 function renderResults(output: QueryOutput) {
@@ -64,14 +64,33 @@ test("shows zero values and omits empty fields and unnecessary JSON", () => {
 
 test("renders a formula sorting header as extra JSON without its rank or sentinel", () => {
   const extras = { formula: "yards / attempts" };
-  const container = renderResults({
-    num_points: 1,
-    points: [{ index: 1, x: "", y: Number.MAX_VALUE, label: "", ...extras }],
-  });
+  const container = renderResults(
+    buildQueryOutput([{ x: "", y: Number.MAX_VALUE, label: "", ...extras }]),
+  );
   const row = container.querySelector("li")!;
 
-  expect(container.textContent).toContain("1 result");
+  expect(container.textContent).toContain("0 results");
   expect(row.textContent).toBe(JSON.stringify(extras, null, 2));
   expect(row.children).toHaveLength(1);
   expect(row.firstElementChild?.tagName).toBe("PRE");
+});
+
+test("formula headers do not consume ranks, result counts, or the 100-result limit", () => {
+  const formula = { x: "", y: Number.MAX_VALUE, label: "", formula: "score" };
+  const seasons = Array.from({ length: 101 }, (_, i) => ({
+    x: 2026 - i,
+    y: 101 - i,
+    label: `Season ${i + 1}`,
+  }));
+  const output = buildQueryOutput([formula, ...seasons]);
+  expect(output.num_points).toBe(101);
+  expect(output.points).toHaveLength(101);
+  expect(output.points[0].index).toBeUndefined();
+  expect(output.points[1]).toEqual({ ...seasons[0], index: 1 });
+  expect(output.points[100]).toEqual({ ...seasons[99], index: 100 });
+  const container = renderResults(output);
+  expect(container.textContent).toContain("101 results — Showing 100 of 101");
+  expect(container.querySelectorAll("small")[0].textContent).toBe("#1");
+  expect(container.querySelectorAll("small")[99].textContent).toBe("#100");
+  expect(buildQueryOutput(seasons).points).toEqual(output.points.slice(1));
 });

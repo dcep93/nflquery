@@ -4,7 +4,7 @@ import QueryBuilder, { QueryBuilderName, QueryFunctions } from "./QueryBuilder";
 import CustomQueryEditor from "./QueryBuilder/CustomQueryEditor";
 import QueryHelpers from "./QueryBuilder/QueryHelpers";
 import getPoints from "./QueryBuilder/getPoints";
-import QueryResults, { QueryOutput } from "./QueryResults";
+import QueryResults, { buildQueryOutput, QueryOutput } from "./QueryResults";
 import Comeback from "./queries/Comeback";
 import Encroachments from "./queries/Encroachments";
 import FewestFieldGoalsNoTD from "./queries/FewestFieldGoalsNoTD";
@@ -98,12 +98,7 @@ export default function Query() {
             datas
           )
         )
-        .then((points) => ({
-          num_points: points.length,
-          points: points
-            .slice(0, 100)
-            .map((p, index) => ({ ...p, index: index + 1 })),
-        }))
+        .then(buildQueryOutput)
         .then(updateOutput)
         .catch((err) => {
           alert(err);
