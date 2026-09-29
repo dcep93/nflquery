@@ -2,10 +2,11 @@
 
 `WEEK_3_INJURY_YEARS` is a permanent NFLQuery dropdown query. Select it, inspect or edit the extract/mapPoints textboxes, then click Customize. The entire inference and scoring algorithm is in those functions; there is no hidden scoring helper.
 
+The saved injury-week object is defined directly as `currentInjuryWeeks` inside `mapPoints`, so Customize exposes every player’s known and estimated missed-game weeks. It is frozen September 28, 2026 before Week 3 Monday Night Football; empty arrays mean no included full-game injury absences. `current-injury-weeks.json` retains the original source snapshot for reference and is not loaded by the app. Edit the inline object to change the query.
+
 ## Variables available to custom queries
 
 - `window.QueryHelpers.ADP_BY_YEAR`: year → Fantasy Football Calculator 12-team 2-QB player list (the approved superflex proxy) with name, position, team, numeric ADP and bye.
-- `window.QueryHelpers.CURRENT_INJURY_WEEKS`: player → complete injury-missed regular-season week numbers: known Weeks 1–3 absences plus estimated future absences. Frozen September 28, 2026 before Week 3 Monday Night Football. Empty arrays mean no full-game injury absences included in the snapshot.
 - `window.QueryHelpers.CURRENT_INJURY_SOURCES`: snapshot date and per-player evidence/rationale, including team, bye and return-week assumptions.
 - `window.QueryHelpers.ADP_SOURCES`: provider, original archive metadata, retrieval date, per-player 2026 chart URLs/dates and known gaps.
 - `window.QueryHelpers.NFL_PLAYER_ALIASES` and `NFL_TEAM_ALIASES`: static identity mappings.

@@ -5,6 +5,21 @@ import rawGetPoints from "../QueryBuilder/getPoints";
 import query from "./Week3InjuryYears";
 
 const original = { ...QueryHelpers };
+let currentInjuryWeeks: Record<string, number[]>;
+// Edit the embedded literal exactly as Customize does, without helper globals.
+const queryFunctions = () => {
+  const source = Object.fromEntries(
+    Object.entries(query.queryFunctions()).map(([key, fn]) => [key, fn.toString()]),
+  );
+  const literal = "{" + Object.entries(currentInjuryWeeks)
+    .map(([name, weeks]) => `${JSON.stringify(name)}: [${weeks.map(String).join(",")}]`)
+    .join(",") + "}";
+  source.mapPoints = source.mapPoints.replace(
+    /const currentInjuryWeeks = \{[\s\S]*?\n    \};/,
+    `const currentInjuryWeeks = ${literal};`,
+  );
+  return evalFunctions(source) as QueryFunctions<any>;
+};
 // Keep season regressions focused on their original x/y/label output.
 const getPoints: typeof rawGetPoints = (functions, data) =>
   rawGetPoints(functions, data).filter((point) => point.x !== "");
@@ -43,15 +58,15 @@ const historical = (games: GameType[], year = 2024): DataType[] => [
   { year, games },
 ];
 const score = (games: GameType[]) =>
-  getPoints(query.queryFunctions(), historical(games)).find(
+  getPoints(queryFunctions(), historical(games)).find(
     (p) => p.x === 2024,
   )!;
 
 beforeEach(() => {
+  currentInjuryWeeks = { "Current Player": [4, 5] };
   window.QueryHelpers = {
     ...original,
     ADP_BY_YEAR: { 2024: [player()], 2026: [player("Current Player")] },
-    CURRENT_INJURY_WEEKS: { "Current Player": [4, 5] },
   };
 });
 afterEach(() => {
@@ -155,11 +170,11 @@ test("a defensive namesake cannot end the sole ADP player's injury stretch", () 
 });
 
 test("current static weeks preserve Weeks 1–3, deduplicate and exclude invalid/postseason", () => {
-  window.QueryHelpers.CURRENT_INJURY_WEEKS = {
+  currentInjuryWeeks = {
     "Current Player": [-1, 0, 1, 1, 2, 3, 4, 4, 5, 18, 19, 2.5, NaN, Infinity],
   };
   expect(
-    getPoints(query.queryFunctions(), []).find((p) => p.x === 2026),
+    getPoints(queryFunctions(), []).find((p) => p.x === 2026),
   ).toEqual({
     x: 2026,
     y: 6.645,
@@ -169,9 +184,9 @@ test("current static weeks preserve Weeks 1–3, deduplicate and exclude invalid
 
 test("the current static map is authoritative despite missing games or appearances", () => {
   window.QueryHelpers.ADP_BY_YEAR[2026].push(player("Unplayed Monday Player"));
-  window.QueryHelpers.CURRENT_INJURY_WEEKS = { "Current Player": [1, 2, 3, 4] };
+  currentInjuryWeeks = { "Current Player": [1, 2, 3, 4] };
   const output = getPoints(
-    query.queryFunctions(),
+    queryFunctions(),
     historical(
       [game(1, ["Current Player"]), game(2, ["Current Player"])],
       2026,
@@ -187,8 +202,8 @@ test("the current static map is authoritative despite missing games or appearanc
 });
 
 test("unmatched ADP and missing historical team schedules are silently skipped", () => {
-  window.QueryHelpers.CURRENT_INJURY_WEEKS = { Unknown: [4] };
-  expect(getPoints(query.queryFunctions(), [])).toEqual([
+  currentInjuryWeeks = { Unknown: [4] };
+  expect(getPoints(queryFunctions(), [])).toEqual([
     {
       x: 2026,
       y: 0,
@@ -212,7 +227,7 @@ test("smooth weighting does not have round cliffs", () => {
 });
 
 test("full functions survive the Customize serialization with no hidden scorer", () => {
-  const functions = query.queryFunctions();
+  const functions = queryFunctions();
   const source = Object.fromEntries(
     Object.entries(functions).map(([k, fn]) => [k, fn.toString()]),
   );
@@ -237,7 +252,7 @@ test("full functions survive the Customize serialization with no hidden scorer",
 
 test("the formula header sorts first and survives JSON while seasons retain only x/y/label", () => {
   const output = rawGetPoints(
-    query.queryFunctions(),
+    queryFunctions(),
     historical(Array.from({ length: 10 }, (_, i) => game(i + 1, []))),
   );
   expect(output[0]).toEqual({
@@ -261,7 +276,7 @@ test("the formula header sorts first and survives JSON while seasons retain only
 
 test("the formula header reflects customized scoring constants while the reference stays exactly 10", () => {
   const source = Object.fromEntries(
-    Object.entries(query.queryFunctions()).map(([key, fn]) => [
+    Object.entries(queryFunctions()).map(([key, fn]) => [
       key,
       fn.toString(),
     ]),
@@ -275,7 +290,7 @@ test("the formula header reflects customized scoring constants while the referen
     historical(Array.from({ length: 10 }, (_, i) => game(i + 1, []))),
   );
   expect(output[0]).toEqual({
-    ...rawGetPoints(query.queryFunctions(), [])[0],
+    ...rawGetPoints(queryFunctions(), [])[0],
     parameters: { adpDecay: 24, durationExponent: 0.65 },
   });
   expect(output.find((point) => point.x === 2024)).toEqual({
@@ -360,8 +375,8 @@ test("Peterson's early draft value and longer absence outweigh Moncrief by about
 test("duration grows with diminishing returns for historical and current absences", () => {
   const values = Array.from({ length: 19 }, (_, duration) => {
     const weeks = Array.from({ length: duration }, (_, i) => i + 1);
-    window.QueryHelpers.CURRENT_INJURY_WEEKS = { "Current Player": weeks };
-    const current = getPoints(query.queryFunctions(), []).find(
+    currentInjuryWeeks = { "Current Player": weeks };
+    const current = getPoints(queryFunctions(), []).find(
       (p) => p.x === 2026,
     )!;
     const past = score(
@@ -400,13 +415,13 @@ test("tiny Gates and Cook draft weights are excluded even for a whole season", (
   window.QueryHelpers.ADP_BY_YEAR[2024] = players;
   window.QueryHelpers.ADP_BY_YEAR[2026] = players;
   const weeks = Array.from({ length: 18 }, (_, i) => i + 1);
-  window.QueryHelpers.CURRENT_INJURY_WEEKS = {
+  currentInjuryWeeks = {
     "Antonio Gates": weeks,
     "Jared Cook": weeks,
   };
   expect(
     getPoints(
-      query.queryFunctions(),
+      queryFunctions(),
       historical(weeks.map((w) => game(w, []))),
     ),
   ).toEqual([
@@ -435,7 +450,7 @@ test.each([8, 24, 40])(
       player("Below Cutoff", 81.6),
     ];
     const source = Object.fromEntries(
-      Object.entries(query.queryFunctions()).map(([key, fn]) => [
+      Object.entries(queryFunctions()).map(([key, fn]) => [
         key,
         fn.toString(),
       ]),
@@ -500,11 +515,11 @@ test("season output has only x/y/label and sorts formatted contributors by contr
     player("Less Burden", 10),
     player("More Burden", 6.6),
   ];
-  window.QueryHelpers.CURRENT_INJURY_WEEKS = {
+  currentInjuryWeeks = {
     "Less Burden": [1],
     "More Burden": [1, 2],
   };
-  expect(getPoints(query.queryFunctions(), [])).toEqual([
+  expect(getPoints(queryFunctions(), [])).toEqual([
     {
       x: 2026,
       y: 4.998,
@@ -597,7 +612,7 @@ test.each([
 ] as [string, number[], number, number | null, number, string][])(
   "current %s bye uses existing injury and return metadata with normalized names",
   (_description, weeks, byeWeek, estimatedReturnWeek, expected, range) => {
-    window.QueryHelpers.CURRENT_INJURY_WEEKS = { "Current Player Jr.": weeks };
+    currentInjuryWeeks = { "Current Player Jr.": weeks };
     window.QueryHelpers.CURRENT_INJURY_SOURCES = {
       ...original.CURRENT_INJURY_SOURCES,
       players: {
@@ -609,14 +624,33 @@ test.each([
         },
       },
     } as typeof original.CURRENT_INJURY_SOURCES;
-    const output = getPoints(query.queryFunctions(), []).find(
+    const output = getPoints(queryFunctions(), []).find(
       (p) => p.x === 2026,
     )!;
     expect(output.y).toBe([0, 1.585, 2.759, 3.817, 4.804][expected]);
     if (expected > 0)
       expect(output.label).toContain(`Current Player (ADP 10, ${range})`);
     expect(
-      window.QueryHelpers.CURRENT_INJURY_WEEKS["Current Player Jr."],
+      currentInjuryWeeks["Current Player Jr."],
     ).toEqual(weeks);
   },
 );
+
+
+test("saved injury weeks are embedded, editable, and independent of helper data", () => {
+  window.QueryHelpers = original;
+  const functions = query.queryFunctions();
+  const source = Object.fromEntries(
+    Object.entries(functions).map(([key, fn]) => [key, fn.toString()]),
+  );
+  expect(source.mapPoints).toContain('"Baker Mayfield": [4, 5]');
+  expect(source.mapPoints).not.toContain("H.CURRENT_INJURY_WEEKS");
+  expect(QueryHelpers).not.toHaveProperty("CURRENT_INJURY_WEEKS");
+  const baseline = rawGetPoints(functions, []);
+  expect(rawGetPoints(evalFunctions(source) as QueryFunctions<any>, [])).toEqual(baseline);
+  source.mapPoints = source.mapPoints.replace('"Baker Mayfield": [4, 5]', '"Baker Mayfield": []');
+  const edited = rawGetPoints(evalFunctions(source) as QueryFunctions<any>, []);
+  expect(edited.find((point) => point.x === 2026)!.y).toBeLessThan(
+    baseline.find((point) => point.x === 2026)!.y,
+  );
+});

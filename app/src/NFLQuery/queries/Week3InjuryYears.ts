@@ -40,6 +40,46 @@ const source = {
     : []`,
   mapPoints: `(points) => {
     // These constants and ALL scoring/inference below remain in this textbox.
+    // Frozen September 28, 2026: edit these missed-game weeks in Customize.
+    const currentInjuryWeeks = {
+        "Justin Jefferson": [],
+        "Baker Mayfield": [4, 5],
+        "Mike Evans": [4],
+        "Puka Nacua": [2, 3],
+        "Travis Etienne Jr": [4, 5],
+        "Jalen Coker": [],
+        "De'Von Achane": [4, 5, 7, 8, 9],
+        "Jalen McMillan": [1, 4, 5],
+        "Breece Hall": [4],
+        "Devin Singletary": [],
+        "Adonai Mitchell": [3],
+        "Jonah Coleman": [3, 4, 5, 6],
+        "Dallas Goedert": [3, 4, 5],
+        "Caleb Williams": [3, 4, 5],
+        "Alec Pierce": [3, 4, 5, 6, 7],
+        "Rico Dowdle": [3, 4],
+        "Nico Collins": [2, 3],
+        "Caleb Douglas": [3, 4],
+        "Tyreek Hill": [],
+        "Jaxson Dart": [3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+        "Jayden Reed": [3, 4, 5, 6, 7, 8, 9, 10],
+        "Jayden Daniels": [3, 4, 5],
+        "Jonathon Brooks": [3, 4, 6, 7, 8, 9],
+        "De'Zhaun Stribling": [2, 3, 4, 5, 6, 7, 9, 10, 11],
+        "Ja'Kobi Lane": [2, 3, 4, 5],
+        "Jordan Mason": [2, 3, 4, 5],
+        "Dylan Sampson": [2, 3, 4, 5, 6, 7, 8],
+        "AJ Brown": [2, 3, 4, 5, 6],
+        "Tank Dell": [1, 2, 3, 4, 5, 6],
+        "Jordyn Tyson": [1, 2, 3, 4, 5, 6],
+        "Zach Charbonnet": [1, 2, 3, 4, 5],
+        "Isiah Pacheco": [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12],
+        "Zay Flowers": [2],
+        "Brock Bowers": [1, 2],
+        "TreVeyon Henderson": [1],
+        "Kyler Murray": [2],
+        "Sam Darnold": [2],
+    };
     const cutoffWeek = 3;
     const cutoffDecay = 35;
     const minDraftWeight = 0.1;
@@ -84,7 +124,7 @@ const source = {
             });
         });
         schedules.forEach((weeks, team) => schedules.set(team, Array.from(new Set(weeks)).sort((a, b) => a - b)));
-        const estimates = new Map(Object.entries(H.CURRENT_INJURY_WEEKS).map(([name, weeks]) => [
+        const estimates = new Map(Object.entries(currentInjuryWeeks).map(([name, weeks]) => [
             normalizeName(name),
             weeks,
         ]));
