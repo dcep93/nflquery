@@ -3,9 +3,11 @@ import QueryHelpers from "../QueryBuilder/QueryHelpers";
 import { evalFunctions, QueryFunctions } from "../QueryBuilder";
 import rawGetPoints from "../QueryBuilder/getPoints";
 import query from "./Week3InjuryYears";
+import injurySourceSnapshot from "../datasets/current-injury-sources.json";
 
 const original = { ...QueryHelpers };
 let currentInjuryWeeks: Record<string, number[]>;
+let currentInjuryReturns: Record<string, { byeWeek: number; estimatedReturnWeek: number | null }>;
 // Edit the embedded literal exactly as Customize does, without helper globals.
 const queryFunctions = () => {
   const source = Object.fromEntries(
@@ -17,6 +19,10 @@ const queryFunctions = () => {
   source.mapPoints = source.mapPoints.replace(
     /const currentInjuryWeeks = \{[\s\S]*?\n    \};/,
     `const currentInjuryWeeks = ${literal};`,
+  );
+  source.mapPoints = source.mapPoints.replace(
+    /const currentInjuryReturns = \{[\s\S]*?\n    \};/,
+    `const currentInjuryReturns = ${JSON.stringify(currentInjuryReturns)};`,
   );
   return evalFunctions(source) as QueryFunctions<any>;
 };
@@ -64,6 +70,7 @@ const score = (games: GameType[]) =>
 
 beforeEach(() => {
   currentInjuryWeeks = { "Current Player": [4, 5] };
+  currentInjuryReturns = {};
   window.QueryHelpers = {
     ...original,
     ADP_BY_YEAR: { 2024: [player()], 2026: [player("Current Player")] },
@@ -613,17 +620,9 @@ test.each([
   "current %s bye uses existing injury and return metadata with normalized names",
   (_description, weeks, byeWeek, estimatedReturnWeek, expected, range) => {
     currentInjuryWeeks = { "Current Player Jr.": weeks };
-    window.QueryHelpers.CURRENT_INJURY_SOURCES = {
-      ...original.CURRENT_INJURY_SOURCES,
-      players: {
-        ...original.CURRENT_INJURY_SOURCES.players,
-        "Current Player": {
-          ...original.CURRENT_INJURY_SOURCES.players["Justin Jefferson"],
-          byeWeek,
-          estimatedReturnWeek,
-        },
-      },
-    } as typeof original.CURRENT_INJURY_SOURCES;
+    currentInjuryReturns = {
+      "Current Player": { byeWeek, estimatedReturnWeek },
+    };
     const output = getPoints(queryFunctions(), []).find(
       (p) => p.x === 2026,
     )!;
@@ -653,4 +652,32 @@ test("saved injury weeks are embedded, editable, and independent of helper data"
   expect(edited.find((point) => point.x === 2026)!.y).toBeLessThan(
     baseline.find((point) => point.x === 2026)!.y,
   );
+});
+
+
+test("inline return assumptions preserve the saved snapshot without loading source metadata", () => {
+  window.QueryHelpers = original;
+  const functions = query.queryFunctions();
+  const source = Object.fromEntries(
+    Object.entries(functions).map(([key, fn]) => [key, fn.toString()]),
+  );
+  expect(QueryHelpers).not.toHaveProperty("CURRENT_INJURY_SOURCES");
+  expect(source.mapPoints).not.toContain("H.CURRENT_INJURY_SOURCES");
+  expect(source.mapPoints).toContain("H.NFL_PLAYER_ALIASES");
+  expect(source.mapPoints).toContain("H.NFL_TEAM_ALIASES");
+  const literal = source.mapPoints.match(
+    /const currentInjuryReturns = (\{[\s\S]*?\n    \});/,
+  )![1];
+  const returns = new Function(`return (${literal})`)();
+  expect(returns).toEqual(Object.fromEntries(
+    Object.entries(injurySourceSnapshot.players).map(([name, injury]) => [
+      name, { byeWeek: injury.byeWeek, estimatedReturnWeek: injury.estimatedReturnWeek },
+    ]),
+  ));
+  const baseline = rawGetPoints(functions, []);
+  source.mapPoints = source.mapPoints.replace(
+    /const currentInjuryReturns = \{[\s\S]*?\n    \};/,
+    `const currentInjuryReturns = ${JSON.stringify(injurySourceSnapshot.players)};`,
+  ).replace(/const currentYear = \d+;/, `const currentYear = ${injurySourceSnapshot.year};`);
+  expect(rawGetPoints(evalFunctions(source) as QueryFunctions<any>, [])).toEqual(baseline);
 });

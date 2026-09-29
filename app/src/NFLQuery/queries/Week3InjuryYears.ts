@@ -80,6 +80,47 @@ const source = {
         "Kyler Murray": [2],
         "Sam Darnold": [2],
     };
+    const currentYear = 2026;
+    // Saved bye and return assumptions; null means no return this season.
+    const currentInjuryReturns = {
+        "Justin Jefferson": {"byeWeek": 6, "estimatedReturnWeek": 4},
+        "Baker Mayfield": {"byeWeek": 10, "estimatedReturnWeek": 6},
+        "Mike Evans": {"byeWeek": 8, "estimatedReturnWeek": 5},
+        "Puka Nacua": {"byeWeek": 11, "estimatedReturnWeek": 4},
+        "Travis Etienne Jr": {"byeWeek": 8, "estimatedReturnWeek": 6},
+        "Jalen Coker": {"byeWeek": 5, "estimatedReturnWeek": 4},
+        "De'Von Achane": {"byeWeek": 6, "estimatedReturnWeek": 10},
+        "Jalen McMillan": {"byeWeek": 10, "estimatedReturnWeek": 6},
+        "Breece Hall": {"byeWeek": 13, "estimatedReturnWeek": 5},
+        "Devin Singletary": {"byeWeek": 8, "estimatedReturnWeek": 4},
+        "Adonai Mitchell": {"byeWeek": 13, "estimatedReturnWeek": 4},
+        "Jonah Coleman": {"byeWeek": 10, "estimatedReturnWeek": 7},
+        "Dallas Goedert": {"byeWeek": 10, "estimatedReturnWeek": 6},
+        "Caleb Williams": {"byeWeek": 10, "estimatedReturnWeek": 6},
+        "Alec Pierce": {"byeWeek": 13, "estimatedReturnWeek": 8},
+        "Rico Dowdle": {"byeWeek": 9, "estimatedReturnWeek": 5},
+        "Nico Collins": {"byeWeek": 8, "estimatedReturnWeek": 4},
+        "Caleb Douglas": {"byeWeek": 6, "estimatedReturnWeek": 5},
+        "Tyreek Hill": {"byeWeek": null, "estimatedReturnWeek": null},
+        "Jaxson Dart": {"byeWeek": 8, "estimatedReturnWeek": null},
+        "Jayden Reed": {"byeWeek": 11, "estimatedReturnWeek": 12},
+        "Jayden Daniels": {"byeWeek": 7, "estimatedReturnWeek": 6},
+        "Jonathon Brooks": {"byeWeek": 5, "estimatedReturnWeek": 10},
+        "De'Zhaun Stribling": {"byeWeek": 8, "estimatedReturnWeek": 12},
+        "Ja'Kobi Lane": {"byeWeek": 13, "estimatedReturnWeek": 6},
+        "Jordan Mason": {"byeWeek": 6, "estimatedReturnWeek": 7},
+        "Dylan Sampson": {"byeWeek": 11, "estimatedReturnWeek": 9},
+        "AJ Brown": {"byeWeek": 11, "estimatedReturnWeek": 7},
+        "Tank Dell": {"byeWeek": 8, "estimatedReturnWeek": 7},
+        "Jordyn Tyson": {"byeWeek": 8, "estimatedReturnWeek": 7},
+        "Zach Charbonnet": {"byeWeek": 11, "estimatedReturnWeek": 6},
+        "Isiah Pacheco": {"byeWeek": 6, "estimatedReturnWeek": 13},
+        "Zay Flowers": {"byeWeek": 13, "estimatedReturnWeek": 3},
+        "Brock Bowers": {"byeWeek": 13, "estimatedReturnWeek": 3},
+        "TreVeyon Henderson": {"byeWeek": 11, "estimatedReturnWeek": 2},
+        "Kyler Murray": {"byeWeek": 6, "estimatedReturnWeek": 3},
+        "Sam Darnold": {"byeWeek": 11, "estimatedReturnWeek": 3},
+    };
     const cutoffWeek = 3;
     const cutoffDecay = 35;
     const minDraftWeight = 0.1;
@@ -88,7 +129,6 @@ const source = {
     const referenceDraftValue = Math.exp(-10 / adpDecay);
     const referenceInjuryCost = Math.pow(10, durationExponent);
     const H = window.QueryHelpers;
-    const currentYear = H.CURRENT_INJURY_SOURCES.year;
     const normalizeName = (name) => {
         const key = name
             .toLowerCase()
@@ -128,7 +168,7 @@ const source = {
             normalizeName(name),
             weeks,
         ]));
-        const currentInjuries = new Map(Object.entries(H.CURRENT_INJURY_SOURCES.players).map(([name, injury]) => [
+        const currentInjuries = new Map(Object.entries(currentInjuryReturns).map(([name, injury]) => [
             normalizeName(name),
             injury,
         ]));
