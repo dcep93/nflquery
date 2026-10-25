@@ -7,8 +7,15 @@ export default BuildQueryConfig({
     extract: (o) =>
       o.g.drives
         .map((dr, drI) => ({ dr, drI }))
-        .filter(({ dr }) => dr.team === o.g.teams[o.teamIndex].name)
-        .map(({ dr, drI }) =>
+        // Start when this score was established, not after the next possession.
+        .filter(({ dr, drI }) => {
+          const previousScores = o.g.drives[drI - 1]?.scores ?? [0, 0];
+          return (
+            dr.plays.length > 0 &&
+            dr.scores.some((score, i) => score !== previousScores[i])
+          );
+        })
+        .map(({ dr }) =>
           (({ driveScores }) => ({
             o,
             clock: dr.plays[dr.plays.length - 1].clock,
@@ -18,7 +25,7 @@ export default BuildQueryConfig({
               : window.QueryHelpers.getHomeAdvantage(driveScores) *
                 (o.teamIndex === 0 ? 1 : -1))!,
           }))({
-            driveScores: o.g.drives[drI - 1]?.scores,
+            driveScores: dr.scores,
           })
         )
         .filter(
