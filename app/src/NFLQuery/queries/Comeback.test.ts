@@ -99,3 +99,47 @@ test("moves the Oakland 42-34 start to Cleveland's subsequent punt", () => {
     x: "Q4 1:38 (42,34) -> (42,45)", y: 8,
   });
 });
+
+test("counts distinct slower games with at least the deficit, excluding tied clocks", () => {
+  const comeback = (gameId: number, deficit: number, clocks: string[]) => ({
+    ...game([
+      ...clocks.map((clock) => drive("ATL", [0, deficit], clock)),
+      drive("NE", [deficit + 1, deficit], "Q4 0:00"),
+    ], [deficit + 1, deficit]),
+    gameId,
+  });
+  const data = [{ year: 2026, games: [
+    comeback(1, 20, ["Q4 5:00"]),
+    comeback(2, 18, ["Q4 8:00"]),
+    comeback(3, 14, ["Q4 4:00", "Q4 1:00"]),
+    comeback(4, 14, ["Q4 3:00", "Q4 2:00"]),
+    comeback(5, 14, ["Q4 2:30", "Q4 1:00"]),
+    comeback(6, 7, ["Q4 0:20"]),
+  ] }];
+  const result = getPoints(query.queryFunctions(), data);
+  expect(result.map((point) => point.y)).toEqual([20, 14, 7]);
+  const fourteen = result[1];
+  expect(fourteen.x).toBe("Q4 1:00 (0,14) -> (15,14) (3 more but slower)");
+  expect(fourteen.slowerComebacks).toEqual([
+    { x: "Q4 2:00 (0,14) -> (15,14)", y: 14, label: "NE @ ATL 2026w1:4" },
+    { x: "Q4 5:00 (0,20) -> (21,20)", y: 20, label: "NE @ ATL 2026w1:1" },
+    { x: "Q4 8:00 (0,18) -> (19,18)", y: 18, label: "NE @ ATL 2026w1:2" },
+  ]);
+  expect(result[0].slowerComebacks).toBeUndefined();
+  expect(result[2].slowerComebacks).toHaveLength(5);
+  const restored = evalFunctions(Object.fromEntries(
+    Object.entries(query.queryFunctions()).map(([key, fn]) => [key, fn.toString()])
+  )) as QueryFunctions<any>;
+  expect(getPoints(restored, data)).toEqual(result);
+});
+
+test("keeps only the larger deficit when record clocks match", () => {
+  const games = [7, 14].map((deficit) => ({
+    ...game([drive("ATL", [0, deficit], "Q4 1:00")], [deficit + 1, deficit]),
+    gameId: deficit,
+  }));
+  const result = getPoints(query.queryFunctions(), [{ year: 2026, games }]);
+  expect(result.map((point) => point.y)).toEqual([14]);
+  expect(result[0].slowerComebacks).toBeUndefined();
+  expect(getPoints(query.queryFunctions(), [])).toEqual([]);
+});

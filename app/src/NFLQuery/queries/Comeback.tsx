@@ -30,32 +30,50 @@ export default BuildQueryConfig({
             o.pointsDeficit > 0 &&
             o.o.g.scores[o.o.teamIndex] > o.o.g.scores[1 - o.o.teamIndex]
         ),
-    mapPoints: (points) =>
-      points
+    mapPoints: (points) => {
+      const candidates = points
         .map((o) => ({
           x: `${o.extraction.clock} (${o.extraction.driveScores}) -> (${o.extraction.o.g.scores})`,
           y: o.extraction.pointsDeficit,
           label: o.label,
+          gameId: o.extraction.o.g.gameId,
           elapsedSeconds: window.QueryHelpers.clockToSeconds(
             o.extraction.clock
           ),
         }))
-        .sort((a, b) => a.elapsedSeconds - b.elapsedSeconds)
-        .map(({ elapsedSeconds, ...point }) => point)
-        .reduce(
-          (prev, curr) =>
-            prev.record >= curr.y
-              ? prev
-              : {
-                  record: curr.y,
-                  rval: prev.rval.concat(curr),
-                },
-          {
-            record: 0,
-            rval: [] as PointType[],
+        .sort((a, b) =>
+          a.elapsedSeconds - b.elapsedSeconds || b.y - a.y || a.gameId - b.gameId
+        );
+      let recordDeficit = 0;
+      return candidates
+        .filter((point) => {
+          if (point.y <= recordDeficit) return false;
+          recordDeficit = point.y;
+          return true;
+        })
+        .sort((a, b) => b.y - a.y)
+        .map((record) => {
+          // Candidates are fastest first. Keep each game's latest qualifying
+          // possession, and never count another possession from the record game.
+          const games = new Set<number>();
+          const slowerComebacks: PointType[] = [];
+          for (const candidate of candidates) {
+            if (candidate.gameId === record.gameId || candidate.y < record.y) continue;
+            if (games.has(candidate.gameId)) continue;
+            games.add(candidate.gameId);
+            // Equal clocks are ties, not slower comebacks.
+            if (candidate.elapsedSeconds <= record.elapsedSeconds) continue;
+            slowerComebacks.push({ x: candidate.x, y: candidate.y, label: candidate.label });
           }
-        )
-        .rval.map((point) => point)
-        .sort((a, b) => b.y - a.y),
+          const point: PointType = { x: record.x, y: record.y, label: record.label };
+          return slowerComebacks.length
+            ? {
+                ...point,
+                x: `${point.x} (${slowerComebacks.length} more but slower)`,
+                slowerComebacks,
+              }
+            : point;
+        });
+    },
   }),
 });

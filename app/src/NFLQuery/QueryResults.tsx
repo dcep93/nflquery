@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { PointType } from "./Query";
 import QueryLineChart from "./QueryLineChart";
 
@@ -30,6 +31,36 @@ export function buildQueryOutput(points: PointType[]): QueryOutput {
   return { num_points: rank, points: displayed };
 }
 
+function SlowerComebacks({ points, deficit }: { points: PointType[]; deficit: number }) {
+  const [expanded, setExpanded] = useState(false);
+  return (
+    <details
+      style={{ marginTop: "0.75rem" }}
+      onToggle={(event) => setExpanded(event.currentTarget.open)}
+    >
+      <summary style={{ cursor: "pointer" }}>
+        View {points.length} slower {points.length === 1 ? "comeback" : "comebacks"}
+      </summary>
+      {expanded && (
+        <>
+          <p>
+            Other games overcoming at least {deficit} points, starting earlier on
+            the game clock. Each game appears once.
+          </p>
+          <ol>
+            {points.map((point, i) => (
+              <li key={i} style={{ marginBottom: "0.75rem", overflowWrap: "anywhere" }}>
+                <div><strong>{point.y}-point deficit:</strong> {point.x}</div>
+                <div>{point.label}</div>
+              </li>
+            ))}
+          </ol>
+        </>
+      )}
+    </details>
+  );
+}
+
 export default function QueryResults({ output }: { output: QueryOutput }) {
   const displayedResults = output.points.filter(
     (point) => !isFormulaHeader(point),
@@ -56,7 +87,7 @@ export default function QueryResults({ output }: { output: QueryOutput }) {
       />
       <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
         {output.points.map((point, position) => {
-          const { x, y, label, index, ...extras } = point;
+          const { x, y, label, index, slowerComebacks, ...extras } = point;
           const hasExtras = Object.keys(extras).length > 0;
           const formulaHeader = isFormulaHeader(point);
 
@@ -108,6 +139,9 @@ export default function QueryResults({ output }: { output: QueryOutput }) {
                     </p>
                   )}
                 </>
+              )}
+              {!!slowerComebacks?.length && (
+                <SlowerComebacks points={slowerComebacks} deficit={y} />
               )}
               {hasExtras && (
                 <pre

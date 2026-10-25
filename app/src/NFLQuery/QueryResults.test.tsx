@@ -1,4 +1,5 @@
 import { renderToStaticMarkup } from "react-dom/server";
+import { fireEvent, render } from "@testing-library/react";
 import QueryResults, { buildQueryOutput } from "./QueryResults";
 import type { QueryOutput } from "./QueryResults";
 
@@ -93,4 +94,36 @@ test("formula headers do not consume ranks, result counts, or the 100-result lim
   expect(container.querySelectorAll("small")[0].textContent).toBe("#1");
   expect(container.querySelectorAll("small")[99].textContent).toBe("#100");
   expect(buildQueryOutput(seasons).points).toEqual(output.points.slice(1));
+});
+
+test("slower comebacks are collapsed and do not become ranked results or raw JSON", () => {
+  const container = renderResults(buildQueryOutput([{
+    x: "Q4 1:00 (0,14) -> (15,14) (1 more but slower)",
+    y: 14,
+    label: "Record game",
+    slowerComebacks: [{ x: "Q4 2:00 (0,14) -> (15,14)", y: 14, label: "Other <game>" }],
+  }]));
+  expect(container.textContent).toContain("1 result");
+  expect(container.querySelectorAll("small")).toHaveLength(1);
+  expect(container.querySelector("details")?.open).toBe(false);
+  expect(container.querySelector("summary")?.textContent).toBe("View 1 slower comeback");
+  expect(container.querySelector("details li")).toBeNull();
+  expect(container.textContent).not.toContain("Other <game>");
+  expect(container.querySelector("pre")).toBeNull();
+});
+
+test("expanding a slower list renders the games and collapsing removes them", () => {
+  const { container } = render(<QueryResults output={buildQueryOutput([{
+    x: "Q4 1:00 (1 more but slower)", y: 14, label: "Record game",
+    slowerComebacks: [{ x: "Q4 2:00", y: 14, label: "Other <game>" }],
+  }])} />);
+  const details = container.querySelector("details")!;
+  expect(details.querySelector("li")).toBeNull();
+  details.open = true;
+  fireEvent(details, new Event("toggle"));
+  expect(details.querySelector("li")?.textContent).toBe("14-point deficit: Q4 2:00Other <game>");
+  expect(details.querySelector("game")).toBeNull();
+  details.open = false;
+  fireEvent(details, new Event("toggle"));
+  expect(details.querySelector("li")).toBeNull();
 });

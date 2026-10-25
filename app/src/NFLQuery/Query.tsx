@@ -159,4 +159,5 @@ export type PointType = {
   x: number | string;
   y: number;
   label: string;
+  slowerComebacks?: PointType[];
 };
