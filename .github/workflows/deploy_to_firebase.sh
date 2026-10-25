@@ -19,7 +19,10 @@ cd app
 
 export GOOGLE_APPLICATION_CREDENTIALS="gac.json"
 echo "$SA_KEY" >"$GOOGLE_APPLICATION_CREDENTIALS"
-npm install -g firebase-tools
+# 15.34.1 adds a Service Usage check unavailable to the Hosting deploy account.
+# Pin the last working CLI so deployments do not pick up unreviewed upgrades.
+npm install -g firebase-tools@15.34.0
+firebase --version
 gcloud auth activate-service-account --key-file="$GOOGLE_APPLICATION_CREDENTIALS"
 project_id="$(cat $GOOGLE_APPLICATION_CREDENTIALS | jq -r .project_id)"
 
