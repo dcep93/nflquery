@@ -50,33 +50,52 @@ test("starts at 28-3, before the comeback team's next scoring drive", () => {
   expect(points(g, restored)).toEqual(points(g));
 });
 
-test("scoreless possessions do not restart the clock", () => {
+test("uses the eventual loser's last possession at the score, including scoreless drives", () => {
   const g = game([
     drive("ATL", [0, 7], "Q4 10:00"),
     drive("NE", [0, 7], "Q4 8:00"),
     drive("ATL", [0, 7], "Q4 6:00"),
+    drive("NE", [0, 7], "Q4 4:00"),
     drive("NE", [8, 7], "Q4 1:00"),
   ], [8, 7]);
   expect(points(g)).toEqual([{
-    x: "Q4 10:00 (0,7) -> (8,7)", y: 7, label: "NE @ ATL 2016w1:1",
+    x: "Q4 6:00 (0,7) -> (8,7)", y: 7, label: "NE @ ATL 2016w1:1",
   }]);
 });
 
-test("handles defensive scoring on the eventual winner's possession", () => {
+test("uses the score before a defensive touchdown on the eventual loser's possession", () => {
   const g = game([
-    drive("NE", [0, 7], "Q4 10:00"),
-    drive("NE", [8, 7], "Q4 1:00"),
-  ], [8, 7]);
-  expect(points(g)[0].x).toBe("Q4 10:00 (0,7) -> (8,7)");
+    drive("ATL", [0, 14], "Q4 10:00"),
+    drive("NE", [0, 14], "Q4 8:00"),
+    drive("ATL", [7, 14], "Q4 6:00"),
+    drive("NE", [15, 14], "Q4 1:00"),
+  ], [15, 14]);
+  expect(points(g)).toEqual([{
+    x: "Q4 6:00 (0,14) -> (15,14)", y: 14, label: "NE @ ATL 2016w1:1",
+  }]);
 });
 
 test("handles a home comeback and excludes final ties", () => {
   const g = game([
     drive("NE", [7, 0], "Q4 10:00"),
+    drive("ATL", [7, 0], "Q4 8:00"),
+    drive("NE", [7, 0], "Q4 6:00"),
     drive("ATL", [7, 8], "Q4 1:00"),
   ], [7, 8]);
   expect(points(g)).toEqual([{
-    x: "Q4 10:00 (7,0) -> (7,8)", y: 7, label: "ATL vs NE 2016w1:1",
+    x: "Q4 6:00 (7,0) -> (7,8)", y: 7, label: "ATL vs NE 2016w1:1",
   }]);
   expect(points({ ...g, scores: [7, 7] })).toEqual([]);
+});
+
+test("moves the Oakland 42-34 start to Cleveland's subsequent punt", () => {
+  const g = game([
+    drive("NE", [41, 34], "Q4 4:20"),
+    drive("ATL", [42, 34], "Q4 1:51"),
+    drive("NE", [42, 34], "Q4 1:38"),
+    drive("ATL", [42, 42], "Q4 0:30"),
+  ], [42, 45]);
+  expect(points(g)[0]).toMatchObject({
+    x: "Q4 1:38 (42,34) -> (42,45)", y: 8,
+  });
 });

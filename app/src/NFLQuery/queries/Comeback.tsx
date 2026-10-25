@@ -2,38 +2,33 @@ import { PointType } from "../Query";
 import { BuildQueryConfig } from "../QueryBuilder";
 
 export default BuildQueryConfig({
-  tooltip: "biggest point deficit overcome in smallest time",
+  tooltip: "biggest deficit overcome from the opponent's last possession at that score",
   queryFunctions: () => ({
     extract: (o) =>
       o.g.drives
         .map((dr, drI) => ({ dr, drI }))
-        // Start when this score was established, not after the next possession.
-        .filter(({ dr, drI }) => {
+        // Each opponent possession is a candidate; mapPoints keeps the latest.
+        .filter(
+          ({ dr }) =>
+            dr.team === o.g.teams[1 - o.teamIndex].name && dr.plays.length > 0
+        )
+        .map(({ dr, drI }) => {
           const previousScores = o.g.drives[drI - 1]?.scores ?? [0, 0];
-          return (
-            dr.plays.length > 0 &&
-            dr.scores.some((score, i) => score !== previousScores[i])
-          );
-        })
-        .map(({ dr }) =>
-          (({ driveScores }) => ({
+          // On a defensive/return score, use the score before possession changed.
+          const driveScores = dr.scores[o.teamIndex] > previousScores[o.teamIndex]
+            ? previousScores
+            : dr.scores;
+          return {
             o,
             clock: dr.plays[dr.plays.length - 1].clock,
             driveScores,
-            pointsDeficit: (!driveScores
-              ? null
-              : window.QueryHelpers.getHomeAdvantage(driveScores) *
-                (o.teamIndex === 0 ? 1 : -1))!,
-          }))({
-            driveScores: dr.scores,
-          })
-        )
+            pointsDeficit: driveScores[1 - o.teamIndex] - driveScores[o.teamIndex],
+          };
+        })
         .filter(
           (o) =>
-            o.driveScores &&
-            window.QueryHelpers.getHomeAdvantage(o.driveScores) *
-              window.QueryHelpers.getHomeAdvantage(o.o.g.scores) <
-              0
+            o.pointsDeficit > 0 &&
+            o.o.g.scores[o.o.teamIndex] > o.o.g.scores[1 - o.o.teamIndex]
         ),
     mapPoints: (points) =>
       points
