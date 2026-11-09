@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { PointType } from "./Query";
+import type { LateGameReport } from "./lateGameAnalysis";
 import QueryLineChart from "./QueryLineChart";
 
 export type QueryOutput = {
@@ -17,7 +18,9 @@ function isFormulaHeader(point: PointType & Record<string, unknown>) {
   );
 }
 
-export function buildQueryOutput(points: PointType[]): QueryOutput {
+export function buildQueryOutput<T extends PointType>(
+  points: T[],
+): QueryOutput {
   let rank = 0;
   const displayed: QueryOutput["points"] = [];
   points.forEach((point) => {
@@ -31,7 +34,13 @@ export function buildQueryOutput(points: PointType[]): QueryOutput {
   return { num_points: rank, points: displayed };
 }
 
-function SlowerComebacks({ points, deficit }: { points: PointType[]; deficit: number }) {
+function SlowerComebacks({
+  points,
+  deficit,
+}: {
+  points: PointType[];
+  deficit: number;
+}) {
   const [expanded, setExpanded] = useState(false);
   return (
     <details
@@ -39,18 +48,24 @@ function SlowerComebacks({ points, deficit }: { points: PointType[]; deficit: nu
       onToggle={(event) => setExpanded(event.currentTarget.open)}
     >
       <summary style={{ cursor: "pointer" }}>
-        View {points.length} slower {points.length === 1 ? "comeback" : "comebacks"}
+        View {points.length} slower{" "}
+        {points.length === 1 ? "comeback" : "comebacks"}
       </summary>
       {expanded && (
         <>
           <p>
-            Other games overcoming at least {deficit} points, starting earlier on
-            the game clock. Each game appears once.
+            Other games overcoming at least {deficit} points, starting earlier
+            on the game clock. Each game appears once.
           </p>
           <ol>
             {points.map((point, i) => (
-              <li key={i} style={{ marginBottom: "0.75rem", overflowWrap: "anywhere" }}>
-                <div><strong>{point.y}-point deficit:</strong> {point.x}</div>
+              <li
+                key={i}
+                style={{ marginBottom: "0.75rem", overflowWrap: "anywhere" }}
+              >
+                <div>
+                  <strong>{point.y}-point deficit:</strong> {point.x}
+                </div>
                 <div>{point.label}</div>
               </li>
             ))}
@@ -58,6 +73,77 @@ function SlowerComebacks({ points, deficit }: { points: PointType[]; deficit: nu
         </>
       )}
     </details>
+  );
+}
+
+function LateGameReportHeader({ report }: { report: LateGameReport }) {
+  const [showExcluded, setShowExcluded] = useState(false);
+  const [showDominated, setShowDominated] = useState(false);
+  return (
+    <div>
+      <h2 style={{ marginTop: 0 }}>{report.title}</h2>
+      <p>{report.definition}</p>
+      <p>{report.scope}</p>
+      <p>
+        {report.gamesAnalyzed.toLocaleString()} games analyzed.{" "}
+        {report.excludedGames.toLocaleString()}{" "}
+        {report.excludedGames === 1 ? "game" : "games"} with excluded records.
+        {report.excludedGames > 0 &&
+          " Valid records from those games may still appear; ambiguous records are excluded from ranking."}
+      </p>
+      {report.exclusions.length > 0 && (
+        <details
+          onToggle={(event) => setShowExcluded(event.currentTarget.open)}
+        >
+          <summary style={{ cursor: "pointer" }}>
+            View exclusions for {report.excludedGames.toLocaleString()}{" "}
+            {report.excludedGames === 1 ? "game" : "games"}
+          </summary>
+          {showExcluded && (
+            <ul>
+              {report.exclusions.map((exclusion, i) => (
+                <li key={i} style={{ margin: "0.75rem 0" }}>
+                  <strong>{exclusion.label}</strong>
+                  <ul>
+                    {exclusion.reasons.map((reason, j) => (
+                      <li key={j}>{reason}</li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
+          )}
+        </details>
+      )}
+      {report.dominated.length > 0 && (
+        <details
+          style={{ marginTop: "0.75rem" }}
+          onToggle={(event) => setShowDominated(event.currentTarget.open)}
+        >
+          <summary style={{ cursor: "pointer" }}>
+            View {report.dominated.length.toLocaleString()} other qualifying{" "}
+            {report.dominated.length === 1 ? "result" : "results"}
+          </summary>
+          {showDominated && (
+            <>
+              <p>
+                These results had no more yards or points and no less time
+                remaining than a listed record, with at least one disadvantage.
+                Results may share a game; exact ties remain ranked.
+              </p>
+              <ol>
+                {report.dominated.map((point, i) => (
+                  <li key={i} style={{ margin: "0.75rem 0" }}>
+                    <strong>{point.label}</strong>
+                    <div>{point.x}</div>
+                  </li>
+                ))}
+              </ol>
+            </>
+          )}
+        </details>
+      )}
+    </div>
   );
 }
 
@@ -87,7 +173,17 @@ export default function QueryResults({ output }: { output: QueryOutput }) {
       />
       <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
         {output.points.map((point, position) => {
-          const { x, y, label, index, slowerComebacks, ...extras } = point;
+          const {
+            x,
+            y,
+            label,
+            index,
+            slowerComebacks,
+            lateGameReport,
+            lateGameDetail,
+            lateGameMetric,
+            ...extras
+          } = point;
           const hasExtras = Object.keys(extras).length > 0;
           const formulaHeader = isFormulaHeader(point);
 
@@ -101,6 +197,11 @@ export default function QueryResults({ output }: { output: QueryOutput }) {
                 marginBottom: "0.75rem",
               }}
             >
+              {!!lateGameReport && (
+                <LateGameReportHeader
+                  report={lateGameReport as LateGameReport}
+                />
+              )}
               {!formulaHeader && (
                 <>
                   <div
@@ -120,11 +221,19 @@ export default function QueryResults({ output }: { output: QueryOutput }) {
                     </small>
                     {x !== "" && (
                       <span>
-                        <strong>x:</strong> {x}
+                        <strong>
+                          {lateGameDetail ? "Time remaining:" : "x:"}
+                        </strong>{" "}
+                        {x}
                       </span>
                     )}
                     <span>
-                      <strong>y:</strong> {y}
+                      <strong>
+                        {typeof lateGameMetric === "string"
+                          ? `${lateGameMetric}:`
+                          : "y:"}
+                      </strong>{" "}
+                      {y}
                     </span>
                   </div>
                   {label !== "" && (
@@ -139,6 +248,9 @@ export default function QueryResults({ output }: { output: QueryOutput }) {
                     </p>
                   )}
                 </>
+              )}
+              {typeof lateGameDetail === "string" && (
+                <p style={{ marginBottom: 0 }}>{lateGameDetail}</p>
               )}
               {!!slowerComebacks?.length && (
                 <SlowerComebacks points={slowerComebacks} deficit={y} />

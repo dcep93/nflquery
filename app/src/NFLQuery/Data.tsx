@@ -1,3 +1,4 @@
+import { correctSeasonData } from "./dataCorrections";
 import { allYears, endYear } from "./constants";
 import { fetchCompletedGameIds, fetchSummaryGame } from "./fetchYear";
 import { DataType } from "./types";
@@ -46,7 +47,7 @@ async function fetchYearData(year: number, cache: Cache): Promise<DataType> {
     response = fetched;
   }
 
-  const data = (await response.json()) as DataType;
+  const data = correctSeasonData((await response.json()) as DataType);
 
   if (year !== endYear) {
     return data;

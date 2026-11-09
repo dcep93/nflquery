@@ -97,33 +97,101 @@ test("formula headers do not consume ranks, result counts, or the 100-result lim
 });
 
 test("slower comebacks are collapsed and do not become ranked results or raw JSON", () => {
-  const container = renderResults(buildQueryOutput([{
-    x: "Q4 1:00 (0,14) -> (15,14) (1 more but slower)",
-    y: 14,
-    label: "Record game",
-    slowerComebacks: [{ x: "Q4 2:00 (0,14) -> (15,14)", y: 14, label: "Other <game>" }],
-  }]));
+  const container = renderResults(
+    buildQueryOutput([
+      {
+        x: "Q4 1:00 (0,14) -> (15,14) (1 more but slower)",
+        y: 14,
+        label: "Record game",
+        slowerComebacks: [
+          { x: "Q4 2:00 (0,14) -> (15,14)", y: 14, label: "Other <game>" },
+        ],
+      },
+    ]),
+  );
   expect(container.textContent).toContain("1 result");
   expect(container.querySelectorAll("small")).toHaveLength(1);
   expect(container.querySelector("details")?.open).toBe(false);
-  expect(container.querySelector("summary")?.textContent).toBe("View 1 slower comeback");
+  expect(container.querySelector("summary")?.textContent).toBe(
+    "View 1 slower comeback",
+  );
   expect(container.querySelector("details li")).toBeNull();
   expect(container.textContent).not.toContain("Other <game>");
   expect(container.querySelector("pre")).toBeNull();
 });
 
 test("expanding a slower list renders the games and collapsing removes them", () => {
-  const { container } = render(<QueryResults output={buildQueryOutput([{
-    x: "Q4 1:00 (1 more but slower)", y: 14, label: "Record game",
-    slowerComebacks: [{ x: "Q4 2:00", y: 14, label: "Other <game>" }],
-  }])} />);
+  const { container } = render(
+    <QueryResults
+      output={buildQueryOutput([
+        {
+          x: "Q4 1:00 (1 more but slower)",
+          y: 14,
+          label: "Record game",
+          slowerComebacks: [{ x: "Q4 2:00", y: 14, label: "Other <game>" }],
+        },
+      ])}
+    />,
+  );
   const details = container.querySelector("details")!;
   expect(details.querySelector("li")).toBeNull();
   details.open = true;
   fireEvent(details, new Event("toggle"));
-  expect(details.querySelector("li")?.textContent).toBe("14-point deficit: Q4 2:00Other <game>");
+  expect(details.querySelector("li")?.textContent).toBe(
+    "14-point deficit: Q4 2:00Other <game>",
+  );
   expect(details.querySelector("game")).toBeNull();
   details.open = false;
   fireEvent(details, new Event("toggle"));
   expect(details.querySelector("li")).toBeNull();
+});
+
+test("late-game reports render readable lazy details and warnings without consuming a rank", () => {
+  const report = {
+    title: "Winning-possession net yards",
+    definition: "Time remaining at possession start.",
+    scope: "Loaded seasons only.",
+    gamesAnalyzed: 2,
+    excludedGames: 1,
+    exclusions: [{ label: "Bad game", reasons: ["Invalid clock Q4 16:00."] }],
+    dominated: [
+      {
+        x: "Time remaining: Q4 2:00. Net gain: 20 yards.",
+        y: 20,
+        label: "Other <game>",
+      },
+    ],
+  };
+  const { container } = render(
+    <QueryResults
+      output={buildQueryOutput([
+        { x: "", y: Number.MAX_VALUE, label: "", lateGameReport: report },
+        {
+          x: "Q4 0:06",
+          y: 26,
+          label: "ATL vs CHI",
+          lateGameMetric: "Net yards",
+          lateGameDetail:
+            "Start: ATL own 44. Net gain: 26 yards. CHI 20 / ATL 22.",
+        },
+      ])}
+    />,
+  );
+  expect(container.querySelectorAll("small")).toHaveLength(1);
+  expect(container.textContent).toContain(
+    "2 games analyzed. 1 game with excluded records.",
+  );
+  expect(container.textContent).toContain("Start: ATL own 44");
+  expect(container.querySelector("pre")).toBeNull();
+  expect(container.textContent).not.toContain("Invalid clock");
+  const details = container.querySelectorAll("details");
+  details.forEach((detail) => {
+    detail.open = true;
+    fireEvent(detail, new Event("toggle"));
+  });
+  expect(container.textContent).toContain("Invalid clock Q4 16:00.");
+  expect(container.textContent).toContain("View 1 other qualifying result");
+  expect(container.textContent).toContain("Other <game>");
+  expect(container.querySelector("game")).toBeNull();
+  expect(container.textContent).not.toContain("more but slower");
 });

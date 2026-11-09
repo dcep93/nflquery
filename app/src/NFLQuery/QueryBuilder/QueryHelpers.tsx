@@ -1,3 +1,4 @@
+import { analyzeLateGame, mapLateGamePoints } from "../lateGameAnalysis";
 import { PlayType } from "../Data";
 import {
   ADP_BY_YEAR,
@@ -88,6 +89,8 @@ declare global {
 }
 
 const QueryHelpers = {
+  analyzeLateGame,
+  mapLateGamePoints,
   ADP_BY_YEAR,
   ADP_SOURCES,
   NFL_TEAM_ALIASES,

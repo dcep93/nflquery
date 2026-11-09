@@ -23,3 +23,11 @@ Validate monotonic scores against the final score, candidate clock order, score 
 Put reusable correction, event extraction, and frontier logic in a focused helper module exposed through window.QueryHelpers; the editable query functions must continue to work after serialization/eval. Keep changes scoped to March/Comeback, their data correction hook, and structured report rendering. Preserve other queries' output and behavior.
 
 Regression tests must cover the two real games, post-score vs pre-snap clocks, opponent scoring vs winner scoring, defensive scores, field goals and holder coordinates, kickoff/period/timeout exclusion, penalties, tied starts, overtime finishes, exact frontier ties, invalid scores/clocks, and serialized Customize functions. Run the Jest suite, type check, production build, and a whole-dataset audit. Review resulting cards visually. Commit and push task-owned changes on main per workspace instructions.
+
+## Completed verification
+
+- Independent spec and code reviews passed after adding next-possession conversion, period-end scoring, and challenged-play regressions.
+- All 96 tests across 8 suites passed; TypeScript and the production build passed.
+- The configured local 2005–2026 snapshots contain 5,817 games. March yielded 4,283 qualifying possessions and 10 frontier records; Comeback yielded 6,092 scoring events and 11 frontier records. Respectively 908 and 917 games have one or more excluded records, including 620 games with inconsistent cumulative scores. These are coverage limitations exposed in the report, not repaired by inference.
+- Browser verification included the Atlanta card, Buffalo's corrected scoring events in the expandable list, and Customize serialization. Live current-season fetching can add games beyond the local snapshot, so displayed counts may differ.
+- Existing cached data receives the verified Buffalo correction on load; season JSON files are unchanged.
